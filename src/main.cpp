@@ -21,6 +21,8 @@ int exit_code = game.Run();
 
     return exit_code;
 }
+//J'ai mis des lignes de code que je voulais me rappler un peu partout dans le code
+//Certaine choses écrites ne sont pas vraiment utilse pour l'instant mais je voulais m'en rappeler car ça pourrait servir.
 /* code pour mettre à jour une position en fonction du mouvement et
  de la rotation d'une autre position
 sf::Vector2f NewTurretPosition;
