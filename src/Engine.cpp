@@ -67,20 +67,11 @@ int Engine::Run()
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
-                            sf::Vector2f converted_coord;
-                converted_coord.x=(float)localMousePosition.x;
-                converted_coord.y=(float)localMousePosition.y;
+                            sf::Vector2f converted_coord;//la position de la souris est en int
+                converted_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
+                converted_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
 
-
-                     Vector2i player_pixel_position=Game.mapCoordsToPixel(player->getPosition(), MainView);
-
-sf::Vector2f converted_player_coord;
-                converted_player_coord.x=(float)player_pixel_position.x;
-                converted_player_coord.y=(float)player_pixel_position.y;
-
-cout<<"player x : "<<player->getPosition().x<<" y : "<<player->getPosition().y<<endl;
-cout<<"player converted x : "<<converted_player_coord.x<<" y : "<<converted_player_coord.y<<endl;
-                AllBullets.push_back(Bullet(converted_player_coord, player->Shoot(converted_coord)));
+                AllBullets.push_back(Bullet(player->getPosition(), player->Shoot(converted_coord, Game)));
 
             }
 //Pour des touches séparées(avec délai du système), il vaut mieux utiliser ces lignes là(pollEvent).

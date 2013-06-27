@@ -10,8 +10,9 @@ class Player : public sf::CircleShape
 {
 public:
 Player(sf::Vector2f init_position);
-void SetRenderWindow(const sf::RenderWindow &mynewWindow);
-float Shoot(sf::Vector2f TargetPosition);
+//void SetRenderWindow(sf::RenderWindow &mynewWindow);
+float Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindow);
+sf::Vector2i GetWindowPosition(sf::RenderWindow &theRenderWindow) const;
 ~Player();
 
 private:
@@ -21,7 +22,7 @@ private:
     //Immunity Timer
     unsigned long Score;
     unsigned short Life;
-sf::RenderWindow* myWindow;
+//sf::RenderWindow myWindow;
 
   std::string PlayerName;
 };

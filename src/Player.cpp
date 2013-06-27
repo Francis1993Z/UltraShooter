@@ -13,17 +13,23 @@ Player::setPosition(init_position);
 Player::setOrigin(50.f, 50.f);
 }
 
-void Player::SetRenderWindow(const sf::RenderWindow &mynewWindow)
+/*void Player::SetRenderWindow(sf::RenderWindow &mynewWindow)
 {
-myWindow=mynewWindow;
+mynewWindow.co;
 
-}
+}*/
 
-float Player::Shoot(sf::Vector2f TargetPosition)
+float Player::Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindow)
 {
 
-float x1=Player::getPosition().x;
-float y1=Player::getPosition().y;
+                     Vector2i player_pixel_position=Player::GetWindowPosition(myRenderWindow);
+
+sf::Vector2f converted_player_coord;
+                converted_player_coord.x=(float)player_pixel_position.x;
+                converted_player_coord.y=(float)player_pixel_position.y;
+
+float x1=converted_player_coord.x;
+float y1=converted_player_coord.y;
 float x2=TargetPosition.x;
 float y2=TargetPosition.y;
     float a=x2-x1;
@@ -31,9 +37,12 @@ float y2=TargetPosition.y;
     float angle;
 return  angle = atan2(-o, a);
 
-
-
 //return GetAngle_v2f(Player::getPosition(), TargetPosition);
+}
+
+sf::Vector2i Player::GetWindowPosition(sf::RenderWindow &theRenderWindow) const
+{
+return theRenderWindow.mapCoordsToPixel(Player::getPosition(), theRenderWindow.getView());
 }
 
  Player::~Player()
