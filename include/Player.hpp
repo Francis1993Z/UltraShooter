@@ -22,7 +22,7 @@ private:
     //Immunity Timer
     unsigned long Score;
     unsigned short Life;
-//sf::RenderWindow myWindow;
+    //sf::RenderWindow myWindow;
 
     std::string PlayerName;
 };

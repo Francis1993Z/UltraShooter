@@ -1,13 +1,17 @@
-#include "Engine.hpp"
 #include <SFML/Window.hpp>
-#include "Player.hpp"
 
 #include <iostream>
 #include <sstream>
 #include <cmath>
 
+#include "Engine.hpp"
+#include "Player.hpp"
+
 using namespace std;
 using namespace sf;
+
+bool Engine::isAlreadyInstancied = false;
+Engine* Engine::instanceOfEngine = 0;
 
 template <typename T> string NumberToString ( T Number )
 {
@@ -16,9 +20,26 @@ template <typename T> string NumberToString ( T Number )
     return ss.str();
 }
 
-Engine::Engine(sf::VideoMode Mode)
+/*
+    Permet de récupérer une adresse vers une instance d'Engine.
+    Si aucun Engine n'a été crée, alors celui-ci sera crée et la fonction retournera son adresse,
+    sinon elle retourne l'adresse de l'Engine qui a déjà été crée.
+*/
+Engine* Engine::getInstance()
 {
-    Game.create(Mode, "Ultra Shooter 0.2");
+    if(!isAlreadyInstancied)
+    {
+        Engine::instanceOfEngine = new Engine(sf::VideoMode(1440, 900, 32)); // Crée une nouvelle instance de l'Engine.
+        isAlreadyInstancied = true;
+    }
+
+    return instanceOfEngine;
+}
+
+Engine::Engine(sf::VideoMode mode)
+{
+    gameMap = new Map();
+    Game.create(mode, "Ultra Shooter 0.2");
 }
 
 int Engine::Run()
@@ -59,7 +80,7 @@ int Engine::Run()
                 converted_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
                 converted_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
 
-                AllBullets.push_back(Bullet(player->getPosition(), player->Shoot(converted_coord, Game)));
+                gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, Game)));
             }
 
             //Pour des touches séparées(avec délai du système), il vaut mieux utiliser ces lignes là(pollEvent).
@@ -125,18 +146,7 @@ int Engine::Run()
                 Game.setView(MainView);
             }
 
-            for(unsigned int n=0; n<AllBullets.size(); n++)
-            {
-                AllBullets.at(n).UpdatePosition();
-
-                if(CheckIfOutOfWindow(AllBullets.at(n).getPosition()) == true)
-                    AllBullets.erase(AllBullets.begin()+n);
-            }
-
-            Game.clear(Color(255,255,255));
-
-            for(unsigned int n=0; n<AllBullets.size(); n++)
-                Game.draw(AllBullets.at(n));
+            gameMap->update(Game);
 
             Game.draw(*player);
             Game.display();
@@ -171,5 +181,6 @@ bool Engine::CheckIfOutOfWindow(sf::Vector2f Position)
 
 Engine::~Engine()
 {
+    isAlreadyInstancied = false;
     Game.close();
 }

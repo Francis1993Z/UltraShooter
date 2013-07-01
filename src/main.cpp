@@ -14,9 +14,10 @@ using namespace sf;
 
 int main()
 {
-    Engine game(sf::VideoMode(1440, 900, 32));
+    Engine* engine;
+    engine = Engine::getInstance();
 
-    int exit_code = game.Run();
+    int exit_code = engine->Run();
 
     return exit_code;
 }
