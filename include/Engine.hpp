@@ -14,11 +14,12 @@ public:
     int Run();
     bool CheckIfOutOfWindow(sf::Vector2f Position);
     ~Engine();
+
 private:
-std::vector<Bullet> AllBullets;
-Player* player;
+    std::vector<Bullet> AllBullets;
+    Player* player;
     bool IsRunning;
-sf::Vector2i localMousePosition;
+    sf::Vector2i localMousePosition;
     sf::Event WindowEvent;
     sf::RenderWindow Game;
     sf::View MainView;

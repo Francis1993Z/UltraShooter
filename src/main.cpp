@@ -7,17 +7,16 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
- #include "Engine.hpp"
+#include "Engine.hpp"
 
 using namespace std;
 using namespace sf;
 
 int main()
 {
+    Engine game(sf::VideoMode(1440, 900, 32));
 
-Engine game(sf::VideoMode(1440, 900, 32));
-
-int exit_code = game.Run();
+    int exit_code = game.Run();
 
     return exit_code;
 }
