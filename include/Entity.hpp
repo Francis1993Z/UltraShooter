@@ -6,7 +6,7 @@
 class Entity : public sf::Shape
 {
 public:
-Entity& getAdresse();
+    Entity& getAdresse();
 private:
 };
 
