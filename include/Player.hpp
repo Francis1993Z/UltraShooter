@@ -4,13 +4,13 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+
 #include "GlobalFunctions.h"
 #include "Hud.h"
 
 class Player : public sf::CircleShape
 {
 public:
-
     Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f tailleFenetre);
     //void SetRenderWindow(sf::RenderWindow &mynewWindow);
     float Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindow);
@@ -28,9 +28,9 @@ private:
     unsigned long Score;
     unsigned short Life;
     Hud hud;
-//sf::RenderWindow myWindow;
+    //sf::RenderWindow myWindow;
 
-  std::string PlayerName;
+    std::string PlayerName;
 };
 
 #endif // PLAYER_HPP_INCLUDED
