@@ -5,7 +5,7 @@ using namespace std;
 using namespace sf;
 
 
-Player::Player(sf::Vector2f init_position)
+Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow):Life(100), Score(0), hud(Life, Score, font, sizeWindow)
 {
     rayon=50.f;
 
@@ -46,6 +46,21 @@ float Player::Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindo
 sf::Vector2i Player::GetWindowPosition(sf::RenderWindow &theRenderWindow) const
 {
     return theRenderWindow.mapCoordsToPixel(Player::getPosition(), theRenderWindow.getView());
+}
+
+sf::Text Player::getLifeHud()
+{
+    return hud.getLife();
+}
+
+sf::Text Player::getScoreHud()
+{
+    return hud.getScore();
+}
+
+void Player::setSizeWindowHud(sf::Vector2f sizeWindow)
+{
+    hud.setSizeWindow(sizeWindow);
 }
 
  Player::~Player()

@@ -19,6 +19,8 @@ int main()
 
     int exit_code = engine->Run();
 
+    delete engine;
+
     return exit_code;
 }
 //J'ai mis des lignes de code que je voulais me rappler un peu partout dans le code

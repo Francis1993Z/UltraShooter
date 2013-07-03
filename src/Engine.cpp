@@ -45,13 +45,19 @@ Engine::Engine(sf::VideoMode mode)
 int Engine::Run()
 {
     sf::Clock fps_clock;
+    sf::Font font;
 
-    player = new Player(sf::Vector2f(200.f, 200.f));
+    if (!font.loadFromFile("arial.ttf"))
+        cerr<<"ERROR : Can't load the font for the HUD"<<endl;
 
     //Game.setVerticalSyncEnabled(true);
     Game.setFramerateLimit(60);
+    //MainView.setSize(880, 550); //Ne pas toucher c'est pour ne pas avoir le bug de la fenêtre trop grande sur Windows
+    //MainView.setCenter(880/2, 550/2);
     MainView.setSize(1440, 900);
     MainView.setCenter(1440/2, 900/2);
+
+    player = new Player(sf::Vector2f(200.f, 200.f), font, MainView.getSize());
     Game.setView(MainView);
 
     IsRunning=true;
@@ -149,6 +155,8 @@ int Engine::Run()
             gameMap->update(Game);
 
             Game.draw(*player);
+            Game.draw(player->getScoreHud());
+            Game.draw(player->getLifeHud());
             Game.display();
 
             /* float currentTime = fps_clock.restart().asSeconds();
@@ -182,5 +190,6 @@ bool Engine::CheckIfOutOfWindow(sf::Vector2f Position)
 Engine::~Engine()
 {
     isAlreadyInstancied = false;
+    delete gameMap;
     Game.close();
 }
