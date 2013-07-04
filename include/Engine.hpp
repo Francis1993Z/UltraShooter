@@ -24,7 +24,7 @@ public:
 
     ~Engine();
     int Run();
-    bool CheckIfOutOfWindow(sf::Vector2f Position);
+    bool CheckIfOutOfWindow(sf::Vector2f Position, float rayon);
     static Engine* getInstance(); //Permet de récupérer l'instance (adresse) de la classe Engine partout dans le programme.
     Map* getMap() const;
 

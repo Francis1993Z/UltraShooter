@@ -68,7 +68,7 @@ void Map::update(sf::RenderWindow& game)
     {
         AllBullets.at(n).UpdatePosition();
 
-        if(engine->CheckIfOutOfWindow(AllBullets.at(n).getPosition()) == true)
+        if(engine->CheckIfOutOfWindow(AllBullets.at(n).getPosition(), 0.0f) == true)
             AllBullets.erase(AllBullets.begin()+n);
     }
 

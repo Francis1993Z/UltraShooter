@@ -19,7 +19,7 @@ void Hud::updateLife(unsigned short n_Life){
     t_life.setString(ss.str());
     t_life.setFont(font);
     t_life.setCharacterSize(15);
-    t_life.setColor(sf::Color::Black);
+    t_life.setColor(sf::Color::Red);
     setPositionHud();
 }
 
@@ -30,7 +30,7 @@ void Hud::updateScore(unsigned long n_Score){
     t_score.setString(ss.str());
     t_score.setFont(font);
     t_score.setCharacterSize(15);
-    t_score.setColor(sf::Color::Black);
+    t_score.setColor(sf::Color::Red);
     setPositionHud();
 }
 

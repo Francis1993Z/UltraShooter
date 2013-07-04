@@ -63,6 +63,11 @@ void Player::setSizeWindowHud(sf::Vector2f sizeWindow)
     hud.setSizeWindow(sizeWindow);
 }
 
+float Player::getRayon(){
+
+    return rayon;
+}
+
  Player::~Player()
 {
 

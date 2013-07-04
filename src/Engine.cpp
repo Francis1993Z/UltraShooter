@@ -46,8 +46,10 @@ int Engine::Run()
 {
     sf::Clock fps_clock;
     sf::Font font;
+    float x(0);
+    float y(0);
 
-    if (!font.loadFromFile("arial.ttf"))
+    if (!font.loadFromFile("ressources/fonts/arial.ttf"))
         cerr<<"ERROR : Can't load the font for the HUD"<<endl;
 
     //Game.setVerticalSyncEnabled(true);
@@ -68,7 +70,10 @@ int Engine::Run()
             localMousePosition = sf::Mouse::getPosition(Game);
             //Pour la répétition il faut utiliser les lignes ci-dessous.
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+
+            //Ancienne gestion des évènements, à rétablir si le TEST ne convient pas
+
+            /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
                 player->move(-15.00f, 00.00f);
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
@@ -78,7 +83,44 @@ int Engine::Run()
                 player->move(0.00f, -15.00f);
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                player->move(0.00f, 15.00f);
+                player->move(0.00f, 15.00f);*/
+        //Début zone de TEST : Tout marche parfaitement, pour moi ça convient !
+            x=0.0f;
+            y=0.0f;
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                x=-15.00f;
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                x=15.00f;
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                y=-15.00f;
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                y=15.00f;
+
+            player->move(x, y);
+
+            if(CheckIfOutOfWindow(player->getPosition(), player->getRayon())){
+
+                cerr<<"Collision : The player is out of the map !"<<endl;
+
+                player->move(-x, -y);
+
+                if(x>0)
+                    x=getMap()->getWidth()-player->getPosition().x-player->getRayon();
+                if(x<0)
+                    x=-player->getPosition().x+player->getRayon();
+                if(y>0)
+                    y=getMap()->getHeight()-player->getPosition().y-player->getRayon();
+                if(y<0)
+                    y=-player->getPosition().y+player->getRayon();
+
+                player->move(x, y);
+            }
+
+            //Fin zone de TEST
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
@@ -178,14 +220,14 @@ Map* Engine::getMap() const
     return gameMap;
 }
 
-bool Engine::CheckIfOutOfWindow(sf::Vector2f Position)
+bool Engine::CheckIfOutOfWindow(sf::Vector2f Position, float rayon)
 {
     sf::Vector2u window_size=Game.getSize();
 
-    if( static_cast<unsigned int>(Position.x) < 0                    ||
-        static_cast<unsigned int>(Position.x) > getMap()->getWidth() ||
-        static_cast<unsigned int>(Position.y) < 0                    ||
-        static_cast<unsigned int>(Position.y) > getMap()->getHeight())
+    if( static_cast<int>(Position.x-rayon) < 0                    ||
+        static_cast<unsigned int>(Position.x+rayon) > getMap()->getWidth() ||
+        static_cast<int>(Position.y-rayon) < 0                    ||
+        static_cast<unsigned int>(Position.y+rayon) > getMap()->getHeight())
 
         return true;
 

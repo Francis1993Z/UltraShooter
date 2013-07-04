@@ -17,6 +17,7 @@ public:
     sf::Vector2i GetWindowPosition(sf::RenderWindow &theRenderWindow) const;
     sf::Text getLifeHud();
     sf::Text getScoreHud();
+    float getRayon();
     void setSizeWindowHud(sf::Vector2f sizeWindow);
     ~Player();
 
