@@ -5,7 +5,7 @@ using namespace sf;
 
 Bullet::Bullet(sf::Vector2f myInitPosition, float myangle)
 {
-    Bullet::setFillColor(sf::Color::Black);
+    Bullet::setFillColor(sf::Color::White);
     Bullet::setPosition(myInitPosition);
     Bullet::setRadius(5);
     damage=15;

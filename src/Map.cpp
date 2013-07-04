@@ -1,13 +1,59 @@
 #include "Map.hpp"
 
+#include <tinyxml.h>
+
 using namespace std;
 using namespace sf;
 
-Map::Map()
-{}
+Map::Map(std::string mapPath)
+{
+    string backgroundPath;
+
+    TiXmlDocument doc(mapPath.c_str());
+
+    if(!doc.LoadFile())
+    {
+        cerr << "Erreur lors du chargement de la Map " << mapPath << endl;
+        cerr << "Error #" << doc.ErrorId() << " : " << doc.ErrorDesc() << endl;
+        exit(1);
+    }
+
+    TiXmlHandle hdl(&doc);
+    TiXmlElement *elem = hdl.FirstChildElement().FirstChildElement().Element();
+
+    if(!elem)
+    {
+        cerr << "Map 01.map corrompue !" << endl;
+        exit(2);
+    }
+
+    elem->QueryIntAttribute("width", &width);
+    elem->QueryIntAttribute("height", &height);
+
+    elem = elem->NextSiblingElement(); // iteration
+
+    backgroundPath = elem->Attribute("path");
+
+    if (!backgroundTexture.loadFromFile(backgroundPath))
+    {
+        cerr << "Background " << backgroundPath << " introuvable !" << endl;
+        exit(3);
+    }
+    background.setTexture(backgroundTexture);
+}
 
 Map::~Map()
 {}
+
+int Map::getWidth() const
+{
+    return width;
+}
+
+int Map::getHeight() const
+{
+    return height;
+}
 
 void Map::addBullet(Bullet bullet)
 {
@@ -26,8 +72,11 @@ void Map::update(sf::RenderWindow& game)
             AllBullets.erase(AllBullets.begin()+n);
     }
 
-    game.clear(Color(255,255,255));
-
     for(unsigned int n=0; n < AllBullets.size(); n++)
         game.draw(AllBullets.at(n));
+}
+
+Sprite Map::getBackground() const
+{
+    return background;
 }

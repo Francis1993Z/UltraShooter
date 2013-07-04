@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<General>
+	<dimentions width="800" height="600"/>
+	<background path="ressources/backgrounds/background01.png"/>
+</General>
+<lObstacles>
+	<obstacle path="ressources/obstacle1.png" width="" height="" coordX="" coordY=""/>
+</lObstacles>
+<Waves>
+</Waves>

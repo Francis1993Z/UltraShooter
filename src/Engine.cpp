@@ -38,7 +38,7 @@ Engine* Engine::getInstance()
 
 Engine::Engine(sf::VideoMode mode)
 {
-    gameMap = new Map();
+    gameMap = new Map("ressources/maps/01.map");
     Game.create(mode, "Ultra Shooter 0.2");
 }
 
@@ -133,27 +133,29 @@ int Engine::Run()
 
             if(object_pixel_position.x < 100)
             {
-                MainView.move(-15.f, 0.f);
+                MainView.move(-5.f, 0.f);
                 Game.setView(MainView);
             }
             if(object_pixel_position.x > Game.getSize().x-100)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
             {
-                MainView.move(15.f, 0.f);
+                MainView.move(5.f, 0.f);
                 Game.setView(MainView);
             }
             if(object_pixel_position.y < 100)
             {
-                MainView.move(0.f, -15.f);
+                MainView.move(0.f, -5.f);
                 Game.setView(MainView);
             }
             if(object_pixel_position.y > Game.getSize().y-100)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
             {
-                MainView.move(0.f, 15.f);
+                MainView.move(0.f, 5.f);
                 Game.setView(MainView);
             }
 
-            gameMap->update(Game);
+            Game.clear(Color(0,0,0));
 
+            Game.draw(gameMap->getBackground());
+            gameMap->update(Game);
             Game.draw(*player);
             Game.draw(player->getScoreHud());
             Game.draw(player->getLifeHud());
@@ -171,14 +173,19 @@ int Engine::Run()
     return 0;
 }
 
+Map* Engine::getMap() const
+{
+    return gameMap;
+}
+
 bool Engine::CheckIfOutOfWindow(sf::Vector2f Position)
 {
     sf::Vector2u window_size=Game.getSize();
 
-    if( static_cast<unsigned int>(Position.x) < 0             ||
-        static_cast<unsigned int>(Position.x) > window_size.x ||
-        static_cast<unsigned int>(Position.y) < 0             ||
-        static_cast<unsigned int>(Position.y) > window_size.y)
+    if( static_cast<unsigned int>(Position.x) < 0                    ||
+        static_cast<unsigned int>(Position.x) > getMap()->getWidth() ||
+        static_cast<unsigned int>(Position.y) < 0                    ||
+        static_cast<unsigned int>(Position.y) > getMap()->getHeight())
 
         return true;
 
