@@ -42,3 +42,20 @@ inline float GetAngle(sf::Vector2f vec1, sf::Vector2f vec2)
 
     return angle;
 }
+
+std::string getWC()
+{
+    char cCurrentPath[FILENAME_MAX];
+
+ if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
+     {
+     std::cout<<"Erreur, cwd not found : "<<errno<<std::endl;
+     }
+
+cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
+
+std::string d(cCurrentPath);
+std::cout<<"The current working directory is "<<cCurrentPath<<std::endl;
+return d;
+}
+

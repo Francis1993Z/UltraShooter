@@ -4,6 +4,8 @@
 #include <sstream>
 #include <cmath>
 
+#include <tinyxml.h>
+
 #include "Engine.hpp"
 #include "Player.hpp"
 
@@ -29,17 +31,52 @@ Engine* Engine::getInstance()
 {
     if(!isAlreadyInstancied)
     {
-        Engine::instanceOfEngine = new Engine(sf::VideoMode(880, 550, 32)); // Crée une nouvelle instance de l'Engine.
+        //!Charge le fichier de configuration.
+        /***********************************************************************************************/
+        int init_width;
+        int init_height;
+        int init_bitmode;
+        bool is_fullscreen;
+
+        TiXmlDocument doc("config");
+
+        if(!doc.LoadFile())
+        {
+            cerr << "Erreur lors du chargement du fichier de configuration " << endl;
+            cerr << "Error #" << doc.ErrorId() << " : " << doc.ErrorDesc() << endl;
+            exit(1);
+        }
+
+        TiXmlHandle hdl(&doc);
+        TiXmlElement *elem = hdl.FirstChildElement().FirstChildElement().Element();
+
+        if(!elem)
+        {
+            cerr << "config corrompue !" << endl;
+            exit(2);
+        }
+
+        elem->QueryIntAttribute("width", &init_width);
+        elem->QueryIntAttribute("height", &init_height);
+        elem->QueryIntAttribute("bitmode", &init_bitmode);
+        elem = elem->NextSiblingElement(); // iteration
+        elem->QueryBoolAttribute("fullscreen", &is_fullscreen);
+
+
+        /***********************************************************************************************/
+
+        Engine::instanceOfEngine = new Engine(sf::VideoMode(init_width, init_height, init_bitmode), is_fullscreen); // Crée une nouvelle instance de l'Engine.
         isAlreadyInstancied = true;
     }
 
     return instanceOfEngine;
 }
 
-Engine::Engine(sf::VideoMode mode)
+Engine::Engine(sf::VideoMode mode, bool fullscreen)
 {
-    gameMap = new Map("ressources/maps/01.map");
-    Game.create(mode, "Ultra Shooter 0.2");
+    gameMap = new Map(getWC()+"/ressources/maps/01.map");
+    if(fullscreen==true) Game.create(mode, "Ultra Shooter 0.2", sf::Style::Fullscreen);
+    else Game.create(mode, "Ultra Shooter 0.2");
 }
 
 int Engine::Run()
@@ -54,13 +91,15 @@ int Engine::Run()
 
     //Game.setVerticalSyncEnabled(true);
     Game.setFramerateLimit(60);
-    MainView.setSize(880, 550); //Ne pas toucher c'est pour ne pas avoir le bug de la fenêtre trop grande sur Windows
-    MainView.setCenter(880/2, 550/2);
+    sf::Vector2u screen_size=Game.getSize();
+    MainView.setSize(screen_size.x, screen_size.y);
+    MainView.setCenter(screen_size.x/2, screen_size.y/2);
     //MainView.setSize(1440, 900);
     //MainView.setCenter(1440/2, 900/2);
 
     player = new Player(sf::Vector2f(200.f, 200.f), font, MainView.getSize());
     Game.setView(MainView);
+    const float player_speed=5;
 
     IsRunning=true;
     while(IsRunning)
@@ -84,25 +123,26 @@ int Engine::Run()
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 player->move(0.00f, 15.00f);*/
-        //Début zone de TEST : Tout marche parfaitement, pour moi ça convient !
+            //Début zone de TEST : Tout marche parfaitement, pour moi ça convient !
             x=0.0f;
             y=0.0f;
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                x=-15.00f;
+                x=-player_speed;
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                x=15.00f;
+                x=player_speed;
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                y=-15.00f;
+                y=-player_speed;
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                y=15.00f;
+                y=player_speed;
 
             player->move(x, y);
 
-            if(CheckIfOutOfWindow(player->getPosition(), player->getRayon())){
+            if(CheckIfOutOfWindow(player->getPosition(), player->getRayon()))
+            {
 
                 cerr<<"Collision : The player is out of the map !"<<endl;
 
@@ -154,6 +194,11 @@ int Engine::Run()
                 }
                 if (WindowEvent.type == Event::KeyPressed)
                 {
+                    if (WindowEvent.key.code == sf::Keyboard::Escape)
+                    {
+                        Game.close();
+                        IsRunning=false;
+                    }
                     if (WindowEvent.key.code == sf::Keyboard::Space)
                     {
                         cout << "the space key was pressed" << std::endl;
@@ -225,9 +270,9 @@ bool Engine::CheckIfOutOfWindow(sf::Vector2f Position, float rayon)
     sf::Vector2u window_size=Game.getSize();
 
     if( static_cast<int>(Position.x-rayon) < 0                    ||
-        static_cast<unsigned int>(Position.x+rayon) > getMap()->getWidth() ||
-        static_cast<int>(Position.y-rayon) < 0                    ||
-        static_cast<unsigned int>(Position.y+rayon) > getMap()->getHeight())
+            static_cast<unsigned int>(Position.x+rayon) > getMap()->getWidth() ||
+            static_cast<int>(Position.y-rayon) < 0                    ||
+            static_cast<unsigned int>(Position.y+rayon) > getMap()->getHeight())
 
         return true;
 

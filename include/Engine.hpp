@@ -30,7 +30,7 @@ public:
 
 private:
 
-    Engine(sf::VideoMode mode); // Le constructeur est privé car on ne doit pas pouvoir construire la classe sans passer par la méthode getInstance().
+    Engine(sf::VideoMode mode, bool fullscreen); // Le constructeur est privé car on ne doit pas pouvoir construire la classe sans passer par la méthode getInstance().
 
     bool IsRunning;
     static bool isAlreadyInstancied; // Permet de savoir si une instance d'Engine existe déjà ou non.
