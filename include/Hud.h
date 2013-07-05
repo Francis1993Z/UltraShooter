@@ -14,11 +14,11 @@ class Hud
         sf::Text getLife();
         sf::Text getScore();
              void Move(float vx, float vy);
-
+ void setPositionHud();
         ~Hud();
     protected:
     private:
-   void setPositionHud();
+
         std::stringstream ss;
         sf::Vector2f sizeWindow;
         sf::Font font;

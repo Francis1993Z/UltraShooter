@@ -3,8 +3,12 @@
 #include <iostream>
 #include <sstream>
 #include <cmath>
+#include <stdio.h>      /* printf, NULL */
+#include <stdlib.h>
+#include <time.h>       /* time */
 
 #include <tinyxml.h>
+
 
 #include "Engine.hpp"
 #include "Player.hpp"
@@ -95,19 +99,24 @@ int Engine::Run()
     MainView.setSize(screen_size.x, screen_size.y);
     MainView.setCenter(screen_size.x/2, screen_size.y/2);
     //MainView.setSize(1024, 768);
-    //MainView.setCenter(1024/2, 768/2);
 
     player = new Player(sf::Vector2f(200.f, 200.f), font, MainView.getSize());
-    Game.setView(MainView);
+
 
 
     ///******************************************************************************///
-    //sf::FloatRect port(0, 0, 1, 1);
+    sf::FloatRect port(0, 0, 1, 1);
  //MainView.setViewport(port);
+
+//MainView.setCenter(player->getPosition());
+
+    Game.setView(MainView);
+
     ///******************************************************************************///
     const float player_speed=15;
 
 
+    sf::Clock ennemy_clock;
 
 
 
@@ -117,6 +126,18 @@ int Engine::Run()
         while(Game.isOpen())//Fenetre
         {
             localMousePosition = sf::Mouse::getPosition(Game);
+
+/*
+sf::Time ennemy_time = ennemy_clock.getElapsedTime();
+            if(ennemy_time.asSeconds()>=1)
+            {
+                srand (time(NULL));
+                float x=rand()%100;
+                float y=rand()%100;
+                gameMap->addZombie(Zombie(sf::Vector2f(x,y)));
+                cout<<"create zombie"<<endl;
+            }*/
+
             //Pour la répétition il faut utiliser les lignes ci-dessous.
             //Début zone de TEST : Tout marche parfaitement, pour moi ça convient !
             x=0.0f;
@@ -203,6 +224,7 @@ int Engine::Run()
                         cout << "alt:" << WindowEvent.key.alt << std::endl;
                         cout << "shift:" << WindowEvent.key.shift << std::endl;
                         cout << "system:" << WindowEvent.key.system << std::endl;
+                        gameMap->addZombie(Zombie(sf::Vector2f(1500,500), *player));
                     }
                 }
                 if (WindowEvent.type == sf::Event::MouseButtonPressed)
@@ -221,25 +243,25 @@ Game.setView(MainView);
 
             Vector2i object_pixel_position=Game.mapCoordsToPixel(player->getPosition(), MainView);
 
-            if(object_pixel_position.x < 100)
+            if(object_pixel_position.x < 300)
             {
                 MainView.move(-player_speed, 0.f);
                 player->move_myhud(-player_speed, 0.f);//On met à jour la position de la HUD
                 Game.setView(MainView);
             }
-            if(object_pixel_position.x > Game.getSize().x-100)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
+            if(object_pixel_position.x > Game.getSize().x-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
             {
                 MainView.move(player_speed, 0.f);
                 player->move_myhud(player_speed, 0.f);
                 Game.setView(MainView);
             }
-            if(object_pixel_position.y < 100)
+            if(object_pixel_position.y < 300)
             {
                 MainView.move(0.f, -player_speed);
                 player->move_myhud(0.f, -player_speed);
                 Game.setView(MainView);
             }
-            if(object_pixel_position.y > Game.getSize().y-100)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
+            if(object_pixel_position.y > Game.getSize().y-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
             {
                 MainView.move(0.f, player_speed);
                 player->move_myhud(0.f, player_speed);

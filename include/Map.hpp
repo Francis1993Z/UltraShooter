@@ -10,10 +10,12 @@
 
 #include "Bullet.hpp"
 #include "Engine.hpp"
+#include "Zombie.hpp"
 
 class Map
 {
     std::vector<Bullet> AllBullets;
+    std::vector<Zombie> ZombieArray;
 
     int width;
     int height;
@@ -30,6 +32,7 @@ public:
     int getHeight() const;
 
     void addBullet(Bullet bullet);
+    void addZombie(Zombie newZombie);
     void update(sf::RenderWindow& game);
 
     sf::Sprite getBackground() const;

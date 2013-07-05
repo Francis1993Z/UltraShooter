@@ -61,6 +61,10 @@ void Map::addBullet(Bullet bullet)
 {
     AllBullets.push_back(bullet);
 }
+void Map::addZombie(Zombie newZombie)
+{
+    ZombieArray.push_back(newZombie);
+}
 
 void Map::update(sf::RenderWindow& game)
 {
@@ -74,8 +78,21 @@ void Map::update(sf::RenderWindow& game)
             AllBullets.erase(AllBullets.begin()+n);
     }
 
+        for(unsigned int n=0; n < ZombieArray.size(); n++)
+    {
+        ZombieArray.at(n).Update();
+
+
+        if(engine->CheckIfOutOfWindow(ZombieArray.at(n).getPosition(), 5.0f) == true)
+        {
+            ZombieArray.erase(ZombieArray.begin()+n);
+        }
+    }
+
     for(unsigned int n=0; n < AllBullets.size(); n++)
         game.draw(AllBullets.at(n));
+          for(unsigned int n=0; n < ZombieArray.size(); n++)
+        game.draw(ZombieArray.at(n));
 }
 
 Sprite Map::getBackground() const

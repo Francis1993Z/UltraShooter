@@ -42,7 +42,6 @@ void Hud::setSizeWindow(sf::Vector2f n_sizeWindow){
 
 void Hud::setPositionHud()
 {
-
     t_score.setPosition(0,0);
     t_life.setPosition(sizeWindow.x-t_life.getGlobalBounds().width, 0);
 }

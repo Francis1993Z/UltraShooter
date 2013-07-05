@@ -10,7 +10,7 @@ Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindo
     rayon=50.f;
 
     Player::setRadius(rayon);
-    Player::setFillColor(sf::Color::Red);
+    Player::setFillColor(sf::Color::Blue);
     Player::setPosition(init_position);
     Player::setOrigin(50.f, 50.f);
 }

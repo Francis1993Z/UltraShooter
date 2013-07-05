@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <General>
-	<resolution width="1920" height="1080" bitmode="32"/>
-	<fullscreen fullscreen="false"/>
+	<resolution width="1024" height="768" bitmode="32"/>
+	<fullscreen fullscreen="true"/>
 </General>
