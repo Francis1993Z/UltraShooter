@@ -58,6 +58,11 @@ sf::Text Player::getScoreHud()
     return hud.getScore();
 }
 
+void Player::move_myhud(float vx, float vy)
+{
+    hud.Move(vx, vy);
+}
+
 void Player::setSizeWindowHud(sf::Vector2f sizeWindow)
 {
     hud.setSizeWindow(sizeWindow);

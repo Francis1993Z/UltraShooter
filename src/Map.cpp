@@ -40,6 +40,8 @@ Map::Map(std::string mapPath)
         exit(3);
     }
     background.setTexture(backgroundTexture);
+    cout<<width<<endl;
+    cout<<height<<endl;
 }
 
 Map::~Map()

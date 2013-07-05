@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <General>
-	<dimentions width="800" height="600"/>
+	<dimentions width="4000" height="4000"/>
 	<background path="ressources/backgrounds/background01.png"/>
 </General>
 <lObstacles>

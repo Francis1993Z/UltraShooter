@@ -8,8 +8,9 @@ Bullet::Bullet(sf::Vector2f myInitPosition, float myangle)
     Bullet::setFillColor(sf::Color::White);
     Bullet::setPosition(myInitPosition);
     Bullet::setRadius(5);
+    Bullet::setOrigin(2.5f, 2.5f);
     damage=15;
-    vitesse=15;
+    vitesse=25;
     angle=myangle;
 }
 

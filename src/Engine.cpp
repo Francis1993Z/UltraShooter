@@ -94,12 +94,22 @@ int Engine::Run()
     sf::Vector2u screen_size=Game.getSize();
     MainView.setSize(screen_size.x, screen_size.y);
     MainView.setCenter(screen_size.x/2, screen_size.y/2);
-    //MainView.setSize(1440, 900);
-    //MainView.setCenter(1440/2, 900/2);
+    //MainView.setSize(1024, 768);
+    //MainView.setCenter(1024/2, 768/2);
 
     player = new Player(sf::Vector2f(200.f, 200.f), font, MainView.getSize());
     Game.setView(MainView);
-    const float player_speed=5;
+
+
+    ///******************************************************************************///
+    //sf::FloatRect port(0, 0, 1, 1);
+ //MainView.setViewport(port);
+    ///******************************************************************************///
+    const float player_speed=15;
+
+
+
+
 
     IsRunning=true;
     while(IsRunning)
@@ -108,21 +118,6 @@ int Engine::Run()
         {
             localMousePosition = sf::Mouse::getPosition(Game);
             //Pour la répétition il faut utiliser les lignes ci-dessous.
-
-
-            //Ancienne gestion des évènements, à rétablir si le TEST ne convient pas
-
-            /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                player->move(-15.00f, 00.00f);
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                player->move(15.00f, 00.00f);
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                player->move(0.00f, -15.00f);
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                player->move(0.00f, 15.00f);*/
             //Début zone de TEST : Tout marche parfaitement, pour moi ça convient !
             x=0.0f;
             y=0.0f;
@@ -144,10 +139,10 @@ int Engine::Run()
             if(CheckIfOutOfWindow(player->getPosition(), player->getRayon()))
             {
 
-                cerr<<"Collision : The player is out of the map !"<<endl;
+
 
                 player->move(-x, -y);
-
+/*
                 if(x>0)
                     x=getMap()->getWidth()-player->getPosition().x-player->getRayon();
                 if(x<0)
@@ -158,6 +153,8 @@ int Engine::Run()
                     y=-player->getPosition().y+player->getRayon();
 
                 player->move(x, y);
+
+        */
             }
 
             //Fin zone de TEST
@@ -213,29 +210,39 @@ int Engine::Run()
                         cout << "the right button was pressed" << std::endl;
 
                 if (WindowEvent.type == sf::Event::MouseWheelMoved)
-                    cout << "wheel movement: " << WindowEvent.mouseWheel.delta << std::endl;
+                {
+                cout << "wheel movement: " << WindowEvent.mouseWheel.delta << std::endl;
+                if(WindowEvent.mouseWheel.delta>0) MainView.zoom(0.8);
+                else if(WindowEvent.mouseWheel.delta<0) MainView.zoom(1.8);
+Game.setView(MainView);
+                }
+
             }//pollEvent
 
             Vector2i object_pixel_position=Game.mapCoordsToPixel(player->getPosition(), MainView);
 
             if(object_pixel_position.x < 100)
             {
-                MainView.move(-5.f, 0.f);
+                MainView.move(-player_speed, 0.f);
+                player->move_myhud(-player_speed, 0.f);//On met à jour la position de la HUD
                 Game.setView(MainView);
             }
             if(object_pixel_position.x > Game.getSize().x-100)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
             {
-                MainView.move(5.f, 0.f);
+                MainView.move(player_speed, 0.f);
+                player->move_myhud(player_speed, 0.f);
                 Game.setView(MainView);
             }
             if(object_pixel_position.y < 100)
             {
-                MainView.move(0.f, -5.f);
+                MainView.move(0.f, -player_speed);
+                player->move_myhud(0.f, -player_speed);
                 Game.setView(MainView);
             }
             if(object_pixel_position.y > Game.getSize().y-100)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
             {
-                MainView.move(0.f, 5.f);
+                MainView.move(0.f, player_speed);
+                player->move_myhud(0.f, player_speed);
                 Game.setView(MainView);
             }
 
@@ -267,7 +274,7 @@ Map* Engine::getMap() const
 
 bool Engine::CheckIfOutOfWindow(sf::Vector2f Position, float rayon)
 {
-    sf::Vector2u window_size=Game.getSize();
+
 
     if( static_cast<int>(Position.x-rayon) < 0                    ||
             static_cast<unsigned int>(Position.x+rayon) > getMap()->getWidth() ||

@@ -13,10 +13,12 @@ class Hud
         void setSizeWindow(sf::Vector2f n_sizeWindow);
         sf::Text getLife();
         sf::Text getScore();
+             void Move(float vx, float vy);
+
         ~Hud();
     protected:
     private:
-        void setPositionHud();
+   void setPositionHud();
         std::stringstream ss;
         sf::Vector2f sizeWindow;
         sf::Font font;
