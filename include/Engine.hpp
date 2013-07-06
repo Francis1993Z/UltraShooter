@@ -7,7 +7,6 @@
 
 #include <vector>
 
-#include "Entity.hpp"
 #include "Player.hpp"
 #include "Bullet.hpp"
 #include "Map.hpp"

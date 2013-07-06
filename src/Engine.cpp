@@ -64,7 +64,7 @@ Engine* Engine::getInstance()
         elem->QueryIntAttribute("height", &init_height);
         elem->QueryIntAttribute("bitmode", &init_bitmode);
         elem = elem->NextSiblingElement(); // iteration
-        elem->QueryBoolAttribute("fullscreen", &is_fullscreen);
+        elem->QueryIntAttribute("fullscreen", (int *)&is_fullscreen);
 
 
         /***********************************************************************************************/
