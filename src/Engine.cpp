@@ -41,7 +41,7 @@ Engine* Engine::getInstance()
         int init_height;
         int init_bitmode;
         bool is_fullscreen;
-        std::string configPath(getWC()+"/config/config");
+        std::string configPath(getCWD()+"/config/config");
         TiXmlDocument doc(configPath.c_str());
 
         if(!doc.LoadFile())
@@ -78,7 +78,7 @@ Engine* Engine::getInstance()
 
 Engine::Engine(sf::VideoMode mode, bool fullscreen)
 {
-    gameMap = new Map(getWC()+"/ressources/maps/01.map");
+    gameMap = new Map(getCWD()+"/ressources/maps/01.map");
     if(fullscreen==true) Game.create(mode, "Ultra Shooter 0.2", sf::Style::Fullscreen);
     else Game.create(mode, "Ultra Shooter 0.2");
 }

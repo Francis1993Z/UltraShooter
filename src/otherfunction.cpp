@@ -43,7 +43,7 @@ inline float GetAngle(sf::Vector2f vec1, sf::Vector2f vec2)
     return angle;
 }
 
-std::string getWC()
+std::string getCWD()
 {
     char cCurrentPath[FILENAME_MAX];
 

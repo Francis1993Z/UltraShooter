@@ -27,7 +27,7 @@ extern "C"
     float GetAngle_v2f(sf::Vector2f vec1, sf::Vector2f vec2);
     float Distance(float, float, float, float);
     float Distance_v2f(sf::Vector2f, sf::Vector2f);
-        std::string getWC();
+        std::string getCWD();
 }
 
 #endif // GLOBALFUNCTIONS_H_INCLUDED

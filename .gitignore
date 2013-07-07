@@ -11,4 +11,10 @@
 *.lai
 *.la
 *.a
+
+*.cbp
+*.depend
+*.layout
 .directory
+bin
+obj
