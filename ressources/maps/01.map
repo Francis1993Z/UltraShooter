@@ -4,7 +4,12 @@
 	<background path="ressources/backgrounds/background02.png"/>
 </General>
 <lObstacles>
-	<obstacle path="ressources/obstacle1.png" width="" height="" coordX="" coordY=""/>
+	<obstacle path="ressources/obstacles/asteroide.png" coordX="1000" coordY="500"/>
+	<obstacle path="ressources/obstacles/asteroide.png" coordX="500" coordY="1000"/>
+	<obstacle path="ressources/obstacles/asteroide.png" coordX="200" coordY="500"/>
+	<obstacle path="ressources/obstacles/asteroide.png" coordX="10" coordY="700"/>
+	<obstacle path="ressources/obstacles/asteroide.png" coordX="700" coordY="800"/>
+	<obstacle path="ressources/obstacles/asteroide.png" coordX="900" coordY="100"/>
 </lObstacles>
 <Waves>
 </Waves>

@@ -40,8 +40,30 @@ Map::Map(std::string mapPath)
         exit(3);
     }
     background.setTexture(backgroundTexture);
+
     cout<<width<<endl;
     cout<<height<<endl;
+
+    elem = hdl.Child(2).FirstChildElement().Element();
+
+    if(!elem)
+    {
+        cerr << "Map 01.map corrompue !" << endl;
+        exit(2);
+    }
+
+    int x = 42, y;
+    while(elem)
+    {
+        elem->QueryIntAttribute("coordX", &x);
+        elem->QueryIntAttribute("coordY", &y);
+
+        if(x > 0 && x < width && y > 0 && y < height)
+            addObstacle(elem->Attribute("path"), x, y);
+
+        elem = elem->NextSiblingElement(); // iteration
+    }
+
 }
 
 Map::~Map()
@@ -66,7 +88,32 @@ void Map::addZombie(Zombie newZombie)
     ZombieArray.push_back(newZombie);
 }
 
-void Map::update(sf::RenderWindow& game)
+void Map::addObstacle(std::string obstacleTexturePath, int x, int y)
+{
+    map<string, Texture>::iterator it = mObstacleTextures.find(obstacleTexturePath);
+
+    if(it != mObstacleTextures.end())
+        lObstacles.push_back(Obstacle(&(it->second), x, y));
+    else
+    {
+        Texture obstacleTexture;
+        if (!obstacleTexture.loadFromFile(obstacleTexturePath))
+        {
+            cerr << "Texture " << obstacleTexturePath << " introuvable !" << endl;
+            exit(4);
+        }
+
+        lObstacles.push_back(Obstacle(&(mObstacleTextures.insert(mObstacleTextures.begin(), pair<string, Texture>(obstacleTexturePath, obstacleTexture))->second), x, y));
+    }
+}
+
+void Map::drawObstacles(RenderWindow* window) const
+{
+    for(list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end(); ++it)
+        it->draw(window);
+}
+
+void Map::update(RenderWindow* game)
 {
     Engine* engine = Engine::getInstance();
 
@@ -90,9 +137,9 @@ void Map::update(sf::RenderWindow& game)
     }
 
     for(unsigned int n=0; n < AllBullets.size(); n++)
-        game.draw(AllBullets.at(n));
+        game->draw(AllBullets.at(n));
           for(unsigned int n=0; n < ZombieArray.size(); n++)
-        game.draw(ZombieArray.at(n));
+        game->draw(ZombieArray.at(n));
 }
 
 Sprite Map::getBackground() const

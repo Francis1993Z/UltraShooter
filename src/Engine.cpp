@@ -260,7 +260,8 @@ Game.setView(MainView);
             Game.clear(Color(0,0,0));
 
             Game.draw(gameMap->getBackground());
-            gameMap->update(Game);
+            gameMap->update(&Game);
+            gameMap->drawObstacles(&Game);
             Game.draw(*player);
             Game.draw(player->getScoreHud());
             Game.draw(player->getLifeHud());

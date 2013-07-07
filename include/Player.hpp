@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "GlobalFunctions.h"
-#include "Hud.h"
+#include "Hud.hpp"
 
 class Player : public sf::CircleShape
 {
