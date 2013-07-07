@@ -213,7 +213,7 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
                         cout << "alt:" << WindowEvent.key.alt << std::endl;
                         cout << "shift:" << WindowEvent.key.shift << std::endl;
                         cout << "system:" << WindowEvent.key.system << std::endl;
-                        gameMap->addZombie(Zombie(sf::Vector2f(1500,500), *player));
+                        gameMap->addZombie(Zombie(sf::Vector2f(500,500), *player));
                     }
                 }
                 if (WindowEvent.type == sf::Event::MouseButtonPressed)
