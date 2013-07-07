@@ -57,9 +57,10 @@ Map::Map(std::string mapPath)
     {
         elem->QueryIntAttribute("coordX", &x);
         elem->QueryIntAttribute("coordY", &y);
+std::string path(getWC()+"path");
 
         if(x > 0 && x < width && y > 0 && y < height)
-            addObstacle(elem->Attribute("path"), x, y);
+            addObstacle(elem->Attribute(path.c_str()), x, y);
 
         elem = elem->NextSiblingElement(); // iteration
     }
