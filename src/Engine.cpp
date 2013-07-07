@@ -155,7 +155,18 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 y=player_speed;
 
-            if(!CheckIfOutOfWindow(player->getPosition(), x, y, player->getRayon()))
+            if(CheckIfOutOfWindow(player->getPosition(), x, y, player->getRayon())){
+
+                if(x>0 && getMap()->getWidth()-player->getPosition().x-player->getRayon() < player_speed)
+                    x=getMap()->getWidth()-player->getPosition().x-player->getRayon();
+                if(x<0 && player->getPosition().x-player->getRayon() < player_speed)
+                    x=-player->getPosition().x+player->getRayon();
+                if(y>0 && getMap()->getHeight()-player->getPosition().y-player->getRayon() < player_speed)
+                    y=getMap()->getHeight()-player->getPosition().y-player->getRayon();
+                if(y<0 && player->getPosition().y-player->getRayon() < player_speed)
+                    y=-player->getPosition().y+player->getRayon();
+            }
+
                 player->move(x, y);
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
