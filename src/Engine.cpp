@@ -41,7 +41,7 @@ Engine* Engine::getInstance()
         int init_height;
         int init_bitmode;
         bool is_fullscreen;
-std::string configPath(getWC()+"/config/config");
+        std::string configPath(getWC()+"/config/config");
         TiXmlDocument doc(configPath.c_str());
 
         if(!doc.LoadFile())
