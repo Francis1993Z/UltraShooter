@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <General>
-	<dimentions width="4000" height="4000"/>
-	<background path="ressources/backgrounds/background01.png"/>
+	<dimentions width="1600" height="1200"/>
+	<background path="ressources/backgrounds/background02.png"/>
 </General>
 <lObstacles>
 	<obstacle path="ressources/obstacle1.png" width="" height="" coordX="" coordY=""/>
