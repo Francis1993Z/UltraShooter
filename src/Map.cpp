@@ -74,7 +74,7 @@ void Map::update(sf::RenderWindow& game)
     {
         AllBullets.at(n).UpdatePosition();
 
-        if(engine->CheckIfOutOfWindow(AllBullets.at(n).getPosition(), 0.0f) == true)
+        if(engine->CheckIfOutOfWindow(AllBullets.at(n).getPosition(), 0.0f, 0.0f, 0.0f) == true)
             AllBullets.erase(AllBullets.begin()+n);
     }
 
@@ -83,7 +83,7 @@ void Map::update(sf::RenderWindow& game)
         ZombieArray.at(n).Update();
 
 
-        if(engine->CheckIfOutOfWindow(ZombieArray.at(n).getPosition(), 5.0f) == true)
+        if(engine->CheckIfOutOfWindow(ZombieArray.at(n).getPosition(), 0.0f, 0.0f, 5.0f) == true)
         {
             ZombieArray.erase(ZombieArray.begin()+n);
         }

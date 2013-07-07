@@ -42,7 +42,7 @@ Engine* Engine::getInstance()
         int init_bitmode;
         bool is_fullscreen;
 
-        TiXmlDocument doc("config");
+        TiXmlDocument doc("config/config");
 
         if(!doc.LoadFile())
         {
@@ -155,30 +155,8 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 y=player_speed;
 
-            player->move(x, y);
-
-            if(CheckIfOutOfWindow(player->getPosition(), player->getRayon()))
-            {
-
-
-
-                player->move(-x, -y);
-/*
-                if(x>0)
-                    x=getMap()->getWidth()-player->getPosition().x-player->getRayon();
-                if(x<0)
-                    x=-player->getPosition().x+player->getRayon();
-                if(y>0)
-                    y=getMap()->getHeight()-player->getPosition().y-player->getRayon();
-                if(y<0)
-                    y=-player->getPosition().y+player->getRayon();
-
+            if(!CheckIfOutOfWindow(player->getPosition(), x, y, player->getRayon()))
                 player->move(x, y);
-
-        */
-            }
-
-            //Fin zone de TEST
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
@@ -294,14 +272,14 @@ Map* Engine::getMap() const
     return gameMap;
 }
 
-bool Engine::CheckIfOutOfWindow(sf::Vector2f Position, float rayon)
+bool Engine::CheckIfOutOfWindow(sf::Vector2f Position, float deplacement_x, float deplacement_y, float rayon)
 {
 
 
-    if( static_cast<int>(Position.x-rayon) < 0                    ||
-            static_cast<unsigned int>(Position.x+rayon) > getMap()->getWidth() ||
-            static_cast<int>(Position.y-rayon) < 0                    ||
-            static_cast<unsigned int>(Position.y+rayon) > getMap()->getHeight())
+    if( static_cast<int>(Position.x+deplacement_x-rayon) < 0                    ||
+            static_cast<unsigned int>(Position.x+deplacement_x+rayon) > getMap()->getWidth() ||
+            static_cast<int>(Position.y+deplacement_y-rayon) < 0                    ||
+            static_cast<unsigned int>(Position.y+deplacement_y+rayon) > getMap()->getHeight())
 
         return true;
 
