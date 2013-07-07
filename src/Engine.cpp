@@ -155,7 +155,18 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 y=player_speed;
 
-            if(!CheckIfOutOfWindow(player->getPosition(), x, y, player->getRayon()))
+            if(CheckIfOutOfWindow(player->getPosition(), x, y, player->getRayon())){
+
+                if(x>0 && getMap()->getWidth()-player->getPosition().x-player->getRayon() < player_speed)
+                    x=getMap()->getWidth()-player->getPosition().x-player->getRayon();
+                if(x<0 && player->getPosition().x-player->getRayon() < player_speed)
+                    x=-player->getPosition().x+player->getRayon();
+                if(y>0 && getMap()->getHeight()-player->getPosition().y-player->getRayon() < player_speed)
+                    y=getMap()->getHeight()-player->getPosition().y-player->getRayon();
+                if(y<0 && player->getPosition().y-player->getRayon() < player_speed)
+                    y=-player->getPosition().y+player->getRayon();
+            }
+
                 player->move(x, y);
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -202,7 +213,7 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
                         cout << "alt:" << WindowEvent.key.alt << std::endl;
                         cout << "shift:" << WindowEvent.key.shift << std::endl;
                         cout << "system:" << WindowEvent.key.system << std::endl;
-                        gameMap->addZombie(Zombie(sf::Vector2f(1500,500), *player));
+                        gameMap->addZombie(Zombie(sf::Vector2f(500,500), *player));
                     }
                 }
                 if (WindowEvent.type == sf::Event::MouseButtonPressed)

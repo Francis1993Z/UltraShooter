@@ -27,7 +27,7 @@ void Zombie::Update()
        sf::Vector2f v;
         v.x=cos(TargetDirection) * 8;
         v.y=sin(TargetDirection) * 8;
-                std::cout<<this<<" : x : "<<Myposition.x<<" y : "<<Myposition.y<<" angle : "<<TargetDirection<<std::endl;
+                //std::cout<<this<<" : x : "<<Myposition.x<<" y : "<<Myposition.y<<" angle : "<<TargetDirection<<std::endl;
         Zombie::move(v.x, -v.y);
     }
 }
