@@ -101,7 +101,7 @@ int Engine::Run()
     //MainView.setSize(1024, 768);
 
     player = new Player(sf::Vector2f(200.f, 200.f), font, MainView.getSize());
-
+    collisionManager = new CollisionManager(*player, *gameMap);
 
 
     ///******************************************************************************///
@@ -155,7 +155,7 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 y=player_speed;
 
-            if(CheckIfOutOfWindow(player->getPosition(), x, y, player->getRayon())){
+            /*if(CheckIfOutOfWindow(player->getPosition(), x, y, player->getRayon())){
 
                 if(x>0 && getMap()->getWidth()-player->getPosition().x-player->getRayon() < player_speed)
                     x=getMap()->getWidth()-player->getPosition().x-player->getRayon();
@@ -168,6 +168,16 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
             }
 
                 player->move(x, y);
+*/
+
+            if(collisionManager->CollisionJoueur(x, y)){
+
+                player->move(collisionManager->getDeplacementX(), collisionManager->getDeplacementY());
+            }
+            else{
+
+                player->move(x, y);
+            }
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
@@ -304,5 +314,6 @@ Engine::~Engine()
 {
     isAlreadyInstancied = false;
     delete gameMap;
+    delete collisionManager;
     Game.close();
 }

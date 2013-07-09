@@ -10,8 +10,10 @@
 #include "Player.hpp"
 #include "Bullet.hpp"
 #include "Map.hpp"
+#include "CollisionManager.hpp"
 
-class Map; /* Permet d'éviter l'interdépendance, en effet, Engine a besoin de connaître Map mais Map a besoin de Connaître Engine
+class Map;
+class CollisionManager; /* Permet d'éviter l'interdépendance, en effet, Engine a besoin de connaître Map mais Map a besoin de Connaître Engine
               On prévient juste le compilateur que Map sera définit plus tard */
 
 /*
@@ -37,6 +39,7 @@ private:
 
     Map* gameMap;   // On utilise un pointeur pour éviter le soucis d'interdépendance.
     Player* player;
+    CollisionManager* collisionManager;
     sf::Vector2i localMousePosition;
     sf::Event WindowEvent;
     sf::RenderWindow Game;

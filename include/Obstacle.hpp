@@ -12,6 +12,8 @@ class Obstacle
     int width;
     int height;
 
+    sf::FloatRect rect;
+
 public :
 
     Obstacle(sf::Texture* obstacleTexture, int x, int y);
@@ -22,6 +24,7 @@ public :
 
     void draw(sf::RenderWindow* window) const;
 
+    sf::FloatRect getCollisionBox() const;
 };
 
 
