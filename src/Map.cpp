@@ -44,6 +44,10 @@ Map::Map(std::string mapPath)
     cout<<width<<endl;
     cout<<height<<endl;
 
+    elem = elem->NextSiblingElement(); // iteration
+
+    theme = elem->Attribute("path");
+
     elem = hdl.Child(2).FirstChildElement().Element();
 
     if(!elem)
@@ -52,7 +56,7 @@ Map::Map(std::string mapPath)
         exit(2);
     }
 
-    int x = 42, y;
+    int x, y;
     while(elem)
     {
         elem->QueryIntAttribute("coordX", &x);
@@ -107,6 +111,11 @@ void Map::addObstacle(std::string obstacleTexturePath, int x, int y)
 
         lObstacles.push_back(Obstacle(&(mObstacleTextures.insert(mObstacleTextures.begin(), pair<string, Texture>(obstacleTexturePath, obstacleTexture))->second), x, y));
     }
+}
+
+string Map::getTheme() const
+{
+    return theme;
 }
 
 void Map::drawObstacles(RenderWindow* window) const

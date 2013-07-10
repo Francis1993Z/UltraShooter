@@ -103,7 +103,6 @@ int Engine::Run()
     collisionManager = new CollisionManager(*player, *gameMap);
 
 
-
     ///******************************************************************************///
     sf::FloatRect port(0, 0, 1, 1);
  //MainView.setViewport(port);
@@ -114,10 +113,9 @@ int Engine::Run()
 
     ///******************************************************************************///
 
+    mManager.playTheme(gameMap->getTheme());
 
     sf::Clock ennemy_clock;
-
-
 
     IsRunning=true;
     while(IsRunning)
@@ -157,6 +155,7 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
 
             if(collisionManager->CollisionJoueur(x, y)){
 
+                mManager.playEvent("ressources/sounds/events/impact.ogg");
                 player->move(-x, -y);
                 player->move(collisionManager->getDeplacementX(), collisionManager->getDeplacementY());
             }
@@ -279,6 +278,11 @@ Map* Engine::getMap() const
 CollisionManager* Engine::getCollisionManager() const{
 
     return collisionManager;
+}
+
+MusicManager* Engine::getMusicManager()
+{
+    return &mManager;
 }
 
 Engine::~Engine()

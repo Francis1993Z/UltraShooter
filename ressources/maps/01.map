@@ -2,6 +2,7 @@
 <General>
 	<dimentions width="1600" height="1200"/>
 	<background path="ressources/backgrounds/background02.png"/>
+	<theme path="ressources/sounds/themes/pn037_04_f-pinto_marisol.ogg"/>
 </General>
 <lObstacles>
 	<obstacle path="ressources/obstacles/asteroide.png" coordX="1000" coordY="500"/>
