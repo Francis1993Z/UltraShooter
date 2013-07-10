@@ -7,6 +7,6 @@
 
 class Caisse {
 
-}
+};
 
 #endif // CAISSE_H_INCLUDED
