@@ -7,7 +7,7 @@
 #include <map>
 #include <list>
 
-#include "CustomSOund.hpp"
+#include "CustomSound.hpp"
 
 class MusicManager
 {
