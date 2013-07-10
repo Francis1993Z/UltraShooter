@@ -8,6 +8,7 @@
 #include "Projectile.hpp"
 #include <iostream>
 
+
 class Bullet : public sf::CircleShape, public Projectile
 {
 public:
