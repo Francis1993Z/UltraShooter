@@ -5,7 +5,7 @@ using namespace std;
 using namespace sf;
 
 
-Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow):Life(100), Score(0), hud(Life, Score, font, sizeWindow)
+Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow):Life(100), Score(0), hud(Life, Score, font, sizeWindow), rect(init_position.x-50, init_position.y-50, 100, 100)
 {
     rayon=50.f;
 
@@ -71,6 +71,16 @@ void Player::setSizeWindowHud(sf::Vector2f sizeWindow)
 float Player::getRayon(){
 
     return rayon;
+}
+
+float Player::getVitesse() const{
+
+    return vitesse;
+}
+
+sf::FloatRect Player::getCollisionBox(){
+
+    return rect;
 }
 
  Player::~Player()

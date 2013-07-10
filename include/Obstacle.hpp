@@ -22,6 +22,7 @@ public :
 
     void draw(sf::RenderWindow* window) const;
 
+    sf::FloatRect getCollisionBox() const;
 };
 
 

@@ -26,3 +26,8 @@ void Obstacle::draw(RenderWindow* window) const
 {
     window->draw(sprite);
 }
+
+sf::FloatRect Obstacle::getCollisionBox() const{
+
+    return sprite.getGlobalBounds();
+}

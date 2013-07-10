@@ -117,13 +117,12 @@ void Map::drawObstacles(RenderWindow* window) const
 
 void Map::update(RenderWindow* game)
 {
-    Engine* engine = Engine::getInstance();
 
     for(unsigned int n=0; n < AllBullets.size(); n++)
     {
         AllBullets.at(n).UpdatePosition();
 
-        if(engine->CheckIfOutOfWindow(AllBullets.at(n).getPosition(), 0.0f, 0.0f, 0.0f) == true)
+        if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(AllBullets.at(n).getPosition(), 0.0f, 0.0f, 0.0f) == true)
             AllBullets.erase(AllBullets.begin()+n);
     }
 
@@ -132,7 +131,7 @@ void Map::update(RenderWindow* game)
         ZombieArray.at(n).Update();
 
 
-        if(engine->CheckIfOutOfWindow(ZombieArray.at(n).getPosition(), 0.0f, 0.0f, 5.0f) == true)
+        if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(ZombieArray.at(n).getPosition(), 0.0f, 0.0f, 5.0f) == true)
         {
             ZombieArray.erase(ZombieArray.begin()+n);
         }
@@ -147,4 +146,9 @@ void Map::update(RenderWindow* game)
 Sprite Map::getBackground() const
 {
     return background;
+}
+
+std::list <Obstacle> Map::getListeObstacles() const{
+
+    return lObstacles;
 }
