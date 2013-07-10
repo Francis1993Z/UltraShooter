@@ -5,8 +5,12 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <list>
+
 #include "Player.hpp"
 #include "Map.hpp"
+#include "Obstacle.hpp"
+
 class Map;
 
 class CollisionManager
@@ -18,11 +22,13 @@ class CollisionManager
         void CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y);
         float getDeplacementX();
         float getDeplacementY();
+        sf::FloatRect getTest();
         virtual ~CollisionManager();
     protected:
     private:
         Player& player;
         Map& gameMap;
+        std::list<Obstacle> lObstacles;
         bool collision;
         float deplacement_x;
         float deplacement_y;

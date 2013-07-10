@@ -47,6 +47,8 @@ public:
 
     sf::Sprite getBackground() const;
 
+    std::list<Obstacle> getListeObstacles() const;
+
 };
 
 

@@ -18,7 +18,6 @@ using namespace sf;
 
 bool Engine::isAlreadyInstancied = false;
 Engine* Engine::instanceOfEngine = 0;
-
 template <typename T> string NumberToString ( T Number )
 {
     ostringstream ss;
@@ -104,6 +103,7 @@ int Engine::Run()
     collisionManager = new CollisionManager(*player, *gameMap);
 
 
+
     ///******************************************************************************///
     sf::FloatRect port(0, 0, 1, 1);
  //MainView.setViewport(port);
@@ -113,7 +113,6 @@ int Engine::Run()
     Game.setView(MainView);
 
     ///******************************************************************************///
-    const float player_speed=15;
 
 
     sf::Clock ennemy_clock;
@@ -139,44 +138,27 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
             }*/
 
             //Pour la répétition il faut utiliser les lignes ci-dessous.
-            //Début zone de TEST : Tout marche parfaitement, pour moi ça convient !
             x=0.0f;
             y=0.0f;
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                x=-player_speed;
+                x=-player->getVitesse();
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                x=player_speed;
+                x=player->getVitesse();
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                y=-player_speed;
+                y=-player->getVitesse();
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                y=player_speed;
+                y=player->getVitesse();
 
-            /*if(CheckIfOutOfWindow(player->getPosition(), x, y, player->getRayon())){
-
-                if(x>0 && getMap()->getWidth()-player->getPosition().x-player->getRayon() < player_speed)
-                    x=getMap()->getWidth()-player->getPosition().x-player->getRayon();
-                if(x<0 && player->getPosition().x-player->getRayon() < player_speed)
-                    x=-player->getPosition().x+player->getRayon();
-                if(y>0 && getMap()->getHeight()-player->getPosition().y-player->getRayon() < player_speed)
-                    y=getMap()->getHeight()-player->getPosition().y-player->getRayon();
-                if(y<0 && player->getPosition().y-player->getRayon() < player_speed)
-                    y=-player->getPosition().y+player->getRayon();
-            }
-
-                player->move(x, y);
-*/
+            player->move(x, y);
 
             if(collisionManager->CollisionJoueur(x, y)){
 
+                player->move(-x, -y);
                 player->move(collisionManager->getDeplacementX(), collisionManager->getDeplacementY());
-            }
-            else{
-
-                player->move(x, y);
             }
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -235,7 +217,7 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
                 cout << "wheel movement: " << WindowEvent.mouseWheel.delta << std::endl;
                 if(WindowEvent.mouseWheel.delta>0) MainView.zoom(0.8);
                 else if(WindowEvent.mouseWheel.delta<0) MainView.zoom(1.8);
-Game.setView(MainView);
+                Game.setView(MainView);
                 }
 
             }//pollEvent
@@ -244,26 +226,26 @@ Game.setView(MainView);
 
             if(object_pixel_position.x < 300)
             {
-                MainView.move(-player_speed, 0.f);
-                player->move_myhud(-player_speed, 0.f);//On met à jour la position de la HUD
+                MainView.move(-player->getVitesse(), 0.f);
+                player->move_myhud(-player->getVitesse(), 0.f);//On met à jour la position de la HUD
                 Game.setView(MainView);
             }
             if(object_pixel_position.x > Game.getSize().x-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
             {
-                MainView.move(player_speed, 0.f);
-                player->move_myhud(player_speed, 0.f);
+                MainView.move(player->getVitesse(), 0.f);
+                player->move_myhud(player->getVitesse(), 0.f);
                 Game.setView(MainView);
             }
             if(object_pixel_position.y < 300)
             {
-                MainView.move(0.f, -player_speed);
-                player->move_myhud(0.f, -player_speed);
+                MainView.move(0.f, -player->getVitesse());
+                player->move_myhud(0.f, -player->getVitesse());
                 Game.setView(MainView);
             }
             if(object_pixel_position.y > Game.getSize().y-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
             {
-                MainView.move(0.f, player_speed);
-                player->move_myhud(0.f, player_speed);
+                MainView.move(0.f, player->getVitesse());
+                player->move_myhud(0.f, player->getVitesse());
                 Game.setView(MainView);
             }
 
@@ -294,21 +276,10 @@ Map* Engine::getMap() const
     return gameMap;
 }
 
-bool Engine::CheckIfOutOfWindow(sf::Vector2f Position, float deplacement_x, float deplacement_y, float rayon)
-{
+CollisionManager* Engine::getCollisionManager() const{
 
-
-    if( static_cast<int>(Position.x+deplacement_x-rayon) < 0                    ||
-            static_cast<unsigned int>(Position.x+deplacement_x+rayon) > getMap()->getWidth() ||
-            static_cast<int>(Position.y+deplacement_y-rayon) < 0                    ||
-            static_cast<unsigned int>(Position.y+deplacement_y+rayon) > getMap()->getHeight())
-
-        return true;
-
-    else
-        return false;
+    return collisionManager;
 }
-
 
 Engine::~Engine()
 {

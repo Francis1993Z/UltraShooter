@@ -2,7 +2,7 @@
 
 using namespace sf;
 
-Obstacle::Obstacle(Texture* obstacleTexture, int x, int y):rect(x, y, obstacleTexture->getSize().x, obstacleTexture->getSize().y)
+Obstacle::Obstacle(Texture* obstacleTexture, int x, int y)
 {
     sprite.setTexture(*obstacleTexture);
     sprite.setPosition(x, y);
@@ -29,5 +29,5 @@ void Obstacle::draw(RenderWindow* window) const
 
 sf::FloatRect Obstacle::getCollisionBox() const{
 
-    return rect;
+    return sprite.getGlobalBounds();
 }

@@ -19,6 +19,8 @@ public:
     sf::Text getScoreHud();
     void move_myhud(float vx, float vy);
     float getRayon();
+    float getVitesse() const;
+    sf::FloatRect getCollisionBox();
     void setSizeWindowHud(sf::Vector2f sizeWindow);
     ~Player();
 
@@ -29,6 +31,8 @@ private:
     //Immunity Timer
     unsigned long Score;
     unsigned short Life;
+    const float vitesse = 15.0f;
+    sf::FloatRect rect;
     Hud hud;
     //sf::RenderWindow myWindow;
 
