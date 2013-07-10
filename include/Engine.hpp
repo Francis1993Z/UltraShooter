@@ -11,6 +11,7 @@
 #include "Bullet.hpp"
 #include "Map.hpp"
 #include "CollisionManager.hpp"
+#include "MusicManager.hpp"
 
 class Map;
 class CollisionManager; /* Permet d'éviter l'interdépendance, en effet, Engine a besoin de connaître Map mais Map a besoin de Connaître Engine
@@ -24,13 +25,19 @@ class Engine
 public:
 
     ~Engine();
+
     int Run();
+
     bool CheckIfOutOfWindow(sf::Vector2f Position, float deplacement_x, float deplacement_y, float rayon);
     static Engine* getInstance(); //Permet de récupérer l'instance (adresse) de la classe Engine partout dans le programme.
+
     Map* getMap() const;
     CollisionManager* getCollisionManager() const;
+    MusicManager* getMusicManager();
 
 private:
+
+    MusicManager mManager;
 
     Engine(sf::VideoMode mode, bool fullscreen); // Le constructeur est privé car on ne doit pas pouvoir construire la classe sans passer par la méthode getInstance().
 

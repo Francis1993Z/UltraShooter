@@ -29,6 +29,8 @@ class Map
     sf::Texture backgroundTexture;
     sf::Sprite background;
 
+    std::string theme;
+
 public:
 
     Map(std::string mapPath);
@@ -41,8 +43,9 @@ public:
     void addZombie(Zombie newZombie);
     void addObstacle(std::string obstacleTexturePath, int x, int y);
 
-    void drawObstacles(sf::RenderWindow* window) const;
+    std::string getTheme() const;
 
+    void drawObstacles(sf::RenderWindow* window) const;
     void update(sf::RenderWindow* game);
 
     sf::Sprite getBackground() const;
