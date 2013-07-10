@@ -12,7 +12,7 @@
 class MusicManager
 {
     sf::Music theme; // Thème du niveau à jouer
-    std::list<CustomSound> lEventSounds; // Liste des sons disponibles
+    std::list<CustomSound *> lEventSounds; // Liste des sons disponibles
 
     int volume; // Volume général de l'application (musique et sons)
 
