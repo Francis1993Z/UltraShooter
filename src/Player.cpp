@@ -1,5 +1,6 @@
 #include "Player.hpp"
 #include "GlobalFunctions.h"
+#include "Engine.hpp"
 
 using namespace std;
 using namespace sf;
@@ -37,6 +38,8 @@ float Player::Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindo
     float a=x2-x1;
     float o=y2-y1;
     float angle;
+
+    Engine::getInstance()->getMusicManager()->playEvent("ressources/sounds/events/sf_laser_18.ogg");
 
     return  angle = atan2(-o, a);
 
