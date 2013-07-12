@@ -19,7 +19,8 @@ class CollisionManager
         CollisionManager(Player& p_player, Map& p_gameMap);
         bool CollisionJoueur(float x, float y);
         bool CheckIfOutOfWindow(sf::Vector2f Position, float deplacement_x, float deplacement_y, float rayon);
-        void CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y);
+        void CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, sf::FloatRect rect);
+        void CalculDistanceAParcourirBordMap(float p_deplacement_x, float p_deplacement_y);
         float getDeplacementX();
         float getDeplacementY();
         sf::FloatRect getTest();
@@ -30,6 +31,8 @@ class CollisionManager
         Map& gameMap;
         std::list<Obstacle> lObstacles;
         bool collision;
+        bool update_x;
+        bool update_y;
         float deplacement_x;
         float deplacement_y;
 };

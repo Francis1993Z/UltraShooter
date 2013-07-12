@@ -140,16 +140,16 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
             y=0.0f;
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                x=-player->getVitesse();
+                x+=-player->getVitesse();
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                x=player->getVitesse();
+                x+=player->getVitesse();
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                y=-player->getVitesse();
+                y+=-player->getVitesse();
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                y=player->getVitesse();
+                y+=player->getVitesse();
 
             player->move(x, y);
 
