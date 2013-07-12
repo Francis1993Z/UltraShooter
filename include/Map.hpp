@@ -14,12 +14,15 @@
 #include "Engine.hpp"
 #include "Zombie.hpp"
 #include "Obstacle.hpp"
+#include "Wave.hpp"
 
 class Map
 {
     std::vector<Bullet> AllBullets;
     std::vector<Zombie> ZombieArray;
+
     std::list<Obstacle> lObstacles;
+    std::list<Wave> lWaves;
 
     std::map<std::string, sf::Texture> mObstacleTextures;
 
@@ -43,6 +46,7 @@ public:
     void addBullet(Bullet bullet);
     void addZombie(Zombie newZombie);
     void addObstacle(std::string obstacleTexturePath, int x, int y);
+    void addWave(Wave w);
 
     std::string getTheme() const;
 

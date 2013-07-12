@@ -12,5 +12,9 @@
 	<obstacle path="ressources/obstacles/asteroide.png" coordX="700" coordY="800"/>
 	<obstacle path="ressources/obstacles/asteroide.png" coordX="900" coordY="100"/>
 </lObstacles>
-<Waves>
-</Waves>
+<lWaves>
+	<wave>
+		<ennemy type="zombie" number="5"/>
+		<ennemy type="test" number="20"/>
+	</wave>
+</lWaves>
