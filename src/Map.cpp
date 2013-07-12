@@ -70,6 +70,35 @@ Map::Map(std::string mapPath)
         elem = elem->NextSiblingElement(); // iteration
     }
 
+    TiXmlNode *node = hdl.Child(3).FirstChild().Node();
+
+    Wave w;
+    int number;
+
+    while(node)
+    {
+        elem = node->FirstChildElement();
+
+        if(!elem)
+        {
+            cerr << "Map 01.map corrompue !" << endl;
+            exit(2);
+        }
+
+        while(elem)
+        {
+
+            elem->QueryIntAttribute("number", &number);
+            w.addEnnemy(elem->Attribute("type"), number);
+
+            elem = elem->NextSiblingElement();
+        }
+
+        addWave(w);
+
+        node = node->NextSibling(); // iteration
+    }
+
 }
 
 Map::~Map()
@@ -111,6 +140,11 @@ void Map::addObstacle(std::string obstacleTexturePath, int x, int y)
 
         lObstacles.push_back(Obstacle(&(mObstacleTextures.insert(mObstacleTextures.begin(), pair<string, Texture>(obstacleTexturePath, obstacleTexture))->second), x, y));
     }
+}
+
+void Map::addWave(Wave w)
+{
+    lWaves.push_back(w);
 }
 
 string Map::getTheme() const
