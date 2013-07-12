@@ -26,6 +26,7 @@ class Map
     int width;
     int height;
 
+
     sf::Texture backgroundTexture;
     sf::Sprite background;
 
@@ -49,6 +50,8 @@ public:
     void update(sf::RenderWindow* game);
 
     sf::Sprite getBackground() const;
+
+    sf::FloatRect getCollisionBox() const;
 
     std::list<Obstacle> getListeObstacles() const;
 

@@ -157,6 +157,11 @@ Sprite Map::getBackground() const
     return background;
 }
 
+sf::FloatRect Map::getCollisionBox() const{
+
+    return background.getGlobalBounds();
+}
+
 std::list <Obstacle> Map::getListeObstacles() const{
 
     return lObstacles;
