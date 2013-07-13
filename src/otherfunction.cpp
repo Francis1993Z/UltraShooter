@@ -55,7 +55,7 @@ std::string getCWD()
 cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
 
 std::string d(cCurrentPath);
-std::cout<<"The current working directory is "<<cCurrentPath<<std::endl;
+//std::cout<<"The current working directory is "<<cCurrentPath<<std::endl;
 return d;
 }
 

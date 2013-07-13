@@ -199,11 +199,11 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
                     }
                     if (WindowEvent.key.code == sf::Keyboard::Space)
                     {
-                        cout << "the space key was pressed" << std::endl;
+                        /*cout << "the space key was pressed" << std::endl;
                         cout << "control:" << WindowEvent.key.control << std::endl;
                         cout << "alt:" << WindowEvent.key.alt << std::endl;
                         cout << "shift:" << WindowEvent.key.shift << std::endl;
-                        cout << "system:" << WindowEvent.key.system << std::endl;
+                        cout << "system:" << WindowEvent.key.system << std::endl;*/
                         gameMap->addZombie(Zombie(sf::Vector2f(500,500), *player));
                     }
                 }

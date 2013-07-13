@@ -11,6 +11,17 @@ void Ennemy::SetTarget(Player &NewTarget)
     //cout<<"Bot : "<<this<<" Target : "<<my_target<<endl;
 }
 
+void Ennemy::ApplyForce(float fx, float fy)
+{
+m_fx=+fx;
+m_fy=+fy;
+}
+
+float Ennemy::get_dRadius() const
+{
+    return d_radius;
+}
+
 Ennemy* Ennemy::getAdresse()
 {
     return  this;

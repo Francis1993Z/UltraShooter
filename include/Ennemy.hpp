@@ -9,7 +9,9 @@ class Ennemy
 {
   public:
   virtual void Update()=0;
+  void ApplyForce(float fx, float fy);
   void SetTarget(Player &NewTarget);
+  float get_dRadius() const;
   int GetKillPoint() const;
   void ChangeBehaviour(Behaviour NewBehaviour);
   Ennemy* getAdresse();
@@ -19,6 +21,8 @@ class Ennemy
   int point;
   Player *my_target;
   Behaviour my_behaviour;
+  float d_radius, m_fx, m_fy;
+  float e_mx, e_my;
 };
 
 #endif // ENNEMY_HPP_INCLUDED

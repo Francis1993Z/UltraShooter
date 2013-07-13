@@ -5,6 +5,27 @@
 using namespace std;
 using namespace sf;
 
+inline float Distance(sf::Vector2f o1, sf::Vector2f o2)
+{
+    float TCoteopposer=o2.y-o1.y;
+    float TCoteadjacent=o2.x-o1.x;
+    float Tracinecarre=pow(TCoteadjacent,2)+pow(TCoteopposer,2);
+    float Thypothenuse=sqrt(Tracinecarre);
+
+    return Thypothenuse;
+}
+
+inline float GetAngle(sf::Vector2f vec1, sf::Vector2f vec2)
+{
+    float a=vec2.x-vec1.x;
+    float o=vec2.y-vec1.y;
+    float angle;
+
+    angle = atan2(-o, a);
+
+    return angle;
+}
+
 Map::Map(std::string mapPath)
 {
     string backgroundPath;
@@ -169,6 +190,46 @@ void Map::update(RenderWindow* game)
             AllBullets.erase(AllBullets.begin()+n);
     }
 
+
+
+
+///********************************************************************///
+     for(unsigned int n=0; n < ZombieArray.size(); n++)
+    {
+
+     for(unsigned int m=0; m < ZombieArray.size(); m++)
+    {
+        if(n!=m)
+        {
+          float distance = Distance(ZombieArray.at(n).getPosition(), ZombieArray.at(m).getPosition());
+          float drn =  ZombieArray.at(n).get_dRadius();
+          float drm =  ZombieArray.at(m).get_dRadius();
+          float drnm = drn + drm;
+          float D = distance - drnm;
+          if(D<0)
+        {
+                   float angle = GetAngle(ZombieArray.at(n).getPosition(), ZombieArray.at(m).getPosition());
+
+                   sf::Vector2f fv;
+                   sf::Vector2f e_Repulsion;
+                   e_Repulsion.x=-8;
+                   e_Repulsion.y=-8;
+        fv.x=cos(angle) * e_Repulsion.x;
+        fv.y=sin(angle) * e_Repulsion.y;
+
+            //ZombieArray.at(n).ApplyForce(-fv.x, -fv.y);
+            ZombieArray.at(m).ApplyForce(-fv.x, -fv.y);
+            cout<<"Zombie : "<<m<<"fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+
+        }
+
+        }
+    }
+
+    }
+///********************************************************************///
+
+
         for(unsigned int n=0; n < ZombieArray.size(); n++)
     {
         ZombieArray.at(n).Update();
@@ -179,6 +240,8 @@ void Map::update(RenderWindow* game)
             ZombieArray.erase(ZombieArray.begin()+n);
         }
     }
+
+
 
     for(unsigned int n=0; n < AllBullets.size(); n++)
         game->draw(AllBullets.at(n));
@@ -191,7 +254,8 @@ Sprite Map::getBackground() const
     return background;
 }
 
-sf::FloatRect Map::getCollisionBox() const{
+sf::FloatRect Map::getCollisionBox() const
+{
 
     return background.getGlobalBounds();
 }

@@ -7,6 +7,10 @@ Zombie::setRadius(50);
 Zombie::setOrigin(sf::Vector2f(25,25));
 Zombie::setPosition(init_Position);
 Zombie::setFillColor(sf::Color::Red);
+
+e_mx=8;
+e_my=8;
+d_radius=Zombie::getRadius();
 my_behaviour=ATTACK;
 my_target=&init_Target;
 }
@@ -25,9 +29,16 @@ void Zombie::Update()
 
     TargetDirection = atan2(-o, a);
        sf::Vector2f v;
-        v.x=cos(TargetDirection) * 8;
-        v.y=sin(TargetDirection) * 8;
+        v.x=cos(TargetDirection) * e_mx;
+        v.y=sin(TargetDirection) * e_my;
                 //std::cout<<this<<" : x : "<<Myposition.x<<" y : "<<Myposition.y<<" angle : "<<TargetDirection<<std::endl;
-        Zombie::move(v.x, -v.y);
+
+float mvx = v.x+m_fx;
+float mvy = v.y+m_fy;
+
+        Zombie::move(mvx, -mvy);
+        m_fy=0;
+        m_fx=0;
+
     }
 }
