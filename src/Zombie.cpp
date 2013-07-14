@@ -9,8 +9,8 @@ Zombie::setOrigin(sf::Vector2f(25,25));
 Zombie::setPosition(10.00f, 10.00f);
 Zombie::setFillColor(sf::Color::Red);
 
-e_mx=8;
-e_my=8;
+e_mx=2;
+e_my=2;
 kill_point=10;
 d_radius=Zombie::getRadius();
 my_behaviour=ATTACK;
@@ -28,8 +28,8 @@ Zombie::setFillColor(sf::Color::Red);
 
 damage=5;
 kill_point=10;
-e_mx=8;
-e_my=8;
+e_mx=2;
+e_my=2;
 d_radius=Zombie::getRadius();
 my_behaviour=ATTACK;
 my_target=&init_Target;
@@ -55,6 +55,7 @@ void Zombie::Update()
 
 float mvx = v.x+m_fx;
 float mvy = v.y+m_fy;
+cout<<mvx<<endl;
 
         Zombie::move(mvx, -mvy);
         m_fy=0;

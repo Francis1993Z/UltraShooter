@@ -23,6 +23,7 @@ public:
     sf::FloatRect getCollisionBox();
     void setSizeWindowHud(sf::Vector2f sizeWindow);
     void addPoints(int p);
+    bool ReadyToShoot() const;
     ~Player();
 
 private:
@@ -35,6 +36,7 @@ private:
     const float vitesse = 15.0f;
     sf::FloatRect rect;
     Hud hud;
+    sf::Clock weapon_clock;
     //sf::RenderWindow myWindow;
 
     std::string PlayerName;

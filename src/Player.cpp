@@ -24,6 +24,7 @@ mynewWindow.co;
 
 float Player::Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindow)
 {
+weapon_clock.restart();
     Vector2i player_pixel_position=Player::GetWindowPosition(myRenderWindow);
 
     sf::Vector2f converted_player_coord;
@@ -44,6 +45,13 @@ float Player::Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindo
     return  angle = atan2(-o, a);
 
 //return GetAngle_v2f(Player::getPosition(), TargetPosition);
+}
+
+bool Player::ReadyToShoot() const
+{
+float time=weapon_clock.getElapsedTime().asSeconds();
+if (time>0.5f) return true;
+else return false;
 }
 
 sf::Vector2i Player::GetWindowPosition(sf::RenderWindow &theRenderWindow) const

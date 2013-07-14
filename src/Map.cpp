@@ -225,7 +225,7 @@ ZombieArray.at(m).takeDamage(AllBullets.at(n).getDamage());
 
 
 ///********************************************************************///
-///Collision Bullet et Splitter
+///Collision Bullet et Splitter et efeft de leur mort
 ///********************************************************************///
     for(unsigned int n=0; n < AllBullets.size(); n++)
     {
@@ -252,6 +252,7 @@ float rp = SplitterArray.at(m).getRotation();
 float s_distance = SplitterArray.at(m).get_dRadius();
 sf::Vector2f base_splitter_pos=SplitterArray.at(m).getPosition();
 sf::Vector2f NewSplittersPosition1, NewSplittersPosition2;
+///Calcul des positions des deux nouveaux Splitters pour qu'ils soient séparés
   NewSplittersPosition1.x=((cos(rp*M_PI/180)*s_distance))+base_splitter_pos.x;
   NewSplittersPosition1.y=(-(sin(rp*M_PI/180)*s_distance))+base_splitter_pos.y;
   NewSplittersPosition2.x=(cos(rp*M_PI/180)*(-s_distance))+base_splitter_pos.x;
@@ -270,7 +271,7 @@ unsigned int next_level = SplitterArray.at(m).getNextLevel();
     }
 }
 ///********************************************************************///
-
+///Répulsion
 ///********************************************************************///
      for(unsigned int n=0; n < ZombieArray.size(); n++)
     {
@@ -304,7 +305,40 @@ unsigned int next_level = SplitterArray.at(m).getNextLevel();
         }
     }
 
+    ///fin for Zombie
+
+     for(unsigned int m=0; m < SplitterArray.size(); m++)
+    {
+        if(n!=m)
+        {
+          float distance = Distance(ZombieArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
+          float drn =  ZombieArray.at(n).get_dRadius();
+          float drm =  SplitterArray.at(m).get_dRadius();
+          float drnm = drn + drm;
+          float D = distance - drnm;
+          if(D<0)
+        {
+                   float angle = GetAngle(ZombieArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
+
+                   sf::Vector2f fv;
+                   sf::Vector2f e_Repulsion;
+                   e_Repulsion.x=-8;
+                   e_Repulsion.y=-8;
+        fv.x=cos(angle) * e_Repulsion.x;
+        fv.y=sin(angle) * e_Repulsion.y;
+
+            //ZombieArray.at(n).ApplyForce(-fv.x, -fv.y);
+            SplitterArray.at(m).ApplyForce(-fv.x, -fv.y);
+            //cout<<"Zombie : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+
+        }
+
+        }
     }
+
+    }//fin for répulsion zombie
+
+
 ///********************************************************************///
 
 

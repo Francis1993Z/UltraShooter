@@ -162,11 +162,14 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
+            if (player->ReadyToShoot()==true)
+            {
                 sf::Vector2f converted_coord;//la position de la souris est en int
                 converted_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
                 converted_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
 
                 gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, Game)));
+                }
             }
 
             //Pour des touches séparées(avec délai du système), il vaut mieux utiliser ces lignes là(pollEvent).
