@@ -18,6 +18,7 @@ class Ennemy
   void takeDamage(unsigned int damage);
 bool alive() const;
 int getKillPoint() const;
+float getSpeed() const;
 
 
   protected:
@@ -26,7 +27,7 @@ int getKillPoint() const;
   Player *my_target;
   Behaviour my_behaviour;
   float d_radius, m_fx, m_fy;
-  float e_mx, e_my;
+  float e_m,e_mx, e_my;
 };
 
 #endif // ENNEMY_HPP_INCLUDED

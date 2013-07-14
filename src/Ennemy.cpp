@@ -1,5 +1,7 @@
 #include "Ennemy.hpp"
 
+using namespace std;
+
 void Ennemy::ChangeBehaviour(Behaviour NewBehaviour)
 {
     my_behaviour=NewBehaviour;
@@ -41,4 +43,10 @@ else if(vie<0) return false;
 int Ennemy::getKillPoint() const
 {
 return kill_point;
+}
+
+float Ennemy::getSpeed() const
+{
+cout<<"e_m f : "<<e_m<<endl;
+return e_m;
 }

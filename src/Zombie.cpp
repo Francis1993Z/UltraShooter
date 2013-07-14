@@ -28,8 +28,9 @@ Zombie::setFillColor(sf::Color::Red);
 
 damage=5;
 kill_point=10;
-e_mx=2;
-e_my=2;
+e_m=2;
+e_mx=e_m;
+e_my=e_m;
 d_radius=Zombie::getRadius();
 my_behaviour=ATTACK;
 my_target=&init_Target;

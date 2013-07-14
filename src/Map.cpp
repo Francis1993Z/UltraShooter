@@ -291,8 +291,10 @@ unsigned int next_level = SplitterArray.at(m).getNextLevel();
 
                    sf::Vector2f fv;
                    sf::Vector2f e_Repulsion;
-                   e_Repulsion.x=-8;
-                   e_Repulsion.y=-8;
+                   float e_m=ZombieArray.at(n).getSpeed();
+                   cout<<"e_m : "<<e_m<<endl;
+                   e_Repulsion.x=-(e_m/2);
+                   e_Repulsion.y=-(e_m/2);
         fv.x=cos(angle) * e_Repulsion.x;
         fv.y=sin(angle) * e_Repulsion.y;
 

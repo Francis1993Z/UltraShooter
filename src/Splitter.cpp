@@ -6,7 +6,7 @@ Splitter::Splitter(sf::Vector2f init_Position, Player& init_Target, unsigned int
 {
 my_level=level;
     float radius=100;
-    float e_m=4;
+     e_m=4;
             e_mx=e_m;
             e_my=e_m;
     float n_radius=radius;
