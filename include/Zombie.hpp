@@ -10,10 +10,12 @@
 class Zombie : public Ennemy, public sf::CircleShape
 {
   public:
+  Zombie();
   Zombie(sf::Vector2f init_Position, Player& init_Target);
 void  Update();
+unsigned int getDamage() const;
   private:
-int damage;
+unsigned int damage;
 };
 
 #endif // ZOMBIE_HPP_INCLUDED

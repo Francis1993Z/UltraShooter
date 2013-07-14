@@ -26,3 +26,19 @@ Ennemy* Ennemy::getAdresse()
 {
     return  this;
 }
+
+void Ennemy::takeDamage(unsigned int damage)
+{
+vie=-damage;
+}
+
+bool Ennemy::alive() const
+{
+if (vie>0)    return true;
+else if(vie<0) return false;
+}
+
+int Ennemy::getKillPoint() const
+{
+return kill_point;
+}

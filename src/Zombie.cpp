@@ -1,5 +1,23 @@
 #include "Zombie.hpp"
 
+using namespace std;
+
+Zombie::Zombie()
+{
+Zombie::setRadius(50);
+Zombie::setOrigin(sf::Vector2f(25,25));
+Zombie::setPosition(10.00f, 10.00f);
+Zombie::setFillColor(sf::Color::Red);
+
+e_mx=8;
+e_my=8;
+kill_point=10;
+d_radius=Zombie::getRadius();
+my_behaviour=ATTACK;
+my_target=0;
+cout<<"Vous ne devriez pas construire un Zombie de cette façon"<<endl;
+cout<<"New Zombie at : "<<this<<endl;
+}
 
 Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
 {
@@ -8,6 +26,8 @@ Zombie::setOrigin(sf::Vector2f(25,25));
 Zombie::setPosition(init_Position);
 Zombie::setFillColor(sf::Color::Red);
 
+damage=5;
+kill_point=10;
 e_mx=8;
 e_my=8;
 d_radius=Zombie::getRadius();
@@ -41,4 +61,9 @@ float mvy = v.y+m_fy;
         m_fx=0;
 
     }
+}
+
+unsigned int Zombie::getDamage() const
+{
+return damage;
 }

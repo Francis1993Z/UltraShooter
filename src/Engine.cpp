@@ -101,7 +101,7 @@ int Engine::Run()
 
     player = new Player(sf::Vector2f(200.f, 200.f), font, MainView.getSize());
     collisionManager = new CollisionManager(*player, *gameMap);
-
+gameMap->setPlayer(*player);
 
     ///******************************************************************************///
     sf::FloatRect port(0, 0, 1, 1);

@@ -11,6 +11,7 @@
 #include <string>
 
 #include "Bullet.hpp"
+#include "Player.hpp"
 #include "Engine.hpp"
 #include "Zombie.hpp"
 #include "Obstacle.hpp"
@@ -23,6 +24,7 @@ class Map
 
     std::list<Obstacle> lObstacles;
     std::list<Wave> lWaves;
+    Player* player;
 
     std::map<std::string, sf::Texture> mObstacleTextures;
 
@@ -42,7 +44,7 @@ public:
 
     int getWidth() const;
     int getHeight() const;
-
+void setPlayer(Player& newPlayer);
     void addBullet(Bullet bullet);
     void addZombie(Zombie newZombie);
     void addObstacle(std::string obstacleTexturePath, int x, int y);

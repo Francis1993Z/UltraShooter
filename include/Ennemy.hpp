@@ -15,10 +15,14 @@ class Ennemy
   int GetKillPoint() const;
   void ChangeBehaviour(Behaviour NewBehaviour);
   Ennemy* getAdresse();
+  void takeDamage(unsigned int damage);
+bool alive() const;
+int getKillPoint() const;
+
 
   protected:
   int vie;
-  int point;
+  int kill_point;
   Player *my_target;
   Behaviour my_behaviour;
   float d_radius, m_fx, m_fy;

@@ -191,6 +191,31 @@ void Map::update(RenderWindow* game)
     }
 
 
+    for(unsigned int n=0; n < AllBullets.size(); n++)
+    {
+         for(unsigned int m=0; m < ZombieArray.size(); m++)
+    {
+
+          float distance = Distance(AllBullets.at(n).getPosition(), ZombieArray.at(m).getPosition());
+          float drbullet =  AllBullets.at(n).getRadius();
+          float drennemy =  ZombieArray.at(m).get_dRadius();
+          float drbe = drbullet + drennemy;
+          float D = distance - drbe;
+          if(D<0)
+        {
+ZombieArray.at(m).takeDamage(AllBullets.at(n).getDamage());
+            AllBullets.erase(AllBullets.begin()+n);
+            if (ZombieArray.at(m).alive()==false)
+            {
+            int j=ZombieArray.at(m).getDamage();
+            //player->addPoints(j);
+                        ZombieArray.erase(ZombieArray.begin()+m);
+            }
+
+
+  }
+    }
+}
 
 
 ///********************************************************************///
@@ -219,7 +244,7 @@ void Map::update(RenderWindow* game)
 
             //ZombieArray.at(n).ApplyForce(-fv.x, -fv.y);
             ZombieArray.at(m).ApplyForce(-fv.x, -fv.y);
-            cout<<"Zombie : "<<m<<"fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+            cout<<"Zombie : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
 
         }
 
@@ -252,6 +277,11 @@ void Map::update(RenderWindow* game)
 Sprite Map::getBackground() const
 {
     return background;
+}
+
+void Map::setPlayer(Player& newPlayer)
+{
+player=&newPlayer;
 }
 
 sf::FloatRect Map::getCollisionBox() const

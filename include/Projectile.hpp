@@ -10,9 +10,9 @@
 class Projectile
 {
 public :
-
+unsigned int getDamage() const;
 protected :
-    int damage;
+    unsigned int damage;
     float vitesse, angle;
     bool grow;
     sf::Vector2f myPosition;

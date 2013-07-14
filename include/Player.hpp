@@ -22,6 +22,7 @@ public:
     float getVitesse() const;
     sf::FloatRect getCollisionBox();
     void setSizeWindowHud(sf::Vector2f sizeWindow);
+    void addPoints(int p);
     ~Player();
 
 private:
