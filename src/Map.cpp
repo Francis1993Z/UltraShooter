@@ -62,9 +62,6 @@ Map::Map(std::string mapPath)
     }
     background.setTexture(backgroundTexture);
 
-    cout<<width<<endl;
-    cout<<height<<endl;
-
     elem = elem->NextSiblingElement(); // iteration
 
     theme = elem->Attribute("path");
@@ -207,8 +204,8 @@ ZombieArray.at(m).takeDamage(AllBullets.at(n).getDamage());
             AllBullets.erase(AllBullets.begin()+n);
             if (ZombieArray.at(m).alive()==false)
             {
-            int j=ZombieArray.at(m).getDamage();
-            //player->addPoints(j);
+            int j=ZombieArray.at(m).getKillPoint();
+            player->addPoints(j);
                         ZombieArray.erase(ZombieArray.begin()+m);
             }
 
@@ -244,7 +241,7 @@ ZombieArray.at(m).takeDamage(AllBullets.at(n).getDamage());
 
             //ZombieArray.at(n).ApplyForce(-fv.x, -fv.y);
             ZombieArray.at(m).ApplyForce(-fv.x, -fv.y);
-            cout<<"Zombie : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+            //cout<<"Zombie : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
 
         }
 

@@ -88,7 +88,8 @@ sf::FloatRect Player::getCollisionBox(){
 
 void Player::addPoints(int p)
 {
-Score=+p;
+Score=Score+p;
+cout<<Score<<endl;
 hud.updateScore(Score);
 }
 

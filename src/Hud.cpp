@@ -4,7 +4,7 @@
 using namespace std;
 using namespace sf;
 
-Hud::Hud(unsigned short life, unsigned long score, sf::Font p_font, Vector2f p_sizeWindow):font(p_font), sizeWindow(p_sizeWindow)
+Hud::Hud(unsigned short life, unsigned int score, sf::Font p_font, Vector2f p_sizeWindow):font(p_font), sizeWindow(p_sizeWindow)
 {
 
     updateLife(life);
@@ -12,7 +12,8 @@ Hud::Hud(unsigned short life, unsigned long score, sf::Font p_font, Vector2f p_s
     setPositionHud();
 }
 
-void Hud::updateLife(unsigned short n_Life){
+void Hud::updateLife(unsigned short n_Life)
+{
 
     ss.str("");
     ss << n_Life;
@@ -20,10 +21,11 @@ void Hud::updateLife(unsigned short n_Life){
     t_life.setFont(font);
     t_life.setCharacterSize(30);
     t_life.setColor(sf::Color::Red);
-    setPositionHud();
+    //setPositionHud();
 }
 
-void Hud::updateScore(unsigned long n_Score){
+void Hud::updateScore(unsigned int n_Score)
+{
 
     ss.str("");
     ss << n_Score;
@@ -31,7 +33,7 @@ void Hud::updateScore(unsigned long n_Score){
     t_score.setFont(font);
     t_score.setCharacterSize(30);
     t_score.setColor(sf::Color::Red);
-    setPositionHud();
+    //setPositionHud();
 }
 
 void Hud::setSizeWindow(sf::Vector2f n_sizeWindow){
