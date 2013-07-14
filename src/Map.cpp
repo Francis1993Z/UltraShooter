@@ -341,8 +341,47 @@ break;
 
     }//fin for répulsion zombie
 
+///Répulsion Splitter
+     for(unsigned int n=0; n < SplitterArray.size(); n++)
+    {
+
+     for(unsigned int m=0; m < SplitterArray.size(); m++)
+    {
+    if(n!=m)
+        {
+          float distance = Distance(SplitterArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
+          float drn =  SplitterArray.at(n).get_dRadius();
+          float drm =  SplitterArray.at(m).get_dRadius();
+          float drnm = drn + drm;
+          float D = distance - drnm;
+          if(D<0)
+        {
+                   float angle = GetAngle(SplitterArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
+
+                   sf::Vector2f fv;
+                   sf::Vector2f e_Repulsion;
+                   float e_m=SplitterArray.at(n).getSpeed();
+                   cout<<"e_m : "<<e_m<<endl;
+                   e_Repulsion.x=-(e_m/2);
+                   e_Repulsion.y=-(e_m/2);
+        fv.x=cos(angle) * e_Repulsion.x;
+        fv.y=sin(angle) * e_Repulsion.y;
+
+            //SplitterArray.at(n).ApplyForce(-fv.x, -fv.y);
+            SplitterArray.at(m).ApplyForce(-fv.x, -fv.y);
+            //cout<<"Splitter : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+
+        }
+
+        }
+    }
+    }
+
 
 ///********************************************************************///
+
+
+
 
 
         for(unsigned int n=0; n < ZombieArray.size(); n++)
