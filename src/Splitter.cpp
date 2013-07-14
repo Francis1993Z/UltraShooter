@@ -68,3 +68,7 @@ unsigned int Splitter::getNextLevel() const
 return my_level+1;
 }
 
+unsigned int Splitter::getLevel() const
+{
+return my_level;
+}

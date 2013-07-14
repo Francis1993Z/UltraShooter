@@ -216,7 +216,7 @@ ZombieArray.at(m).takeDamage(AllBullets.at(n).getDamage());
             player->addPoints(j);
                         ZombieArray.erase(ZombieArray.begin()+m);
             }
-
+break;
 
   }
     }
@@ -247,7 +247,8 @@ SplitterArray.at(m).takeDamage(AllBullets.at(n).getDamage());
             int j=SplitterArray.at(m).getKillPoint();
             player->addPoints(j);
 
-
+if (SplitterArray.at(m).getLevel()!=3)
+{
 float rp = SplitterArray.at(m).getRotation();
 float s_distance = SplitterArray.at(m).get_dRadius();
 sf::Vector2f base_splitter_pos=SplitterArray.at(m).getPosition();
@@ -262,11 +263,11 @@ unsigned int next_level = SplitterArray.at(m).getNextLevel();
             Map::addSplitter(Splitter(NewSplittersPosition1, *player, next_level));
     Map::addSplitter(Splitter(NewSplittersPosition2, *player, next_level));
 
-
+}
                         SplitterArray.erase(SplitterArray.begin()+m);
             }
 
-
+break;
   }
     }
 }

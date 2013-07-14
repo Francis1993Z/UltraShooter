@@ -8,6 +8,7 @@ class Splitter : public Zombie
 public:
     Splitter(sf::Vector2f init_Position, Player& init_Target, unsigned int level);
     unsigned int getNextLevel() const;
+    unsigned int getLevel() const;
 private:
 unsigned int my_level;
 };

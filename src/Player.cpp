@@ -50,7 +50,7 @@ weapon_clock.restart();
 bool Player::ReadyToShoot() const
 {
 Int32 time=weapon_clock.getElapsedTime().asMilliseconds();
-if (time>300) return true;
+if (time>80) return true;
 else return false;
 }
 
