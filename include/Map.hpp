@@ -14,6 +14,7 @@
 #include "Player.hpp"
 #include "Engine.hpp"
 #include "Zombie.hpp"
+#include "Splitter.hpp"
 #include "Obstacle.hpp"
 #include "Wave.hpp"
 
@@ -21,6 +22,8 @@ class Map
 {
     std::vector<Bullet> AllBullets;
     std::vector<Zombie> ZombieArray;
+    std::vector<Splitter> SplitterArray;
+    std::vector<Ennemy> EnnemyArray;
 
     std::list<Obstacle> lObstacles;
     std::list<Wave> lWaves;
@@ -47,6 +50,7 @@ public:
 void setPlayer(Player& newPlayer);
     void addBullet(Bullet bullet);
     void addZombie(Zombie newZombie);
+    void addSplitter(Splitter newSplitter);
     void addObstacle(std::string obstacleTexturePath, int x, int y);
     void addWave(Wave w);
 

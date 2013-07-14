@@ -136,9 +136,15 @@ void Map::addBullet(Bullet bullet)
 {
     AllBullets.push_back(bullet);
 }
+
 void Map::addZombie(Zombie newZombie)
 {
     ZombieArray.push_back(newZombie);
+}
+
+void Map::addSplitter(Splitter newSplitter)
+{
+    SplitterArray.push_back(newSplitter);
 }
 
 void Map::addObstacle(std::string obstacleTexturePath, int x, int y)
@@ -187,7 +193,9 @@ void Map::update(RenderWindow* game)
             AllBullets.erase(AllBullets.begin()+n);
     }
 
-
+///********************************************************************///
+///Collision Bullet et Zombie
+///********************************************************************///
     for(unsigned int n=0; n < AllBullets.size(); n++)
     {
          for(unsigned int m=0; m < ZombieArray.size(); m++)
@@ -213,7 +221,55 @@ ZombieArray.at(m).takeDamage(AllBullets.at(n).getDamage());
   }
     }
 }
+///********************************************************************///
 
+
+///********************************************************************///
+///Collision Bullet et Splitter
+///********************************************************************///
+    for(unsigned int n=0; n < AllBullets.size(); n++)
+    {
+         for(unsigned int m=0; m < SplitterArray.size(); m++)
+    {
+
+          float distance = Distance(AllBullets.at(n).getPosition(), SplitterArray.at(m).getPosition());
+          float drbullet =  AllBullets.at(n).getRadius();
+          float drennemy =  SplitterArray.at(m).get_dRadius();
+          float drbe = drbullet + drennemy;
+          float D = distance - drbe;
+          if(D<0)
+        {
+SplitterArray.at(m).takeDamage(AllBullets.at(n).getDamage());
+            AllBullets.erase(AllBullets.begin()+n);
+            if (SplitterArray.at(m).alive()==false)
+            {
+
+            int j=SplitterArray.at(m).getKillPoint();
+            player->addPoints(j);
+
+
+float rp = SplitterArray.at(m).getRotation();
+float s_distance = SplitterArray.at(m).get_dRadius();
+sf::Vector2f base_splitter_pos=SplitterArray.at(m).getPosition();
+sf::Vector2f NewSplittersPosition1, NewSplittersPosition2;
+  NewSplittersPosition1.x=((cos(rp*M_PI/180)*s_distance))+base_splitter_pos.x;
+  NewSplittersPosition1.y=(-(sin(rp*M_PI/180)*s_distance))+base_splitter_pos.y;
+  NewSplittersPosition2.x=(cos(rp*M_PI/180)*(-s_distance))+base_splitter_pos.x;
+  NewSplittersPosition2.y=-(sin(rp*M_PI/180)*(-s_distance))+base_splitter_pos.y;
+unsigned int next_level = SplitterArray.at(m).getNextLevel();
+
+            Map::addSplitter(Splitter(NewSplittersPosition1, *player, next_level));
+    Map::addSplitter(Splitter(NewSplittersPosition2, *player, next_level));
+
+
+                        SplitterArray.erase(SplitterArray.begin()+m);
+            }
+
+
+  }
+    }
+}
+///********************************************************************///
 
 ///********************************************************************///
      for(unsigned int n=0; n < ZombieArray.size(); n++)
@@ -262,6 +318,16 @@ ZombieArray.at(m).takeDamage(AllBullets.at(n).getDamage());
             ZombieArray.erase(ZombieArray.begin()+n);
         }
     }
+            for(unsigned int n=0; n < SplitterArray.size(); n++)
+    {
+        SplitterArray.at(n).Update();
+
+
+        if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(SplitterArray.at(n).getPosition(), 0.0f, 0.0f, 5.0f) == true)
+        {
+            SplitterArray.erase(SplitterArray.begin()+n);
+        }
+    }
 
 
 
@@ -269,6 +335,8 @@ ZombieArray.at(m).takeDamage(AllBullets.at(n).getDamage());
         game->draw(AllBullets.at(n));
           for(unsigned int n=0; n < ZombieArray.size(); n++)
         game->draw(ZombieArray.at(n));
+                  for(unsigned int n=0; n < SplitterArray.size(); n++)
+        game->draw(SplitterArray.at(n));
 }
 
 Sprite Map::getBackground() const

@@ -206,6 +206,15 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
                         cout << "system:" << WindowEvent.key.system << std::endl;*/
                         gameMap->addZombie(Zombie(sf::Vector2f(500,500), *player));
                     }
+                     if (WindowEvent.key.code == sf::Keyboard::Numpad0)
+                    {
+                        /*cout << "the space key was pressed" << std::endl;
+                        cout << "control:" << WindowEvent.key.control << std::endl;
+                        cout << "alt:" << WindowEvent.key.alt << std::endl;
+                        cout << "shift:" << WindowEvent.key.shift << std::endl;
+                        cout << "system:" << WindowEvent.key.system << std::endl;*/
+                        gameMap->addSplitter(Splitter(sf::Vector2f(300,500), *player, 1));
+                    }
                 }
                 if (WindowEvent.type == sf::Event::MouseButtonPressed)
                     if (WindowEvent.mouseButton.button == sf::Mouse::Right)

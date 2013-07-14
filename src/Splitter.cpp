@@ -1,5 +1,6 @@
 #include "Splitter.hpp"
 
+using namespace std;
 
 Splitter::Splitter(sf::Vector2f init_Position, Player& init_Target, unsigned int level)
 {
@@ -32,7 +33,7 @@ kill_point=kill_point*8;
             e_my=e_m*8;
         }
 
-
+cout<<"level : "<<level<<endl;
 
     Splitter::setRadius(n_radius);
     Splitter::setOrigin(sf::Vector2f(n_radius/2, n_radius/2));
@@ -43,10 +44,23 @@ kill_point=kill_point*8;
     d_radius=Splitter::getRadius();
     my_behaviour=ATTACK;
     my_target=&init_Target;
+
+
+    sf::Vector2f t_pos=my_target->getPosition();
+
+
+        float a=t_pos.x-init_Position.x;
+    float o=t_pos.y-init_Position.y;
+    float angle = atan2(-o, a);
+
+     float myrotation = angle;
+
+
+        Splitter::setRotation(myrotation);
 }
 
 
-unsigned int Splitter::getLevel() const
+unsigned int Splitter::getNextLevel() const
 {
 return my_level+1;
 }
