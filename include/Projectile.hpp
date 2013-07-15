@@ -10,6 +10,7 @@
 class Projectile
 {
 public :
+
 unsigned int getDamage() const;
 protected :
     unsigned int damage;

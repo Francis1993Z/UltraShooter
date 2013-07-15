@@ -40,6 +40,8 @@ class Map
 
     std::string theme;
 
+    Zombie* zombieTouche;
+
 public:
 
     Map(std::string mapPath);

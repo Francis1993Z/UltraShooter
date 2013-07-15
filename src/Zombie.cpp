@@ -1,5 +1,7 @@
 #include "Zombie.hpp"
 
+#include <iostream>
+
 using namespace std;
 
 Zombie::Zombie()
@@ -12,6 +14,8 @@ Zombie::setFillColor(sf::Color::Red);
 e_mx=2;
 e_my=2;
 kill_point=10;
+vie=1;
+damage=5;
 d_radius=Zombie::getRadius();
 my_behaviour=ATTACK;
 my_target=0;
@@ -26,6 +30,7 @@ Zombie::setOrigin(sf::Vector2f(25,25));
 Zombie::setPosition(init_Position);
 Zombie::setFillColor(sf::Color::Red);
 
+vie=1;
 damage=5;
 kill_point=10;
 e_m=8;
@@ -65,7 +70,7 @@ cout<<mvx<<endl;
     }
 }
 
-unsigned int Zombie::getDamage() const
-{
-return damage;
+sf::FloatRect Zombie::getCollisionBox() const{
+
+    return getGlobalBounds();
 }

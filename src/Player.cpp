@@ -6,7 +6,7 @@ using namespace std;
 using namespace sf;
 
 
-Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow):Life(100), Score(0), hud(Life, Score, font, sizeWindow), rect(init_position.x-50, init_position.y-50, 100, 100)
+Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow):Life(100), Score(0), hud(Life, Score, font, sizeWindow)
 {
     rayon=50.f;
 
@@ -91,7 +91,7 @@ float Player::getVitesse() const{
 
 sf::FloatRect Player::getCollisionBox(){
 
-    return rect;
+    return getGlobalBounds();
 }
 
 void Player::addPoints(int p)

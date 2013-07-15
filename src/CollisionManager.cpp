@@ -14,7 +14,7 @@ bool CollisionManager::CollisionJoueur(float x, float y){
     deplacement_x = 0.0f;
     deplacement_y = 0.0f;
 
-    if(CheckIfOutOfWindow(player.getPosition(), x, y, player.getRayon())){
+    if(CheckIfOutOfWindow(player.getPosition().x, player.getPosition().y, x, y, player.getRayon())){
 
         collision = true;
         CalculDistanceAParcourirBordMap(x, y);
@@ -23,7 +23,7 @@ bool CollisionManager::CollisionJoueur(float x, float y){
 
         for(std::list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it){
 
-            if(player.getGlobalBounds().intersects(it->getCollisionBox())){
+            if(player.getCollisionBox().intersects(it->getCollisionBox())){
 
                 collision = true;
                 CalculDistanceAParcourir(x, y, it->getCollisionBox());
@@ -34,12 +34,43 @@ bool CollisionManager::CollisionJoueur(float x, float y){
     return collision;
 }
 
-bool CollisionManager::CheckIfOutOfWindow(sf::Vector2f Position, float p_deplacement_x, float p_deplacement_y, float rayon)
+bool CollisionManager::CollisionObstacles(sf::FloatRect rect){
+
+    collision = false;
+
+        for(std::list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it){
+
+            if(rect.intersects(it->getCollisionBox())){
+
+                collision = true;
+            }
+        }
+
+    return collision;
+}
+
+bool CollisionManager::CollisionZombies(sf::FloatRect rect, std::vector<Zombie>& ZombieArray){
+
+    collision = false;
+
+        for(unsigned int n=0; n < ZombieArray.size(); n++){
+
+            if(rect.intersects(ZombieArray.at(n).getCollisionBox())){
+
+                collision = true;
+                adresseZombieTouche = &(ZombieArray.at(n));
+            }
+        }
+
+    return collision;
+}
+
+bool CollisionManager::CheckIfOutOfWindow(float pos_x, float pos_y, float p_deplacement_x, float p_deplacement_y, float rayon)
 {
-    if( static_cast<int>(Position.x-rayon) < 0                    ||
-            static_cast<unsigned int>(Position.x+rayon) > gameMap.getWidth() ||
-            static_cast<int>(Position.y-rayon) < 0                    ||
-            static_cast<unsigned int>(Position.y+rayon) > gameMap.getHeight())
+    if( static_cast<int>(pos_x-rayon) < 0                    ||
+            static_cast<unsigned int>(pos_x+rayon) > gameMap.getWidth() ||
+            static_cast<int>(pos_y-rayon) < 0                    ||
+            static_cast<unsigned int>(pos_y+rayon) > gameMap.getHeight())
 
         return true;
 
@@ -98,6 +129,11 @@ float CollisionManager::getDeplacementX(){
 float CollisionManager::getDeplacementY(){
 
     return deplacement_y;
+}
+
+Zombie* CollisionManager::getAdresseZombieTouche(){
+
+    return adresseZombieTouche;
 }
 
 CollisionManager::~CollisionManager()

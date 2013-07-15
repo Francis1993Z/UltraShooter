@@ -189,8 +189,18 @@ void Map::update(RenderWindow* game)
     {
         AllBullets.at(n).UpdatePosition();
 
-        if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(AllBullets.at(n).getPosition(), 0.0f, 0.0f, 0.0f) == true)
+        if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(AllBullets.at(n).getPosition().x, AllBullets.at(n).getPosition().y, 0.0f, 0.0f, 0.0f) == true)
             AllBullets.erase(AllBullets.begin()+n);
+        else if(Engine::getInstance()->getCollisionManager()->CollisionObstacles(AllBullets.at(n).getGlobalBounds())){
+
+            AllBullets.erase(AllBullets.begin()+n);
+        }
+        else if(Engine::getInstance()->getCollisionManager()->CollisionZombies(AllBullets.at(n).getGlobalBounds(), ZombieArray)){
+
+            zombieTouche = Engine::getInstance()->getCollisionManager()->getAdresseZombieTouche();
+            zombieTouche->subirDegats(AllBullets.at(n).getDamage());
+            cerr << zombieTouche->getVie() << endl;
+        }
     }
 
 ///********************************************************************///
@@ -386,12 +396,19 @@ break;
 
         for(unsigned int n=0; n < ZombieArray.size(); n++)
     {
-        ZombieArray.at(n).Update();
 
+        if(ZombieArray.at(n).getVie() <= 0){
 
-        if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(ZombieArray.at(n).getPosition(), 0.0f, 0.0f, 5.0f) == true)
-        {
             ZombieArray.erase(ZombieArray.begin()+n);
+
+        }else{
+
+            ZombieArray.at(n).Update();
+
+            if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(ZombieArray.at(n).getPosition().x, ZombieArray.at(n).getPosition().y, 0.0f, 0.0f, 5.0f) == true)
+            {
+                ZombieArray.erase(ZombieArray.begin()+n);
+            }
         }
     }
             for(unsigned int n=0; n < SplitterArray.size(); n++)
@@ -399,7 +416,7 @@ break;
         SplitterArray.at(n).Update();
 
 
-        if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(SplitterArray.at(n).getPosition(), 0.0f, 0.0f, 5.0f) == true)
+        if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(SplitterArray.at(n).getPosition().x, SplitterArray.at(n).getPosition().y, 0.0f, 0.0f, 5.0f) == true)
         {
             SplitterArray.erase(SplitterArray.begin()+n);
         }

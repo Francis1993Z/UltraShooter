@@ -5,6 +5,5 @@ using namespace sf;
 
 unsigned int Projectile::getDamage() const
 {
-return damage;
+    return damage;
 }
-

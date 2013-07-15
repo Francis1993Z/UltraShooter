@@ -11,18 +11,21 @@ class Ennemy
   virtual void Update()=0;
   void ApplyForce(float fx, float fy);
   void SetTarget(Player &NewTarget);
+  int getKillPoint() const;
+  int getVie() const;
+  unsigned int getDamage() const;
   float get_dRadius() const;
-  int GetKillPoint() const;
   void ChangeBehaviour(Behaviour NewBehaviour);
   Ennemy* getAdresse();
   void takeDamage(unsigned int damage);
-bool alive() const;
-int getKillPoint() const;
-float getSpeed() const;
+  bool alive() const;
+  float getSpeed() const;
+  void subirDegats(unsigned int p_damage);
 
 
   protected:
   int vie;
+  int damage;
   int kill_point;
   Player *my_target;
   Behaviour my_behaviour;
