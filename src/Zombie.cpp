@@ -51,9 +51,7 @@ void Zombie::Update()
 {
     if(my_behaviour == ATTACK)
         {
-            float a = vec2.x - vec1.x;
-            float o = vec2.y - vec1.y;
-            float TargetDirection;
+
 
             float mvx;
             float mvy;
@@ -62,7 +60,9 @@ void Zombie::Update()
             //float TargetDirection = GetAngle(Myposition.x, Myposition.y, Targetposition.x, Targetposition.y); référence indéfinie vers GetAngle() je ne comprends pas pourquoi
             Vector2f vec1 = Myposition;
             Vector2f vec2 = Targetposition;
-
+            float a = vec2.x - vec1.x;
+            float o = vec2.y - vec1.y;
+            float TargetDirection;
             TargetDirection = atan2(-o, a);
 
             Vector2f v;

@@ -5,8 +5,7 @@
 
 class Splitter : public Zombie
 {
-   private:
-    unsigned int my_level;
+
 
 public:
 
@@ -14,7 +13,8 @@ public:
 
     unsigned int getNextLevel() const;
     unsigned int getLevel() const;
-
+private:
+    unsigned int my_level;
 };
 
 #endif // SPLITTER_HPP_INCLUDED

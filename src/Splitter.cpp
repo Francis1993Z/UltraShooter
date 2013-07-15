@@ -69,7 +69,8 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
 
 unsigned int Splitter::getNextLevel() const
 {
-    return ++my_level;
+unsigned int next_level=my_level+1;
+    return next_level=my_level+1;
 }
 
 unsigned int Splitter::getLevel() const

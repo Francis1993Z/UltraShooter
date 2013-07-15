@@ -27,6 +27,8 @@ float Player::Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindo
     Vector2i player_pixel_position = GetWindowPosition(myRenderWindow);
 
     Vector2f converted_player_coord;
+    converted_player_coord.x=(float)player_pixel_position.x;
+    converted_player_coord.y=(float)player_pixel_position.y;
 
     float x1 = converted_player_coord.x;
     float y1 = converted_player_coord.y;
@@ -36,7 +38,8 @@ float Player::Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindo
 
     float a = x2 - x1;
     float o = y2 - y1;
-
+cout<<" x1 :"<<x1<<" y1 :"<<y1<<endl;
+cout<<" x2 :"<<x2<<" y2 :"<<y2<<endl;
     float angle;
 
     weapon_clock.restart();
