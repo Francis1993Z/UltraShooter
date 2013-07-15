@@ -38,8 +38,8 @@ float Player::Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindo
 
     float a = x2 - x1;
     float o = y2 - y1;
-cout<<" x1 :"<<x1<<" y1 :"<<y1<<endl;
-cout<<" x2 :"<<x2<<" y2 :"<<y2<<endl;
+    cout<<" x1 :"<<x1<<" y1 :"<<y1<<endl;
+    cout<<" x2 :"<<x2<<" y2 :"<<y2<<endl;
     float angle;
 
     weapon_clock.restart();

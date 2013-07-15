@@ -25,6 +25,7 @@ class CollisionManager
         bool CollisionEnnemy(sf::FloatRect rect, std::vector<Ennemy *>& EnnemyArray);
         bool CheckIfOutOfWindow(float pos_x, float pos_y, float deplacement_x, float deplacement_y, float rayon);
 
+        void update_repulsion(std::vector<Ennemy *>& EnnemyArray);
         void CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, sf::FloatRect rect);
         void CalculDistanceAParcourirBordMap(float p_deplacement_x, float p_deplacement_y);
 

@@ -1,6 +1,29 @@
 #include "CollisionManager.hpp"
 #include <iostream>
 
+inline float Distance(sf::Vector2f o1, sf::Vector2f o2)
+{
+    float TCoteopposer=o2.y-o1.y;
+    float TCoteadjacent=o2.x-o1.x;
+    float Tracinecarre=pow(TCoteadjacent,2)+pow(TCoteopposer,2);
+    float Thypothenuse=sqrt(Tracinecarre);
+
+    return Thypothenuse;
+}
+
+
+inline float GetAngle(sf::Vector2f vec1, sf::Vector2f vec2)
+{
+    float a=vec2.x-vec1.x;
+    float o=vec2.y-vec1.y;
+    float angle;
+
+    angle = atan2(-o, a);
+
+    return angle;
+}
+
+
 CollisionManager::CollisionManager(Player& p_player, Map& p_gameMap):player(p_player), gameMap(p_gameMap), lObstacles(p_gameMap.getListeObstacles())
 {
 
@@ -87,6 +110,45 @@ bool CollisionManager::CheckIfOutOfWindow(float pos_x, float pos_y, float p_depl
 
     else
         return false;
+}
+
+void CollisionManager::update_repulsion(std::vector<Ennemy *>& EnnemyArray)
+{
+    for(unsigned int n=0; n < EnnemyArray.size(); n++)
+        {
+            for(unsigned int m=0; m < EnnemyArray.size(); m++)
+                {
+                    if(n != m)
+                        {
+                            float distance = Distance(EnnemyArray.at(n)->getPosition(), EnnemyArray.at(m)->getPosition());
+                            float drn =  EnnemyArray.at(n)->get_dRadius();
+                            float drm =  EnnemyArray.at(m)->get_dRadius();
+                            float drnm = drn + drm;
+                            float D = distance - drnm;
+
+                            if(D < 0)
+                                {
+                                    float angle = GetAngle(EnnemyArray.at(n)->getPosition(), EnnemyArray.at(m)->getPosition());
+                                    float e_m=EnnemyArray.at(n)->getSpeed();
+
+                                    sf::Vector2f fv;
+                                    sf::Vector2f e_Repulsion;
+
+
+
+                                    e_Repulsion.x=-(e_m/2);
+                                    e_Repulsion.y=-(e_m/2);
+
+                                    fv.x=cos(angle) * e_Repulsion.x;
+                                    fv.y=sin(angle) * e_Repulsion.y;
+
+                                    //EnnemyArray.at(n).ApplyForce(-fv.x, -fv.y);
+                                    EnnemyArray.at(m)->ApplyForce(-fv.x, -fv.y);
+                                    //cout<<"Ennemy : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+                                }
+                        }
+                }
+        }
 }
 
 void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, sf::FloatRect rect)

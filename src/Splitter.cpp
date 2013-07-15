@@ -82,6 +82,7 @@ unsigned int Splitter::getLevel() const
 {
     return my_level;
 }
+
 unsigned int Splitter::die() const
 {
     if (getLevel() != 3)
@@ -108,5 +109,5 @@ unsigned int Splitter::die() const
             tmp_map->addEnnemy(new Splitter(NewSplittersPosition2, *tmp_player, next_level));
 
         }
-        return getKillPoint();
+    return getKillPoint();
 }

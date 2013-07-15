@@ -2,16 +2,16 @@
 
 using namespace std;
 
- void Ennemy::update()
- {
- cout<<"virtual update"<<endl;
- }
+void Ennemy::update()
+{
+    cout<<"virtual update"<<endl;
+}
 
 unsigned int Ennemy::die() const
- {
- cout<<"virtual die"<<endl;
- return 1;
- }
+{
+    cout<<"virtual die"<<endl;
+    return 1;
+}
 
 
 void Ennemy::ChangeBehaviour(Behaviour NewBehaviour)

@@ -200,46 +200,9 @@ void Map::update(RenderWindow* game)
                 }
         }
 
+    Engine::getInstance()->getCollisionManager()->update_repulsion(EnnemyArray);
 
-///********************************************************************///
-///Répulsion
-///********************************************************************///
 
-    for(unsigned int n=0; n < EnnemyArray.size(); n++)
-        {
-            for(unsigned int m=0; m < EnnemyArray.size(); m++)
-                {
-                    if(n != m)
-                        {
-                            float distance = Distance(EnnemyArray.at(n)->getPosition(), EnnemyArray.at(m)->getPosition());
-                            float drn =  EnnemyArray.at(n)->get_dRadius();
-                            float drm =  EnnemyArray.at(m)->get_dRadius();
-                            float drnm = drn + drm;
-                            float D = distance - drnm;
-
-                            if(D < 0)
-                                {
-                                    float angle = GetAngle(EnnemyArray.at(n)->getPosition(), EnnemyArray.at(m)->getPosition());
-                                    float e_m=EnnemyArray.at(n)->getSpeed();
-
-                                    sf::Vector2f fv;
-                                    sf::Vector2f e_Repulsion;
-
-                                    cout << "e_m : " << e_m << endl;
-
-                                    e_Repulsion.x=-(e_m/2);
-                                    e_Repulsion.y=-(e_m/2);
-
-                                    fv.x=cos(angle) * e_Repulsion.x;
-                                    fv.y=sin(angle) * e_Repulsion.y;
-
-                                    //EnnemyArray.at(n).ApplyForce(-fv.x, -fv.y);
-                                    EnnemyArray.at(m)->ApplyForce(-fv.x, -fv.y);
-                                    //cout<<"Ennemy : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
-                                }
-                        }
-                }
-        }
 
     for(unsigned int n=0; n < EnnemyArray.size(); n++)
         {
@@ -248,7 +211,8 @@ void Map::update(RenderWindow* game)
 
                     int killpoints = EnnemyArray.at(n)->die();
                     player->addPoints(killpoints);
-                    EnnemyArray.erase(EnnemyArray.begin()+n);
+                    //EnnemyArray.erase(EnnemyArray.begin()+n);
+                    deleteEnnemyat(n);
                 }
 
             else
