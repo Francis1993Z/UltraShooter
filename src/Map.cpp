@@ -200,103 +200,12 @@ void Map::update(RenderWindow* game)
                 }
         }
 
-///********************************************************************///
-///Collision Bullet et Zombie
-///********************************************************************///
-   /* float distance;
-    float drbullet;
-    float drennemy;
-    float drbe;
-    float D;
 
-    for(unsigned int n=0; n < AllBullets.size(); n++)
-        {
-            for(unsigned int m=0; m < ZombieArray.size(); m++)
-                {
-                    distance = Distance(AllBullets.at(n).getPosition(), ZombieArray.at(m).getPosition());
-                    drbullet =  AllBullets.at(n).getRadius();
-                    drennemy =  ZombieArray.at(m).get_dRadius();
-                    drbe = drbullet + drennemy;
-                    D = distance - drbe;
-
-                    if(D < 0)
-                        {
-                            ZombieArray.at(m).takeDamage(AllBullets.at(n).getDamage());
-                            AllBullets.erase(AllBullets.begin()+n);
-
-                            if (ZombieArray.at(m).alive() == false)
-                                {
-                                    int j = ZombieArray.at(m).getKillPoint();
-
-                                    player->addPoints(j);
-                                    ZombieArray.erase(ZombieArray.begin()+m);
-                                }
-
-                            break;
-                        }
-                }
-        }
-
-
-*/
-///********************************************************************///
-///Collision Bullet et Splitter et effet de leur mort
-///********************************************************************///
-   /* for(unsigned int n=0; n < AllBullets.size(); n++)
-        {
-            for(unsigned int m=0; m < SplitterArray.size(); m++)
-                {
-                    float distance = Distance(AllBullets.at(n).getPosition(), SplitterArray.at(m).getPosition());
-                    float drbullet =  AllBullets.at(n).getRadius();
-                    float drennemy =  SplitterArray.at(m).get_dRadius();
-                    float drbe = drbullet + drennemy;
-                    float D = distance - drbe;
-
-                    if(D < 0)
-                        {
-                            SplitterArray.at(m).takeDamage(AllBullets.at(n).getDamage());
-                            AllBullets.erase(AllBullets.begin()+n);
-
-                            if (SplitterArray.at(m).alive()==false)
-                                {
-                                    int j = SplitterArray.at(m).getKillPoint();
-                                    player->addPoints(j);
-
-                                    if (SplitterArray.at(m).getLevel() != 3)
-                                        {
-                                            float rp = SplitterArray.at(m).getRotation();
-                                            float s_distance = SplitterArray.at(m).get_dRadius();
-
-                                            unsigned int next_level;
-
-                                            sf::Vector2f base_splitter_pos=SplitterArray.at(m).getPosition();
-                                            sf::Vector2f NewSplittersPosition1, NewSplittersPosition2;
-
-                                            ///Calcul des positions des deux nouveaux Splitters pour qu'ils soient séparés
-                                            NewSplittersPosition1.x=((cos(rp*M_PI/180)*s_distance))+base_splitter_pos.x;
-                                            NewSplittersPosition1.y=(-(sin(rp*M_PI/180)*s_distance))+base_splitter_pos.y;
-                                            NewSplittersPosition2.x=(cos(rp*M_PI/180)*(-s_distance))+base_splitter_pos.x;
-                                            NewSplittersPosition2.y=-(sin(rp*M_PI/180)*(-s_distance))+base_splitter_pos.y;
-
-                                            next_level = SplitterArray.at(m).getNextLevel();
-
-                                            Map::addEnnemy(new Splitter(NewSplittersPosition1, *player, next_level));
-                                            Map::addEnnemy(new Splitter(NewSplittersPosition2, *player, next_level));
-
-                                        }
-
-                                    SplitterArray.erase(SplitterArray.begin()+m);
-                                }
-
-                            break;
-                        }
-                }
-        }*/
 ///********************************************************************///
 ///Répulsion
 ///********************************************************************///
 
- for(unsigned int n=0; n < EnnemyArray.size(); n++)
+    for(unsigned int n=0; n < EnnemyArray.size(); n++)
         {
             for(unsigned int m=0; m < EnnemyArray.size(); m++)
                 {
@@ -330,26 +239,32 @@ void Map::update(RenderWindow* game)
                                 }
                         }
                 }
-                }
+        }
 
     for(unsigned int n=0; n < EnnemyArray.size(); n++)
-    {
-        if(EnnemyArray.at(n)->getVie() <= 0)
-            EnnemyArray.erase(EnnemyArray.begin()+n);
-        else
         {
-            EnnemyArray.at(n)->update();
+            if(EnnemyArray.at(n)->getVie() <= 0)
+                {
 
-            if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(EnnemyArray.at(n)->getPosition().x, EnnemyArray.at(n)->getPosition().y, 0.0f, 0.0f, 5.0f))
-                EnnemyArray.erase(EnnemyArray.begin()+n);
+                    int killpoints = EnnemyArray.at(n)->die();
+                    player->addPoints(killpoints);
+                    EnnemyArray.erase(EnnemyArray.begin()+n);
+                }
+
+            else
+                {
+                    EnnemyArray.at(n)->update();
+
+                    if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(EnnemyArray.at(n)->getPosition().x, EnnemyArray.at(n)->getPosition().y, 0.0f, 0.0f, 5.0f))
+                        EnnemyArray.erase(EnnemyArray.begin()+n);
+                }
         }
-    }
 
     for(unsigned int n=0; n < AllBullets.size(); n++)
         game->draw(AllBullets.at(n));
 
 
-            for(unsigned int n=0; n < EnnemyArray.size(); n++)
+    for(unsigned int n=0; n < EnnemyArray.size(); n++)
         game->draw(*EnnemyArray.at(n));
 }
 
@@ -363,6 +278,10 @@ void Map::setPlayer(Player& newPlayer)
     player=&newPlayer;
 }
 
+void Map::deleteEnnemyat(unsigned int n)
+{
+    EnnemyArray.erase(EnnemyArray.begin()+n);
+}
 
 
 sf::FloatRect Map::getCollisionBox() const

@@ -297,6 +297,11 @@ Map* Engine::getMap() const
     return gameMap;
 }
 
+    Player* Engine::getPlayer() const
+    {
+        return player;
+    }
+
 CollisionManager* Engine::getCollisionManager() const
 {
 

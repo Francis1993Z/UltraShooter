@@ -88,3 +88,7 @@ void Zombie::update()
         }
 }
 
+unsigned int Zombie::die() const
+{
+return getKillPoint();
+}

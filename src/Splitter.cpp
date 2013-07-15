@@ -1,4 +1,6 @@
 #include "Splitter.hpp"
+#include "Engine.hpp"
+#include "Player.hpp"
 
 using namespace std;
 using namespace sf;
@@ -79,4 +81,32 @@ unsigned int Splitter::getNextLevel() const
 unsigned int Splitter::getLevel() const
 {
     return my_level;
+}
+unsigned int Splitter::die() const
+{
+    if (getLevel() != 3)
+        {
+            float rp = getRotation();
+            float s_distance = get_dRadius();
+
+            unsigned int next_level;
+
+            sf::Vector2f base_splitter_pos=getPosition();
+            sf::Vector2f NewSplittersPosition1, NewSplittersPosition2;
+
+            ///Calcul des positions des deux nouveaux Splitters pour qu'ils soient séparés
+            NewSplittersPosition1.x=((cos(rp*M_PI/180)*s_distance))+base_splitter_pos.x;
+            NewSplittersPosition1.y=(-(sin(rp*M_PI/180)*s_distance))+base_splitter_pos.y;
+            NewSplittersPosition2.x=(cos(rp*M_PI/180)*(-s_distance))+base_splitter_pos.x;
+            NewSplittersPosition2.y=-(sin(rp*M_PI/180)*(-s_distance))+base_splitter_pos.y;
+
+            next_level = getNextLevel();
+
+            Map *tmp_map = Engine::getInstance()->getMap();
+            Player *tmp_player = Engine::getInstance()->getPlayer();
+            tmp_map->addEnnemy(new Splitter(NewSplittersPosition1, *tmp_player, next_level));
+            tmp_map->addEnnemy(new Splitter(NewSplittersPosition2, *tmp_player, next_level));
+
+        }
+        return getKillPoint();
 }
