@@ -13,8 +13,9 @@
 #else
     #include <unistd.h>
     #include <errno.h>
+
     #define GetCurrentDir getcwd
- #endif
+#endif
 
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
@@ -27,7 +28,8 @@ extern "C"
     float GetAngle_v2f(sf::Vector2f vec1, sf::Vector2f vec2);
     float Distance(float, float, float, float);
     float Distance_v2f(sf::Vector2f, sf::Vector2f);
-        std::string getCWD();
+
+    std::string getCWD();
 }
 
 #endif // GLOBALFUNCTIONS_H_INCLUDED

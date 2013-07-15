@@ -206,31 +206,39 @@ void Map::update(RenderWindow* game)
 ///********************************************************************///
 ///Collision Bullet et Zombie
 ///********************************************************************///
+    float distance;
+    float drbullet;
+    float drennemy;
+    float drbe;
+    float D;
+
     for(unsigned int n=0; n < AllBullets.size(); n++)
     {
-         for(unsigned int m=0; m < ZombieArray.size(); m++)
-    {
-
-          float distance = Distance(AllBullets.at(n).getPosition(), ZombieArray.at(m).getPosition());
-          float drbullet =  AllBullets.at(n).getRadius();
-          float drennemy =  ZombieArray.at(m).get_dRadius();
-          float drbe = drbullet + drennemy;
-          float D = distance - drbe;
-          if(D<0)
+        for(unsigned int m=0; m < ZombieArray.size(); m++)
         {
-ZombieArray.at(m).takeDamage(AllBullets.at(n).getDamage());
-            AllBullets.erase(AllBullets.begin()+n);
-            if (ZombieArray.at(m).alive()==false)
-            {
-            int j=ZombieArray.at(m).getKillPoint();
-            player->addPoints(j);
-                        ZombieArray.erase(ZombieArray.begin()+m);
-            }
-break;
+            distance = Distance(AllBullets.at(n).getPosition(), ZombieArray.at(m).getPosition());
+            drbullet =  AllBullets.at(n).getRadius();
+            drennemy =  ZombieArray.at(m).get_dRadius();
+            drbe = drbullet + drennemy;
+            D = distance - drbe;
 
-  }
+            if(D < 0)
+            {
+                ZombieArray.at(m).takeDamage(AllBullets.at(n).getDamage());
+                AllBullets.erase(AllBullets.begin()+n);
+
+                if (ZombieArray.at(m).alive() == false)
+                {
+                    int j = ZombieArray.at(m).getKillPoint();
+
+                    player->addPoints(j);
+                    ZombieArray.erase(ZombieArray.begin()+m);
+                }
+
+                break;
+            }
+        }
     }
-}
 ///********************************************************************///
 
 
@@ -239,196 +247,196 @@ break;
 ///********************************************************************///
     for(unsigned int n=0; n < AllBullets.size(); n++)
     {
-         for(unsigned int m=0; m < SplitterArray.size(); m++)
-    {
-
-          float distance = Distance(AllBullets.at(n).getPosition(), SplitterArray.at(m).getPosition());
-          float drbullet =  AllBullets.at(n).getRadius();
-          float drennemy =  SplitterArray.at(m).get_dRadius();
-          float drbe = drbullet + drennemy;
-          float D = distance - drbe;
-          if(D<0)
+        for(unsigned int m=0; m < SplitterArray.size(); m++)
         {
-SplitterArray.at(m).takeDamage(AllBullets.at(n).getDamage());
-            AllBullets.erase(AllBullets.begin()+n);
-            if (SplitterArray.at(m).alive()==false)
+            distance = Distance(AllBullets.at(n).getPosition(), SplitterArray.at(m).getPosition());
+            drbullet =  AllBullets.at(n).getRadius();
+            drennemy =  SplitterArray.at(m).get_dRadius();
+            drbe = drbullet + drennemy;
+            D = distance - drbe;
+
+            if(D < 0)
             {
+                SplitterArray.at(m).takeDamage(AllBullets.at(n).getDamage());
+                AllBullets.erase(AllBullets.begin()+n);
 
-            int j=SplitterArray.at(m).getKillPoint();
-            player->addPoints(j);
+                if (SplitterArray.at(m).alive()==false)
+                {
+                    int j = SplitterArray.at(m).getKillPoint();
+                    player->addPoints(j);
 
-if (SplitterArray.at(m).getLevel()!=3)
-{
-float rp = SplitterArray.at(m).getRotation();
-float s_distance = SplitterArray.at(m).get_dRadius();
-sf::Vector2f base_splitter_pos=SplitterArray.at(m).getPosition();
-sf::Vector2f NewSplittersPosition1, NewSplittersPosition2;
-///Calcul des positions des deux nouveaux Splitters pour qu'ils soient séparés
-  NewSplittersPosition1.x=((cos(rp*M_PI/180)*s_distance))+base_splitter_pos.x;
-  NewSplittersPosition1.y=(-(sin(rp*M_PI/180)*s_distance))+base_splitter_pos.y;
-  NewSplittersPosition2.x=(cos(rp*M_PI/180)*(-s_distance))+base_splitter_pos.x;
-  NewSplittersPosition2.y=-(sin(rp*M_PI/180)*(-s_distance))+base_splitter_pos.y;
-unsigned int next_level = SplitterArray.at(m).getNextLevel();
+                    if (SplitterArray.at(m).getLevel() != 3)
+                    {
+                        float rp = SplitterArray.at(m).getRotation();
+                        float s_distance = SplitterArray.at(m).get_dRadius();
 
-            Map::addSplitter(Splitter(NewSplittersPosition1, *player, next_level));
-    Map::addSplitter(Splitter(NewSplittersPosition2, *player, next_level));
+                        unsigned int next_level;
 
-}
-                        SplitterArray.erase(SplitterArray.begin()+m);
+                        sf::Vector2f base_splitter_pos=SplitterArray.at(m).getPosition();
+                        sf::Vector2f NewSplittersPosition1, NewSplittersPosition2;
+
+                        ///Calcul des positions des deux nouveaux Splitters pour qu'ils soient séparés
+                        NewSplittersPosition1.x=((cos(rp*M_PI/180)*s_distance))+base_splitter_pos.x;
+                        NewSplittersPosition1.y=(-(sin(rp*M_PI/180)*s_distance))+base_splitter_pos.y;
+                        NewSplittersPosition2.x=(cos(rp*M_PI/180)*(-s_distance))+base_splitter_pos.x;
+                        NewSplittersPosition2.y=-(sin(rp*M_PI/180)*(-s_distance))+base_splitter_pos.y;
+
+                        next_level = SplitterArray.at(m).getNextLevel();
+
+                        Map::addSplitter(Splitter(NewSplittersPosition1, *player, next_level));
+                        Map::addSplitter(Splitter(NewSplittersPosition2, *player, next_level));
+
+                    }
+
+                    SplitterArray.erase(SplitterArray.begin()+m);
+                }
+
+                break;
             }
-
-break;
-  }
+        }
     }
-}
 ///********************************************************************///
 ///Répulsion
 ///********************************************************************///
-     for(unsigned int n=0; n < ZombieArray.size(); n++)
+    for(unsigned int n=0; n < ZombieArray.size(); n++)
     {
-
-     for(unsigned int m=0; m < ZombieArray.size(); m++)
-    {
-        if(n!=m)
+        for(unsigned int m=0; m < ZombieArray.size(); m++)
         {
-          float distance = Distance(ZombieArray.at(n).getPosition(), ZombieArray.at(m).getPosition());
-          float drn =  ZombieArray.at(n).get_dRadius();
-          float drm =  ZombieArray.at(m).get_dRadius();
-          float drnm = drn + drm;
-          float D = distance - drnm;
-          if(D<0)
-        {
-                   float angle = GetAngle(ZombieArray.at(n).getPosition(), ZombieArray.at(m).getPosition());
+            if(n != m)
+            {
+                float distance = Distance(ZombieArray.at(n).getPosition(), ZombieArray.at(m).getPosition());
+                float drn =  ZombieArray.at(n).get_dRadius();
+                float drm =  ZombieArray.at(m).get_dRadius();
+                float drnm = drn + drm;
+                float D = distance - drnm;
 
-                   sf::Vector2f fv;
-                   sf::Vector2f e_Repulsion;
-                   float e_m=ZombieArray.at(n).getSpeed();
-                   cout<<"e_m : "<<e_m<<endl;
-                   e_Repulsion.x=-(e_m/2);
-                   e_Repulsion.y=-(e_m/2);
-        fv.x=cos(angle) * e_Repulsion.x;
-        fv.y=sin(angle) * e_Repulsion.y;
+                if(D < 0)
+                {
+                    float angle = GetAngle(ZombieArray.at(n).getPosition(), ZombieArray.at(m).getPosition());
+                    float e_m=ZombieArray.at(n).getSpeed();
 
-            //ZombieArray.at(n).ApplyForce(-fv.x, -fv.y);
-            ZombieArray.at(m).ApplyForce(-fv.x, -fv.y);
-            //cout<<"Zombie : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+                    sf::Vector2f fv;
+                    sf::Vector2f e_Repulsion;
 
+                    cout << "e_m : " << e_m << endl;
+
+                    e_Repulsion.x=-(e_m/2);
+                    e_Repulsion.y=-(e_m/2);
+
+                    fv.x=cos(angle) * e_Repulsion.x;
+                    fv.y=sin(angle) * e_Repulsion.y;
+
+                    //ZombieArray.at(n).ApplyForce(-fv.x, -fv.y);
+                    ZombieArray.at(m).ApplyForce(-fv.x, -fv.y);
+                    //cout<<"Zombie : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+                }
+            }
         }
 
-        }
-    }
+        ///fin for Zombie
 
-    ///fin for Zombie
-
-     for(unsigned int m=0; m < SplitterArray.size(); m++)
-    {
-        if(n!=m)
+        for(unsigned int m=0; m < SplitterArray.size(); m++)
         {
-          float distance = Distance(ZombieArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
-          float drn =  ZombieArray.at(n).get_dRadius();
-          float drm =  SplitterArray.at(m).get_dRadius();
-          float drnm = drn + drm;
-          float D = distance - drnm;
-          if(D<0)
-        {
-                   float angle = GetAngle(ZombieArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
+            if(n!=m)
+            {
+                float distance = Distance(ZombieArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
+                float drn =  ZombieArray.at(n).get_dRadius();
+                float drm =  SplitterArray.at(m).get_dRadius();
+                float drnm = drn + drm;
+                float D = distance - drnm;
 
-                   sf::Vector2f fv;
-                   sf::Vector2f e_Repulsion;
-                   e_Repulsion.x=-8;
-                   e_Repulsion.y=-8;
-        fv.x=cos(angle) * e_Repulsion.x;
-        fv.y=sin(angle) * e_Repulsion.y;
+                if(D < 0)
+                {
+                    float angle = GetAngle(ZombieArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
 
-            //ZombieArray.at(n).ApplyForce(-fv.x, -fv.y);
-            SplitterArray.at(m).ApplyForce(-fv.x, -fv.y);
-            //cout<<"Zombie : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+                    sf::Vector2f fv;
+                    sf::Vector2f e_Repulsion;
 
+                    e_Repulsion.x=-8;
+                    e_Repulsion.y=-8;
+
+                    fv.x=cos(angle) * e_Repulsion.x;
+                    fv.y=sin(angle) * e_Repulsion.y;
+
+                    //ZombieArray.at(n).ApplyForce(-fv.x, -fv.y);
+                    SplitterArray.at(m).ApplyForce(-fv.x, -fv.y);
+                    //cout<<"Zombie : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+
+                }
+            }
         }
-
-        }
-    }
 
     }//fin for répulsion zombie
 
 ///Répulsion Splitter
-     for(unsigned int n=0; n < SplitterArray.size(); n++)
+    for(unsigned int n=0; n < SplitterArray.size(); n++)
     {
 
-     for(unsigned int m=0; m < SplitterArray.size(); m++)
-    {
-    if(n!=m)
+        for(unsigned int m=0; m < SplitterArray.size(); m++)
         {
-          float distance = Distance(SplitterArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
-          float drn =  SplitterArray.at(n).get_dRadius();
-          float drm =  SplitterArray.at(m).get_dRadius();
-          float drnm = drn + drm;
-          float D = distance - drnm;
-          if(D<0)
-        {
-                   float angle = GetAngle(SplitterArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
+            if(n != m)
+            {
+                float distance = Distance(SplitterArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
+                float drn =  SplitterArray.at(n).get_dRadius();
+                float drm =  SplitterArray.at(m).get_dRadius();
+                float drnm = drn + drm;
+                float D = distance - drnm;
 
-                   sf::Vector2f fv;
-                   sf::Vector2f e_Repulsion;
-                   float e_m=SplitterArray.at(n).getSpeed();
-                   cout<<"e_m : "<<e_m<<endl;
-                   e_Repulsion.x=-(e_m/2);
-                   e_Repulsion.y=-(e_m/2);
-        fv.x=cos(angle) * e_Repulsion.x;
-        fv.y=sin(angle) * e_Repulsion.y;
+                if(D<0)
+                {
+                    float angle = GetAngle(SplitterArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
+                    float e_m = SplitterArray.at(n).getSpeed();
 
-            //SplitterArray.at(n).ApplyForce(-fv.x, -fv.y);
-            SplitterArray.at(m).ApplyForce(-fv.x, -fv.y);
-            //cout<<"Splitter : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+                    sf::Vector2f fv;
+                    sf::Vector2f e_Repulsion;
 
+                    cout<<"e_m : "<<e_m<<endl;
+
+                    e_Repulsion.x=-(e_m/2);
+                    e_Repulsion.y=-(e_m/2);
+
+                    fv.x=cos(angle) * e_Repulsion.x;
+                    fv.y=sin(angle) * e_Repulsion.y;
+
+                    //SplitterArray.at(n).ApplyForce(-fv.x, -fv.y);
+                    SplitterArray.at(m).ApplyForce(-fv.x, -fv.y);
+                    //cout<<"Splitter : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+                }
+            }
         }
-
-        }
-    }
     }
 
 
 ///********************************************************************///
 
-
-
-
-
-        for(unsigned int n=0; n < ZombieArray.size(); n++)
+    for(unsigned int n=0; n < ZombieArray.size(); n++)
     {
-
-        if(ZombieArray.at(n).getVie() <= 0){
-
+        if(ZombieArray.at(n).getVie() <= 0)
             ZombieArray.erase(ZombieArray.begin()+n);
-
-        }else{
-
+        else
+        {
             ZombieArray.at(n).Update();
 
             if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(ZombieArray.at(n).getPosition().x, ZombieArray.at(n).getPosition().y, 0.0f, 0.0f, 5.0f) == true)
-            {
                 ZombieArray.erase(ZombieArray.begin()+n);
-            }
         }
     }
-            for(unsigned int n=0; n < SplitterArray.size(); n++)
+
+    for(unsigned int n=0; n < SplitterArray.size(); n++)
     {
         SplitterArray.at(n).Update();
 
-
         if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(SplitterArray.at(n).getPosition().x, SplitterArray.at(n).getPosition().y, 0.0f, 0.0f, 5.0f) == true)
-        {
             SplitterArray.erase(SplitterArray.begin()+n);
-        }
     }
-
-
 
     for(unsigned int n=0; n < AllBullets.size(); n++)
         game->draw(AllBullets.at(n));
-          for(unsigned int n=0; n < ZombieArray.size(); n++)
+
+    for(unsigned int n=0; n < ZombieArray.size(); n++)
         game->draw(ZombieArray.at(n));
-                  for(unsigned int n=0; n < SplitterArray.size(); n++)
+
+    for(unsigned int n=0; n < SplitterArray.size(); n++)
         game->draw(SplitterArray.at(n));
 }
 
@@ -439,16 +447,15 @@ Sprite Map::getBackground() const
 
 void Map::setPlayer(Player& newPlayer)
 {
-player=&newPlayer;
+    player=&newPlayer;
 }
 
 sf::FloatRect Map::getCollisionBox() const
 {
-
     return background.getGlobalBounds();
 }
 
-std::list <Obstacle> Map::getListeObstacles() const{
-
+std::list <Obstacle> Map::getListeObstacles() const
+{
     return lObstacles;
 }

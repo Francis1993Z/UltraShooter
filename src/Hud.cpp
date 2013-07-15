@@ -50,8 +50,7 @@ void Hud::setPositionHud()
 
 void Hud::Move(float vx, float vy)
 {
-
-        t_score.move(vx, vy);
+    t_score.move(vx, vy);
     t_life.move(vx, vy);
 }
 

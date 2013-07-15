@@ -10,11 +10,14 @@
 class Zombie : public Ennemy, public sf::CircleShape
 {
   public:
+
     Zombie(sf::Vector2f init_Position, Player& init_Target);
     Zombie();
+
     void  Update();
+
     sf::FloatRect getCollisionBox() const;
-  private:
+
 };
 
 #endif // ZOMBIE_HPP_INCLUDED

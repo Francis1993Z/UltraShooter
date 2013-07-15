@@ -17,28 +17,39 @@ class Map;
 class CollisionManager
 {
     public:
+
         CollisionManager(Player& p_player, Map& p_gameMap);
+
         bool CollisionJoueur(float x, float y);
         bool CollisionObstacles(sf::FloatRect rect);
         bool CollisionZombies(sf::FloatRect rect, std::vector<Zombie>& ZombieArray);
         bool CheckIfOutOfWindow(float pos_x, float pos_y, float deplacement_x, float deplacement_y, float rayon);
+
         void CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, sf::FloatRect rect);
         void CalculDistanceAParcourirBordMap(float p_deplacement_x, float p_deplacement_y);
 
         float getDeplacementX();
         float getDeplacementY();
+
         Zombie* getAdresseZombieTouche();
+
         virtual ~CollisionManager();
+
     protected:
     private:
+
         Player& player;
+
         Map& gameMap;
+
         Zombie* adresseZombieTouche;
+
         std::list<Obstacle> lObstacles;
 
         bool collision;
         bool update_x;
         bool update_y;
+
         float deplacement_x;
         float deplacement_y;
 };

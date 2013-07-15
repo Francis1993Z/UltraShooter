@@ -22,6 +22,7 @@ class CollisionManager; /* Permet d'éviter l'interdépendance, en effet, Engine a
 */
 class Engine
 {
+
 public:
 
     ~Engine();
@@ -29,10 +30,13 @@ public:
     int Run();
 
     bool CheckIfOutOfWindow(sf::Vector2f Position, float deplacement_x, float deplacement_y, float rayon);
+
     static Engine* getInstance(); //Permet de récupérer l'instance (adresse) de la classe Engine partout dans le programme.
 
     Map* getMap() const;
+
     CollisionManager* getCollisionManager() const;
+
     MusicManager* getMusicManager();
 
 private:
@@ -48,6 +52,7 @@ private:
     Map* gameMap;   // On utilise un pointeur pour éviter le soucis d'interdépendance.
     Player* player;
     CollisionManager* collisionManager;
+
     sf::Vector2i localMousePosition;
     sf::Event WindowEvent;
     sf::RenderWindow Game;

@@ -24,21 +24,25 @@ mynewWindow.co;
 
 float Player::Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindow)
 {
-weapon_clock.restart();
-    Vector2i player_pixel_position=Player::GetWindowPosition(myRenderWindow);
+    Vector2i player_pixel_position = GetWindowPosition(myRenderWindow);
 
-    sf::Vector2f converted_player_coord;
+    Vector2f converted_player_coord;
+
+    float x1 = converted_player_coord.x;
+    float y1 = converted_player_coord.y;
+
+    float x2 = TargetPosition.x;
+    float y2 = TargetPosition.y;
+
+    float a = x2 - x1;
+    float o = y2 - y1;
+
+    float angle;
+
+    weapon_clock.restart();
 
     converted_player_coord.x=(float)player_pixel_position.x;
     converted_player_coord.y=(float)player_pixel_position.y;
-
-    float x1=converted_player_coord.x;
-    float y1=converted_player_coord.y;
-    float x2=TargetPosition.x;
-    float y2=TargetPosition.y;
-    float a=x2-x1;
-    float o=y2-y1;
-    float angle;
 
     Engine::getInstance()->getMusicManager()->playEvent("ressources/sounds/events/sf_laser_18.ogg");
 
@@ -49,22 +53,25 @@ weapon_clock.restart();
 
 bool Player::ReadyToShoot() const
 {
-Int32 time=weapon_clock.getElapsedTime().asMilliseconds();
-if (time>80) return true;
-else return false;
+    Int32 time=weapon_clock.getElapsedTime().asMilliseconds();
+
+    if (time > 80)
+        return true;
+    else
+        return false;
 }
 
-sf::Vector2i Player::GetWindowPosition(sf::RenderWindow &theRenderWindow) const
+Vector2i Player::GetWindowPosition(sf::RenderWindow &theRenderWindow) const
 {
     return theRenderWindow.mapCoordsToPixel(Player::getPosition(), theRenderWindow.getView());
 }
 
-sf::Text Player::getLifeHud()
+Text Player::getLifeHud()
 {
     return hud.getLife();
 }
 
-sf::Text Player::getScoreHud()
+Text Player::getScoreHud()
 {
     return hud.getScore();
 }
@@ -74,7 +81,7 @@ void Player::move_myhud(float vx, float vy)
     hud.Move(vx, vy);
 }
 
-void Player::setSizeWindowHud(sf::Vector2f sizeWindow)
+void Player::setSizeWindowHud(Vector2f sizeWindow)
 {
     hud.setSizeWindow(sizeWindow);
 }

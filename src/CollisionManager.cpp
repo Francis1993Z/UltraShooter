@@ -19,7 +19,8 @@ bool CollisionManager::CollisionJoueur(float x, float y){
         collision = true;
         CalculDistanceAParcourirBordMap(x, y);
     }
-    else{
+    else
+    {
 
         for(std::list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it){
 
@@ -82,10 +83,13 @@ void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_d
 
     if(p_deplacement_x>0 && rect.left-player.getPosition().x-p_deplacement_x-player.getRayon() < player.getVitesse())
             deplacement_x=rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon();
+
     if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width < player.getVitesse())
             deplacement_x= -(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width);
+
     if(p_deplacement_y>0 && rect.top -player.getPosition().y-p_deplacement_y-player.getRayon() < player.getVitesse())
             deplacement_y=rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon();
+
     if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height < player.getVitesse())
             deplacement_y= -(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height);
 
@@ -117,6 +121,7 @@ void CollisionManager::CalculDistanceAParcourirBordMap(float p_deplacement_x, fl
 
     if(!update_x)
             deplacement_x = p_deplacement_x;
+
     if(!update_y)
             deplacement_y = p_deplacement_y;
 }

@@ -18,6 +18,7 @@ using namespace sf;
 
 bool Engine::isAlreadyInstancied = false;
 Engine* Engine::instanceOfEngine = 0;
+
 template <typename T> string NumberToString ( T Number )
 {
     ostringstream ss;
@@ -101,13 +102,14 @@ int Engine::Run()
 
     player = new Player(sf::Vector2f(200.f, 200.f), font, MainView.getSize());
     collisionManager = new CollisionManager(*player, *gameMap);
-gameMap->setPlayer(*player);
+
+    gameMap->setPlayer(*player);
 
     ///******************************************************************************///
     sf::FloatRect port(0, 0, 1, 1);
- //MainView.setViewport(port);
+    //MainView.setViewport(port);
 
-//MainView.setCenter(player->getPosition());
+    //MainView.setCenter(player->getPosition());
 
     Game.setView(MainView);
 
@@ -124,8 +126,8 @@ gameMap->setPlayer(*player);
         {
             localMousePosition = sf::Mouse::getPosition(Game);
 
-/*
-sf::Time ennemy_time = ennemy_clock.getElapsedTime();
+            /*
+            sf::Time ennemy_time = ennemy_clock.getElapsedTime();
             if(ennemy_time.asSeconds()>=1)
             {
                 srand (time(NULL));
@@ -162,13 +164,13 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
-            if (player->ReadyToShoot()==true)
-            {
-                sf::Vector2f converted_coord;//la position de la souris est en int
-                converted_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
-                converted_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
+                if (player->ReadyToShoot()==true)
+                {
+                    sf::Vector2f converted_coord;//la position de la souris est en int
+                    converted_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
+                    converted_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
 
-                gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, Game)));
+                    gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, Game)));
                 }
             }
 
@@ -225,10 +227,14 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
 
                 if (WindowEvent.type == sf::Event::MouseWheelMoved)
                 {
-                cout << "wheel movement: " << WindowEvent.mouseWheel.delta << std::endl;
-                if(WindowEvent.mouseWheel.delta>0) MainView.zoom(0.8);
-                else if(WindowEvent.mouseWheel.delta<0) MainView.zoom(1.8);
-                Game.setView(MainView);
+                    cout << "wheel movement: " << WindowEvent.mouseWheel.delta << endl;
+
+                    if(WindowEvent.mouseWheel.delta > 0)
+                        MainView.zoom(0.8);
+                    else if(WindowEvent.mouseWheel.delta < 0)
+                        MainView.zoom(1.8);
+
+                    Game.setView(MainView);
                 }
 
             }//pollEvent
@@ -241,18 +247,21 @@ sf::Time ennemy_time = ennemy_clock.getElapsedTime();
                 player->move_myhud(-player->getVitesse(), 0.f);//On met à jour la position de la HUD
                 Game.setView(MainView);
             }
+
             if(object_pixel_position.x > Game.getSize().x-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
             {
                 MainView.move(player->getVitesse(), 0.f);
                 player->move_myhud(player->getVitesse(), 0.f);
                 Game.setView(MainView);
             }
+
             if(object_pixel_position.y < 300)
             {
                 MainView.move(0.f, -player->getVitesse());
                 player->move_myhud(0.f, -player->getVitesse());
                 Game.setView(MainView);
             }
+
             if(object_pixel_position.y > Game.getSize().y-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
             {
                 MainView.move(0.f, player->getVitesse());

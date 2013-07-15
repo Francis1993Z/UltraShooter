@@ -24,8 +24,8 @@ unsigned int Ennemy::getDamage() const{
 }
 void Ennemy::ApplyForce(float fx, float fy)
 {
-m_fx=+fx;
-m_fy=+fy;
+    m_fx=+fx;
+    m_fy=+fy;
 }
 
 float Ennemy::get_dRadius() const
@@ -40,13 +40,15 @@ Ennemy* Ennemy::getAdresse()
 
 void Ennemy::takeDamage(unsigned int damage)
 {
-vie=-damage;
+    vie=-damage;
 }
 
 bool Ennemy::alive() const
 {
-if (vie>0)    return true;
-else if(vie<0) return false;
+    if (vie > 0)
+        return true;
+    else if(vie < 0)
+        return false;
 }
 
 int Ennemy::getKillPoint() const
@@ -56,8 +58,8 @@ return kill_point;
 
 float Ennemy::getSpeed() const
 {
-cout<<"e_m f : "<<e_m<<endl;
-return e_m;
+    cout<<"e_m f : "<<e_m<<endl;
+    return e_m;
 }
 
 void Ennemy::subirDegats(unsigned int p_damage){

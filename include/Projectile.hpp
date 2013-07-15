@@ -11,12 +11,16 @@ class Projectile
 {
 public :
 
-unsigned int getDamage() const;
+    unsigned int getDamage() const;
+
 protected :
-    unsigned int damage;
-    float vitesse, angle;
-    bool grow;
+
     sf::Vector2f myPosition;
+    unsigned int damage;
+
+    float vitesse, angle;
+
+    bool grow;
 };
 
 #endif // PROJECTILE_HPP_INCLUDED

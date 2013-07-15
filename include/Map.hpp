@@ -49,7 +49,8 @@ public:
 
     int getWidth() const;
     int getHeight() const;
-void setPlayer(Player& newPlayer);
+
+    void setPlayer(Player& newPlayer);
     void addBullet(Bullet bullet);
     void addZombie(Zombie newZombie);
     void addSplitter(Splitter newSplitter);
