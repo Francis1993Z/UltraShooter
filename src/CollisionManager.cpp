@@ -57,19 +57,19 @@ bool CollisionManager::CollisionObstacles(sf::FloatRect rect)
     return collision;
 }
 
-bool CollisionManager::CollisionZombies(sf::FloatRect rect, std::vector<Zombie>& ZombieArray)
+bool CollisionManager::CollisionEnnemy(sf::FloatRect rect, std::vector<Ennemy *>& EnnemyArray)
 {
 
     collision = false;
 
-    for(unsigned int n=0; n < ZombieArray.size(); n++)
+    for(unsigned int n=0; n < EnnemyArray.size(); n++)
         {
 
-            if(rect.intersects(ZombieArray.at(n).getCollisionBox()))
+            if(rect.intersects(EnnemyArray.at(n)->getCollisionBox()))
                 {
 
                     collision = true;
-                    adresseZombieTouche = &(ZombieArray.at(n));
+                    adresseEnnemyTouche = &*(EnnemyArray.at(n));//attention
                 }
         }
 
@@ -154,10 +154,10 @@ float CollisionManager::getDeplacementY()
     return deplacement_y;
 }
 
-Zombie* CollisionManager::getAdresseZombieTouche()
+Ennemy* CollisionManager::getAdresseEnnemyTouche()
 {
 
-    return adresseZombieTouche;
+    return adresseEnnemyTouche;
 }
 
 CollisionManager::~CollisionManager()

@@ -2,6 +2,11 @@
 
 using namespace std;
 
+ void Ennemy::update()
+ {
+ cout<<"virtual update"<<endl;
+ }
+
 void Ennemy::ChangeBehaviour(Behaviour NewBehaviour)
 {
     my_behaviour=NewBehaviour;
@@ -68,4 +73,11 @@ void Ennemy::subirDegats(unsigned int p_damage)
 {
 
     vie-=p_damage;
+}
+
+
+sf::FloatRect Ennemy::getCollisionBox() const
+{
+
+    return getGlobalBounds();
 }

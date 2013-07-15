@@ -5,9 +5,9 @@ using namespace sf;
 
 Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int level)
 {
-    float radius = 100;
-    float n_radius = radius;
-
+    float m_size = 100;
+    float n_size = m_size;
+    sf::Vector2f my_size;
     my_level = level;
 
     e_m = 4;
@@ -18,7 +18,7 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
 
     if (level == 2)
         {
-            n_radius = radius / 2;
+            n_size = m_size / 2;
             kill_point = kill_point * 2;
 
             e_mx = e_m * 2;
@@ -26,7 +26,7 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
         }
     else if (level == 3)
         {
-            n_radius = radius / 4;
+            n_size = m_size / 4;
             kill_point = kill_point * 4;
 
             e_mx=e_m*4;
@@ -34,7 +34,7 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
         }
     else if (level == 4)
         {
-            n_radius = radius / 8;
+            n_size = m_size / 8;
             kill_point = kill_point * 8;
 
             e_mx=e_m*8;
@@ -45,12 +45,15 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
 
     cout << "level : " << level << endl;
 
-    setRadius(n_radius);
-    setOrigin(Vector2f(n_radius / 2, n_radius / 2));
+    my_size.x=n_size;
+    my_size.y=n_size;
+    setSize(my_size);
+
+    setOrigin(Vector2f(my_size.x / 2, my_size.y / 2));
     setPosition(init_Position);
     setFillColor(Color::Green);
 
-    d_radius=Splitter::getRadius();
+    d_radius=m_size;
 
     my_behaviour=ATTACK;
     my_target=&init_Target;
@@ -69,7 +72,7 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
 
 unsigned int Splitter::getNextLevel() const
 {
-unsigned int next_level=my_level+1;
+    unsigned int next_level=my_level+1;
     return next_level=my_level+1;
 }
 

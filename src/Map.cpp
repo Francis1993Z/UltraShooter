@@ -119,8 +119,6 @@ Map::Map(std::string mapPath)
 
 }
 
-Map::~Map()
-{}
 
 int Map::getWidth() const
 {
@@ -137,15 +135,12 @@ void Map::addBullet(Bullet bullet)
     AllBullets.push_back(bullet);
 }
 
-void Map::addZombie(Zombie newZombie)
+
+void Map::addEnnemy(Ennemy* e)
 {
-    ZombieArray.push_back(newZombie);
+    EnnemyArray.push_back(e);
 }
 
-void Map::addSplitter(Splitter newSplitter)
-{
-    SplitterArray.push_back(newSplitter);
-}
 
 void Map::addObstacle(std::string obstacleTexturePath, int x, int y)
 {
@@ -196,19 +191,19 @@ void Map::update(RenderWindow* game)
 
                     AllBullets.erase(AllBullets.begin()+n);
                 }
-            else if(Engine::getInstance()->getCollisionManager()->CollisionZombies(AllBullets.at(n).getGlobalBounds(), ZombieArray))
+            else if(Engine::getInstance()->getCollisionManager()->CollisionEnnemy(AllBullets.at(n).getGlobalBounds(), EnnemyArray))
                 {
 
-                    zombieTouche = Engine::getInstance()->getCollisionManager()->getAdresseZombieTouche();
-                    zombieTouche->subirDegats(AllBullets.at(n).getDamage());
-                    cerr << zombieTouche->getVie() << endl;
+                    EnnemyTouche = Engine::getInstance()->getCollisionManager()->getAdresseEnnemyTouche();
+                    EnnemyTouche->subirDegats(AllBullets.at(n).getDamage());
+                    cerr << EnnemyTouche->getVie() << endl;
                 }
         }
 
 ///********************************************************************///
 ///Collision Bullet et Zombie
 ///********************************************************************///
-    float distance;
+   /* float distance;
     float drbullet;
     float drennemy;
     float drbe;
@@ -241,21 +236,21 @@ void Map::update(RenderWindow* game)
                         }
                 }
         }
-///********************************************************************///
 
 
+*/
 ///********************************************************************///
-///Collision Bullet et Splitter et efeft de leur mort
+///Collision Bullet et Splitter et effet de leur mort
 ///********************************************************************///
-    for(unsigned int n=0; n < AllBullets.size(); n++)
+   /* for(unsigned int n=0; n < AllBullets.size(); n++)
         {
             for(unsigned int m=0; m < SplitterArray.size(); m++)
                 {
-                    distance = Distance(AllBullets.at(n).getPosition(), SplitterArray.at(m).getPosition());
-                    drbullet =  AllBullets.at(n).getRadius();
-                    drennemy =  SplitterArray.at(m).get_dRadius();
-                    drbe = drbullet + drennemy;
-                    D = distance - drbe;
+                    float distance = Distance(AllBullets.at(n).getPosition(), SplitterArray.at(m).getPosition());
+                    float drbullet =  AllBullets.at(n).getRadius();
+                    float drennemy =  SplitterArray.at(m).get_dRadius();
+                    float drbe = drbullet + drennemy;
+                    float D = distance - drbe;
 
                     if(D < 0)
                         {
@@ -285,8 +280,8 @@ void Map::update(RenderWindow* game)
 
                                             next_level = SplitterArray.at(m).getNextLevel();
 
-                                            Map::addSplitter(Splitter(NewSplittersPosition1, *player, next_level));
-                                            Map::addSplitter(Splitter(NewSplittersPosition2, *player, next_level));
+                                            Map::addEnnemy(new Splitter(NewSplittersPosition1, *player, next_level));
+                                            Map::addEnnemy(new Splitter(NewSplittersPosition2, *player, next_level));
 
                                         }
 
@@ -296,26 +291,27 @@ void Map::update(RenderWindow* game)
                             break;
                         }
                 }
-        }
+        }*/
 ///********************************************************************///
 ///Répulsion
 ///********************************************************************///
-    for(unsigned int n=0; n < ZombieArray.size(); n++)
+
+ for(unsigned int n=0; n < EnnemyArray.size(); n++)
         {
-            for(unsigned int m=0; m < ZombieArray.size(); m++)
+            for(unsigned int m=0; m < EnnemyArray.size(); m++)
                 {
                     if(n != m)
                         {
-                            float distance = Distance(ZombieArray.at(n).getPosition(), ZombieArray.at(m).getPosition());
-                            float drn =  ZombieArray.at(n).get_dRadius();
-                            float drm =  ZombieArray.at(m).get_dRadius();
+                            float distance = Distance(EnnemyArray.at(n)->getPosition(), EnnemyArray.at(m)->getPosition());
+                            float drn =  EnnemyArray.at(n)->get_dRadius();
+                            float drm =  EnnemyArray.at(m)->get_dRadius();
                             float drnm = drn + drm;
                             float D = distance - drnm;
 
                             if(D < 0)
                                 {
-                                    float angle = GetAngle(ZombieArray.at(n).getPosition(), ZombieArray.at(m).getPosition());
-                                    float e_m=ZombieArray.at(n).getSpeed();
+                                    float angle = GetAngle(EnnemyArray.at(n)->getPosition(), EnnemyArray.at(m)->getPosition());
+                                    float e_m=EnnemyArray.at(n)->getSpeed();
 
                                     sf::Vector2f fv;
                                     sf::Vector2f e_Repulsion;
@@ -328,118 +324,33 @@ void Map::update(RenderWindow* game)
                                     fv.x=cos(angle) * e_Repulsion.x;
                                     fv.y=sin(angle) * e_Repulsion.y;
 
-                                    //ZombieArray.at(n).ApplyForce(-fv.x, -fv.y);
-                                    ZombieArray.at(m).ApplyForce(-fv.x, -fv.y);
-                                    //cout<<"Zombie : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+                                    //EnnemyArray.at(n).ApplyForce(-fv.x, -fv.y);
+                                    EnnemyArray.at(m)->ApplyForce(-fv.x, -fv.y);
+                                    //cout<<"Ennemy : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
                                 }
                         }
                 }
-
-            ///fin for Zombie
-
-            for(unsigned int m=0; m < SplitterArray.size(); m++)
-                {
-                    if(n!=m)
-                        {
-                            float distance = Distance(ZombieArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
-                            float drn =  ZombieArray.at(n).get_dRadius();
-                            float drm =  SplitterArray.at(m).get_dRadius();
-                            float drnm = drn + drm;
-                            float D = distance - drnm;
-
-                            if(D < 0)
-                                {
-                                    float angle = GetAngle(ZombieArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
-
-                                    sf::Vector2f fv;
-                                    sf::Vector2f e_Repulsion;
-
-                                    e_Repulsion.x=-8;
-                                    e_Repulsion.y=-8;
-
-                                    fv.x=cos(angle) * e_Repulsion.x;
-                                    fv.y=sin(angle) * e_Repulsion.y;
-
-                                    //ZombieArray.at(n).ApplyForce(-fv.x, -fv.y);
-                                    SplitterArray.at(m).ApplyForce(-fv.x, -fv.y);
-                                    //cout<<"Zombie : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
-
-                                }
-                        }
                 }
 
-        }//fin for répulsion zombie
-
-///Répulsion Splitter
-    for(unsigned int n=0; n < SplitterArray.size(); n++)
+    for(unsigned int n=0; n < EnnemyArray.size(); n++)
+    {
+        if(EnnemyArray.at(n)->getVie() <= 0)
+            EnnemyArray.erase(EnnemyArray.begin()+n);
+        else
         {
+            EnnemyArray.at(n)->update();
 
-            for(unsigned int m=0; m < SplitterArray.size(); m++)
-                {
-                    if(n != m)
-                        {
-                            float distance = Distance(SplitterArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
-                            float drn =  SplitterArray.at(n).get_dRadius();
-                            float drm =  SplitterArray.at(m).get_dRadius();
-                            float drnm = drn + drm;
-                            float D = distance - drnm;
-
-                            if(D<0)
-                                {
-                                    float angle = GetAngle(SplitterArray.at(n).getPosition(), SplitterArray.at(m).getPosition());
-                                    float e_m = SplitterArray.at(n).getSpeed();
-
-                                    sf::Vector2f fv;
-                                    sf::Vector2f e_Repulsion;
-
-                                    cout<<"e_m : "<<e_m<<endl;
-
-                                    e_Repulsion.x=-(e_m/2);
-                                    e_Repulsion.y=-(e_m/2);
-
-                                    fv.x=cos(angle) * e_Repulsion.x;
-                                    fv.y=sin(angle) * e_Repulsion.y;
-
-                                    //SplitterArray.at(n).ApplyForce(-fv.x, -fv.y);
-                                    SplitterArray.at(m).ApplyForce(-fv.x, -fv.y);
-                                    //cout<<"Splitter : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
-                                }
-                        }
-                }
+            if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(EnnemyArray.at(n)->getPosition().x, EnnemyArray.at(n)->getPosition().y, 0.0f, 0.0f, 5.0f))
+                EnnemyArray.erase(EnnemyArray.begin()+n);
         }
-
-
-///********************************************************************///
-
-    for(unsigned int n=0; n < ZombieArray.size(); n++)
-        {
-            if(ZombieArray.at(n).getVie() <= 0)
-                ZombieArray.erase(ZombieArray.begin()+n);
-            else
-                {
-                    ZombieArray.at(n).Update();
-
-                    if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(ZombieArray.at(n).getPosition().x, ZombieArray.at(n).getPosition().y, 0.0f, 0.0f, 5.0f) == true)
-                        ZombieArray.erase(ZombieArray.begin()+n);
-                }
-        }
-
-    for(unsigned int n=0; n < SplitterArray.size(); n++)
-        {
-            SplitterArray.at(n).Update();
-
-            if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(SplitterArray.at(n).getPosition().x, SplitterArray.at(n).getPosition().y, 0.0f, 0.0f, 5.0f) == true)
-                SplitterArray.erase(SplitterArray.begin()+n);
-        }
+    }
 
     for(unsigned int n=0; n < AllBullets.size(); n++)
         game->draw(AllBullets.at(n));
 
-    for(unsigned int n=0; n < ZombieArray.size(); n++)
-        game->draw(ZombieArray.at(n));
 
-    for(unsigned int n=0; n < SplitterArray.size(); n++)
-        game->draw(SplitterArray.at(n));
+            for(unsigned int n=0; n < EnnemyArray.size(); n++)
+        game->draw(*EnnemyArray.at(n));
 }
 
 Sprite Map::getBackground() const
@@ -452,6 +363,8 @@ void Map::setPlayer(Player& newPlayer)
     player=&newPlayer;
 }
 
+
+
 sf::FloatRect Map::getCollisionBox() const
 {
     return background.getGlobalBounds();
@@ -460,4 +373,10 @@ sf::FloatRect Map::getCollisionBox() const
 std::list <Obstacle> Map::getListeObstacles() const
 {
     return lObstacles;
+}
+
+Map::~Map()
+{
+    for(vector<Ennemy *>::iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
+        delete *it;
 }

@@ -5,12 +5,12 @@
 
 enum Behaviour {STANDBY, ATTACK, ESCAPE, FOLLOW};
 
-class Ennemy
+class Ennemy : public sf::RectangleShape
 {
 
 public:
 
-    virtual void Update() = 0;
+    virtual void update();
 
     void ApplyForce(float fx, float fy);
     void SetTarget(Player &NewTarget);
@@ -24,12 +24,13 @@ public:
 
     float get_dRadius() const;
     float getSpeed() const;
-
+   sf::FloatRect getCollisionBox() const;
     bool alive() const;
 
     Ennemy* getAdresse();
 
 protected:
+
 
   int vie;
   int damage;

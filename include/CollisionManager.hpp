@@ -22,7 +22,7 @@ class CollisionManager
 
         bool CollisionJoueur(float x, float y);
         bool CollisionObstacles(sf::FloatRect rect);
-        bool CollisionZombies(sf::FloatRect rect, std::vector<Zombie>& ZombieArray);
+        bool CollisionEnnemy(sf::FloatRect rect, std::vector<Ennemy *>& EnnemyArray);
         bool CheckIfOutOfWindow(float pos_x, float pos_y, float deplacement_x, float deplacement_y, float rayon);
 
         void CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, sf::FloatRect rect);
@@ -31,7 +31,7 @@ class CollisionManager
         float getDeplacementX();
         float getDeplacementY();
 
-        Zombie* getAdresseZombieTouche();
+        Ennemy* getAdresseEnnemyTouche();
 
         virtual ~CollisionManager();
 
@@ -42,7 +42,7 @@ class CollisionManager
 
         Map& gameMap;
 
-        Zombie* adresseZombieTouche;
+        Ennemy* adresseEnnemyTouche;
 
         std::list<Obstacle> lObstacles;
 

@@ -21,9 +21,7 @@
 class Map
 {
     std::vector<Bullet> AllBullets;
-    std::vector<Zombie> ZombieArray;
-    std::vector<Splitter> SplitterArray;
-    std::vector<Ennemy> EnnemyArray;
+    std::vector<Ennemy *> EnnemyArray;
 
     std::list<Obstacle> lObstacles;
     std::list<Wave> lWaves;
@@ -40,7 +38,7 @@ class Map
 
     std::string theme;
 
-    Zombie* zombieTouche;
+    Ennemy* EnnemyTouche;
 
 public:
 
@@ -52,8 +50,7 @@ public:
 
     void setPlayer(Player& newPlayer);
     void addBullet(Bullet bullet);
-    void addZombie(Zombie newZombie);
-    void addSplitter(Splitter newSplitter);
+    void addEnnemy(Ennemy* e);
     void addObstacle(std::string obstacleTexturePath, int x, int y);
     void addWave(Wave w);
 

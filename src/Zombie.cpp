@@ -7,7 +7,10 @@ using namespace sf;
 
 Zombie::Zombie()
 {
-    setRadius(50);
+sf::Vector2f my_size;
+my_size.x=50;
+my_size.y=50;
+    setSize(my_size);
     setOrigin(Vector2f(25,25));
     setPosition(10.00f, 10.00f);
     setFillColor(Color::Red);
@@ -19,7 +22,7 @@ Zombie::Zombie()
     vie = 1;
     damage = 5;
 
-    d_radius = getRadius();
+    d_radius = 25;
     my_behaviour = ATTACK;
     my_target=0;
 
@@ -29,7 +32,11 @@ Zombie::Zombie()
 
 Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
 {
-    setRadius(50);
+
+sf::Vector2f my_size;
+my_size.x=50;
+my_size.y=50;
+    setSize(my_size);
     setOrigin(Vector2f(25,25));
     setPosition(init_Position);
     setFillColor(Color::Red);
@@ -42,12 +49,13 @@ Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
     e_mx = e_m;
     e_my = e_m;
 
-    d_radius = getRadius();
+    d_radius = 25;
     my_behaviour = ATTACK;
     my_target = &init_Target;
+        //cout << "New Zombie at : " << this << endl;
 }
 
-void Zombie::Update()
+void Zombie::update()
 {
     if(my_behaviour == ATTACK)
         {
@@ -64,7 +72,7 @@ void Zombie::Update()
             float o = vec2.y - vec1.y;
             float TargetDirection;
             TargetDirection = atan2(-o, a);
-
+            setRotation(-(TargetDirection*180/M_PI));
             Vector2f v;
             v.x = cos(TargetDirection) * e_mx;
             v.y = sin(TargetDirection) * e_my;
@@ -73,8 +81,6 @@ void Zombie::Update()
             mvx = v.x + m_fx;
             mvy = v.y + m_fy;
 
-            cout << mvx << endl;
-
             move(mvx, -mvy);
 
             m_fy = 0;
@@ -82,8 +88,3 @@ void Zombie::Update()
         }
 }
 
-FloatRect Zombie::getCollisionBox() const
-{
-
-    return getGlobalBounds();
-}

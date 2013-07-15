@@ -210,7 +210,7 @@ int Engine::Run()
                                             cout << "alt:" << WindowEvent.key.alt << std::endl;
                                             cout << "shift:" << WindowEvent.key.shift << std::endl;
                                             cout << "system:" << WindowEvent.key.system << std::endl;*/
-                                            gameMap->addZombie(Zombie(sf::Vector2f(500,500), *player));
+                                            gameMap->addEnnemy(new Zombie(sf::Vector2f(500,500), *player));
                                         }
                                     if (WindowEvent.key.code == sf::Keyboard::Numpad0)
                                         {
@@ -219,7 +219,7 @@ int Engine::Run()
                                             cout << "alt:" << WindowEvent.key.alt << std::endl;
                                             cout << "shift:" << WindowEvent.key.shift << std::endl;
                                             cout << "system:" << WindowEvent.key.system << std::endl;*/
-                                            gameMap->addSplitter(Splitter(sf::Vector2f(300,500), *player, 1));
+                                            gameMap->addEnnemy(new Splitter(sf::Vector2f(300,500), *player, 1));
                                         }
                                 }
                             if (WindowEvent.type == sf::Event::MouseButtonPressed)
