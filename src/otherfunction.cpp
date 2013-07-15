@@ -47,15 +47,15 @@ std::string getCWD()
 {
     char cCurrentPath[FILENAME_MAX];
 
- if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
-     {
-     std::cout<<"Erreur, cwd not found : "<<errno<<std::endl;
-     }
+    if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
+        {
+            std::cout<<"Erreur, cwd not found : "<<errno<<std::endl;
+        }
 
-cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
+    cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
 
-std::string d(cCurrentPath);
+    std::string d(cCurrentPath);
 //std::cout<<"The current working directory is "<<cCurrentPath<<std::endl;
-return d;
+    return d;
 }
 

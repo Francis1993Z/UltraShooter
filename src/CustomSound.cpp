@@ -10,10 +10,10 @@ CustomSound::CustomSound(string source)
     :source(source)
 {
     if(!buffer.loadFromFile(source))
-    {
-        cout << "Fichier event " << source << " introuvable !" << endl;
-        exit(5);
-    }
+        {
+            cout << "Fichier event " << source << " introuvable !" << endl;
+            exit(5);
+        }
 
     sound.setBuffer(buffer);
 }
@@ -35,7 +35,7 @@ void CustomSound::play()
 
 void CustomSound::setVolume(int volume)
 {
-   sound.setVolume(volume);
+    sound.setVolume(volume);
 }
 
 SoundSource::Status CustomSound::getStatus() const

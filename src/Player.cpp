@@ -86,29 +86,32 @@ void Player::setSizeWindowHud(Vector2f sizeWindow)
     hud.setSizeWindow(sizeWindow);
 }
 
-float Player::getRayon(){
+float Player::getRayon()
+{
 
     return rayon;
 }
 
-float Player::getVitesse() const{
+float Player::getVitesse() const
+{
 
     return vitesse;
 }
 
-sf::FloatRect Player::getCollisionBox(){
+sf::FloatRect Player::getCollisionBox()
+{
 
     return getGlobalBounds();
 }
 
 void Player::addPoints(int p)
 {
-Score=Score+p;
-cout<<Score<<endl;
-hud.updateScore(Score);
+    Score=Score+p;
+    cout<<Score<<endl;
+    hud.updateScore(Score);
 }
 
- Player::~Player()
+Player::~Player()
 {
 
 }

@@ -36,10 +36,11 @@ void Hud::updateScore(unsigned int n_Score)
     //setPositionHud();
 }
 
-void Hud::setSizeWindow(sf::Vector2f n_sizeWindow){
+void Hud::setSizeWindow(sf::Vector2f n_sizeWindow)
+{
 
-   sizeWindow = n_sizeWindow;
-   setPositionHud();
+    sizeWindow = n_sizeWindow;
+    setPositionHud();
 }
 
 void Hud::setPositionHud()
@@ -54,12 +55,14 @@ void Hud::Move(float vx, float vy)
     t_life.move(vx, vy);
 }
 
-sf::Text Hud::getLife(){
+sf::Text Hud::getLife()
+{
 
     return t_life;
 }
 
-sf::Text Hud::getScore(){
+sf::Text Hud::getScore()
+{
 
     return t_score;
 }

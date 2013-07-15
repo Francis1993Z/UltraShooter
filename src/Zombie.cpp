@@ -50,39 +50,40 @@ Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
 void Zombie::Update()
 {
     if(my_behaviour == ATTACK)
-    {
-        float a = vec2.x - vec1.x;
-        float o = vec2.y - vec1.y;
-        float TargetDirection;
+        {
+            float a = vec2.x - vec1.x;
+            float o = vec2.y - vec1.y;
+            float TargetDirection;
 
-        float mvx;
-        float mvy;
+            float mvx;
+            float mvy;
 
-        Vector2f Myposition = getPosition(), Targetposition = my_target->getPosition();
-        //float TargetDirection = GetAngle(Myposition.x, Myposition.y, Targetposition.x, Targetposition.y); référence indéfinie vers GetAngle() je ne comprends pas pourquoi
-        Vector2f vec1 = Myposition;
-        Vector2f vec2 = Targetposition;
+            Vector2f Myposition = getPosition(), Targetposition = my_target->getPosition();
+            //float TargetDirection = GetAngle(Myposition.x, Myposition.y, Targetposition.x, Targetposition.y); référence indéfinie vers GetAngle() je ne comprends pas pourquoi
+            Vector2f vec1 = Myposition;
+            Vector2f vec2 = Targetposition;
 
-        TargetDirection = atan2(-o, a);
+            TargetDirection = atan2(-o, a);
 
-        Vector2f v;
-        v.x = cos(TargetDirection) * e_mx;
-        v.y = sin(TargetDirection) * e_my;
-        //std::cout<<this<<" : x : "<<Myposition.x<<" y : "<<Myposition.y<<" angle : "<<TargetDirection<<std::endl;
+            Vector2f v;
+            v.x = cos(TargetDirection) * e_mx;
+            v.y = sin(TargetDirection) * e_my;
+            //std::cout<<this<<" : x : "<<Myposition.x<<" y : "<<Myposition.y<<" angle : "<<TargetDirection<<std::endl;
 
-        mvx = v.x + m_fx;
-        mvy = v.y + m_fy;
+            mvx = v.x + m_fx;
+            mvy = v.y + m_fy;
 
-        cout << mvx << endl;
+            cout << mvx << endl;
 
-        move(mvx, -mvy);
+            move(mvx, -mvy);
 
-        m_fy = 0;
-        m_fx = 0;
-    }
+            m_fy = 0;
+            m_fx = 0;
+        }
 }
 
-FloatRect Zombie::getCollisionBox() const{
+FloatRect Zombie::getCollisionBox() const
+{
 
     return getGlobalBounds();
 }

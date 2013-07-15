@@ -41,21 +41,21 @@ void MusicManager::playEvent(string eventPath)
 {
     list<CustomSound *>::iterator itSound = lEventSounds.begin(); // On se place au début de la liste des sons
 
-    for(;itSound != lEventSounds.end(); ++itSound) // On parcours la liste des sons disponibles
-    {
-        if((*itSound)->getSource() == eventPath)
+    for(; itSound != lEventSounds.end(); ++itSound) // On parcours la liste des sons disponibles
         {
-            if((*itSound)->getStatus() == SoundSource::Playing)
-                return;
-            else
-            {
-                (*itSound)->setVolume(volume);
-                (*itSound)->play();
+            if((*itSound)->getSource() == eventPath)
+                {
+                    if((*itSound)->getStatus() == SoundSource::Playing)
+                        return;
+                    else
+                        {
+                            (*itSound)->setVolume(volume);
+                            (*itSound)->play();
 
-                return;
-            }
+                            return;
+                        }
+                }
         }
-    }
 
     lEventSounds.push_back(new CustomSound(eventPath));
 }

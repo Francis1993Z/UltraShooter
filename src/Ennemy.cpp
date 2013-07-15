@@ -13,12 +13,14 @@ void Ennemy::SetTarget(Player &NewTarget)
     //cout<<"Bot : "<<this<<" Target : "<<my_target<<endl;
 }
 
-int Ennemy::getVie() const {
+int Ennemy::getVie() const
+{
 
     return vie;
 }
 
-unsigned int Ennemy::getDamage() const{
+unsigned int Ennemy::getDamage() const
+{
 
     return damage;
 }
@@ -53,7 +55,7 @@ bool Ennemy::alive() const
 
 int Ennemy::getKillPoint() const
 {
-return kill_point;
+    return kill_point;
 }
 
 float Ennemy::getSpeed() const
@@ -62,7 +64,8 @@ float Ennemy::getSpeed() const
     return e_m;
 }
 
-void Ennemy::subirDegats(unsigned int p_damage){
+void Ennemy::subirDegats(unsigned int p_damage)
+{
 
     vie-=p_damage;
 }

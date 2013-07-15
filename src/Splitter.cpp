@@ -17,29 +17,29 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
     kill_point = 5;
 
     if (level == 2)
-    {
-        n_radius = radius / 2;
-        kill_point = kill_point * 2;
+        {
+            n_radius = radius / 2;
+            kill_point = kill_point * 2;
 
-        e_mx = e_m * 2;
-        e_my = e_m * 2;
-    }
+            e_mx = e_m * 2;
+            e_my = e_m * 2;
+        }
     else if (level == 3)
-    {
-        n_radius = radius / 4;
-        kill_point = kill_point * 4;
+        {
+            n_radius = radius / 4;
+            kill_point = kill_point * 4;
 
-        e_mx=e_m*4;
-        e_my=e_m*4;
-    }
+            e_mx=e_m*4;
+            e_my=e_m*4;
+        }
     else if (level == 4)
-    {
-        n_radius = radius / 8;
-        kill_point = kill_point * 8;
+        {
+            n_radius = radius / 8;
+            kill_point = kill_point * 8;
 
-        e_mx=e_m*8;
-        e_my=e_m*8;
-    }
+            e_mx=e_m*8;
+            e_my=e_m*8;
+        }
 
     cout << "e_m : " << e_m << endl;
 

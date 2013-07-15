@@ -5,6 +5,7 @@
 
 class Splitter : public Zombie
 {
+   private:
     unsigned int my_level;
 
 public:
