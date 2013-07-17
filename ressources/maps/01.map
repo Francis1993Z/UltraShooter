@@ -13,9 +13,16 @@
 	<obstacle path="ressources/obstacles/asteroide.png" coordX="900" coordY="100"/>
 </lObstacles>
 <lWaves>
-	<wave>
-		<ennemy type="zombie" number="5"/>
-		<ennemy type="splitter" number="5"/>
-		<ennemy type="test" number="20"/>
-	</wave>
+	<Wave>
+		<ennemy type="zombie" number="3"/>
+		<ennemy type="splitter" number="2"/>
+	</Wave>
+	<Wave>
+		<ennemy type="zombie" number="4"/>
+		<ennemy type="splitter" number="3"/>
+	</Wave>
+	<Wave>
+		<ennemy type="zombie" number="10"/>
+		<ennemy type="splitter" number="3"/>
+	</Wave>
 </lWaves>
