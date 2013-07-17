@@ -2,6 +2,12 @@
 
 using namespace std;
 
+Ennemy::Ennemy(sf::Vector2f init_Position, Player& init_Target)
+{
+    setPosition(init_Position);
+    my_target = &init_Target;
+}
+
 void Ennemy::update()
 {
     cout<<"virtual update"<<endl;
@@ -22,7 +28,6 @@ void Ennemy::ChangeBehaviour(Behaviour NewBehaviour)
 void Ennemy::SetTarget(Player &NewTarget)
 {
     my_target=&NewTarget;
-    //cout<<"Bot : "<<this<<" Target : "<<my_target<<endl;
 }
 
 int Ennemy::getVie() const
@@ -72,7 +77,6 @@ int Ennemy::getKillPoint() const
 
 float Ennemy::getSpeed() const
 {
-    cout<<"e_m f : "<<e_m<<endl;
     return e_m;
 }
 

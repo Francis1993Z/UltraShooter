@@ -4,6 +4,8 @@
 #include <list>
 #include <string>
 
+#include "EnnemyFactory.hpp"
+
 typedef struct
 {
     std::string type;
@@ -21,6 +23,7 @@ public :
     ~Wave();
 
     void addEnnemy(std::string type, int number);
+    void loadEnnemies(EnnemyFactory & factory);
 
 };
 

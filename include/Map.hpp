@@ -17,6 +17,7 @@
 #include "Splitter.hpp"
 #include "Obstacle.hpp"
 #include "Wave.hpp"
+#include "EnnemyFactory.hpp"
 
 class Map
 {
@@ -25,9 +26,10 @@ class Map
 
     std::list<Obstacle> lObstacles;
     std::list<Wave> lWaves;
-    Player* player;
 
     std::map<std::string, sf::Texture> mObstacleTextures;
+
+    EnnemyFactory factory;
 
     int width;
     int height;
@@ -39,6 +41,7 @@ class Map
     std::string theme;
 
     Ennemy* EnnemyTouche;
+    Player* player;
 
 public:
 
@@ -54,6 +57,9 @@ public:
     void addObstacle(std::string obstacleTexturePath, int x, int y);
     void addWave(Wave w);
     void deleteEnnemyat(unsigned int n);
+
+    bool loadNextWave();
+    bool isCurrentWaveOver() const;
 
     std::string getTheme() const;
 

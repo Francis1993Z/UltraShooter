@@ -6,6 +6,7 @@ using namespace std;
 using namespace sf;
 
 Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int level)
+    :Zombie(init_Position, init_Target)
 {
     float m_size = 100;
     float n_size = m_size;
@@ -43,22 +44,16 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
             e_my=e_m*8;
         }
 
-    cout << "e_m : " << e_m << endl;
-
-    cout << "level : " << level << endl;
-
     my_size.x=n_size;
     my_size.y=n_size;
     setSize(my_size);
 
     setOrigin(Vector2f(my_size.x / 2, my_size.y / 2));
-    setPosition(init_Position);
     setFillColor(Color::Green);
 
     d_radius=m_size;
 
     my_behaviour=ATTACK;
-    my_target=&init_Target;
 
     Vector2f t_pos=my_target->getPosition();
 

@@ -80,6 +80,24 @@ bool CollisionManager::CollisionObstacles(sf::FloatRect rect)
     return collision;
 }
 
+bool CollisionManager::CollisionObstacles(int x, int y)
+{
+
+    collision = false;
+
+    for(std::list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it)
+        {
+
+            if((it->getCollisionBox().contains(x, y)))
+                {
+
+                    collision = true;
+                }
+        }
+
+    return collision;
+}
+
 bool CollisionManager::CollisionEnnemy(sf::FloatRect rect, std::vector<Ennemy *>& EnnemyArray)
 {
 

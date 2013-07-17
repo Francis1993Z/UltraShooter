@@ -90,33 +90,31 @@ Map::Map(std::string mapPath)
 
     TiXmlNode *node = hdl.Child(3).FirstChild().Node();
 
-    Wave w;
     int number;
 
     while(node)
+    {
+        Wave w;
+        elem = node->FirstChildElement();
+
+        if(!elem)
         {
-            elem = node->FirstChildElement();
-
-            if(!elem)
-                {
-                    cerr << "Map 01.map corrompue !" << endl;
-                    exit(2);
-                }
-
-            while(elem)
-                {
-
-                    elem->QueryIntAttribute("number", &number);
-                    w.addEnnemy(elem->Attribute("type"), number);
-
-                    elem = elem->NextSiblingElement();
-                }
-
-            addWave(w);
-
-            node = node->NextSibling(); // iteration
+            cerr << "Map 01.map corrompue !" << endl;
+            exit(2);
         }
 
+        while(elem)
+        {
+            elem->QueryIntAttribute("number", &number);
+            w.addEnnemy(elem->Attribute("type"), number);
+
+            elem = elem->NextSiblingElement();
+        }
+
+        addWave(w);
+
+        node = node->NextSibling(); // iteration
+    }
 }
 
 
@@ -196,12 +194,10 @@ void Map::update(RenderWindow* game)
 
                     EnnemyTouche = Engine::getInstance()->getCollisionManager()->getAdresseEnnemyTouche();
                     EnnemyTouche->subirDegats(AllBullets.at(n).getDamage());
-                    cerr << EnnemyTouche->getVie() << endl;
                 }
         }
 
     Engine::getInstance()->getCollisionManager()->update_repulsion(EnnemyArray);
-
 
 
     for(unsigned int n=0; n < EnnemyArray.size(); n++)
@@ -244,11 +240,33 @@ void Map::setPlayer(Player& newPlayer)
 
 void Map::deleteEnnemyat(unsigned int n)
 {
+    delete EnnemyArray.at(n);
     EnnemyArray.erase(EnnemyArray.begin()+n);
 }
 
+bool Map::loadNextWave()
+{
+    if(!lWaves.empty())
+    {
+        lWaves.front().loadEnnemies(factory);
+        lWaves.pop_front();
 
-sf::FloatRect Map::getCollisionBox() const
+        return true;
+    }
+
+    return false;
+}
+
+
+bool Map::isCurrentWaveOver() const
+{
+    if(EnnemyArray.empty())
+        return true;
+
+    return false;
+}
+
+FloatRect Map::getCollisionBox() const
 {
     return background.getGlobalBounds();
 }

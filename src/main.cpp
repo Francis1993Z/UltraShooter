@@ -14,9 +14,10 @@ using namespace sf;
 
 int main()
 {
+    srand(time(0));
+
     Engine* engine;
     engine = Engine::getInstance();
-
     int exit_code = engine->Run();
 
     delete engine;

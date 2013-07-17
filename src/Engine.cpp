@@ -78,9 +78,20 @@ Engine* Engine::getInstance()
 
 Engine::Engine(sf::VideoMode mode, bool fullscreen)
 {
-    gameMap = new Map(getCWD()+"/ressources/maps/01.map");
-    if(fullscreen==true) Game.create(mode, "Ultra Shooter 0.2", sf::Style::Fullscreen);
-    else Game.create(mode, "Ultra Shooter 0.2");
+    mapNumber = 1;
+
+    ostringstream oss;
+    oss << mapNumber;
+
+    if(mapNumber < 10)
+        gameMap = new Map(getCWD()+"/ressources/maps/0" + oss.str() + ".map");
+    else
+        gameMap = new Map(getCWD()+"/ressources/maps/" + oss.str() + ".map");
+
+    if(fullscreen)
+        Game.create(mode, "Ultra Shooter 0.2", sf::Style::Fullscreen);
+    else
+        Game.create(mode, "Ultra Shooter 0.2");
 }
 
 int Engine::Run()
@@ -118,6 +129,8 @@ int Engine::Run()
     mManager.playTheme(gameMap->getTheme());
 
     sf::Clock ennemy_clock;
+
+    gameMap->loadNextWave();
 
     IsRunning=true;
     while(IsRunning)
@@ -280,15 +293,26 @@ int Engine::Run()
                     Game.draw(player->getLifeHud());
                     Game.display();
 
+                    if(gameMap->isCurrentWaveOver())
+                    {
+                        if(!gameMap->loadNextWave())
+                        {
+                            if(!loadNextMap())
+                            {
+                                Game.close();
+                                IsRunning=false;
+
+                                cout << "Jeu termine !" << endl;
+                            }
+                        }
+                    }
+
                     /* float currentTime = fps_clock.restart().asSeconds();
                     int fps = static_cast<int> ( 1.f / currentTime);
                     string fps_string = NumberToString(fps);
                     Game.setTitle("Ultra Shooter 0.2 FPS : "+fps_string);*/
                 }
-
-            delete player;
         }
-
     return 0;
 }
 
@@ -313,10 +337,38 @@ MusicManager* Engine::getMusicManager()
     return &mManager;
 }
 
+bool Engine::loadNextMap()
+{
+    ++mapNumber;
+
+    ostringstream oss;
+    string path;
+
+    oss << mapNumber;
+
+    if(mapNumber < 10)
+        path = getCWD()+"/ressources/maps/0" + oss.str() + ".map";
+    else
+        path = getCWD()+"/ressources/maps/" + oss.str() + ".map";
+
+    if(fileExists(path.c_str()))
+    {
+        delete gameMap;
+        gameMap = new Map(path);
+
+        return true;
+    }
+
+    return false;
+}
+
 Engine::~Engine()
 {
     isAlreadyInstancied = false;
+
     delete gameMap;
+    delete player;
     delete collisionManager;
+
     Game.close();
 }

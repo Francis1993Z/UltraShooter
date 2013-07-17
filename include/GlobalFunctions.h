@@ -29,6 +29,10 @@ extern "C"
     float Distance(float, float, float, float);
     float Distance_v2f(sf::Vector2f, sf::Vector2f);
 
+    bool fileExists(const char * path);
+
+    int rand_a_b(int a, int b);
+
     std::string getCWD();
 }
 

@@ -12,6 +12,8 @@ class Ennemy : public sf::RectangleShape
 
 public:
 
+    Ennemy(sf::Vector2f init_Position, Player& init_Target);
+
     virtual void update();
     virtual unsigned int die() const;
     void ApplyForce(float fx, float fy);

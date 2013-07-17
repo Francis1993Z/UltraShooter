@@ -38,8 +38,6 @@ float Player::Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindo
 
     float a = x2 - x1;
     float o = y2 - y1;
-    cout<<" x1 :"<<x1<<" y1 :"<<y1<<endl;
-    cout<<" x2 :"<<x2<<" y2 :"<<y2<<endl;
     float angle;
 
     weapon_clock.restart();
@@ -110,7 +108,6 @@ sf::FloatRect Player::getCollisionBox()
 void Player::addPoints(int p)
 {
     Score=Score+p;
-    cout<<Score<<endl;
     hud.updateScore(Score);
 }
 

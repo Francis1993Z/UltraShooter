@@ -43,6 +43,25 @@ inline float GetAngle(sf::Vector2f vec1, sf::Vector2f vec2)
     return angle;
 }
 
+bool fileExists(const char * path)
+{
+    FILE* fp = NULL;
+
+    fp = fopen( path, "rb" );
+    if( fp != NULL )
+    {
+        fclose( fp );
+        return true;
+    }
+
+    return false;
+}
+
+int rand_a_b(int a, int b)
+{
+    return rand()%(b-a) +a;
+}
+
 std::string getCWD()
 {
     char cCurrentPath[FILENAME_MAX];

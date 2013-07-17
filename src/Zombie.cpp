@@ -5,32 +5,9 @@
 using namespace std;
 using namespace sf;
 
-Zombie::Zombie()
-{
-sf::Vector2f my_size;
-my_size.x=50;
-my_size.y=50;
-    setSize(my_size);
-    setOrigin(Vector2f(25,25));
-    setPosition(10.00f, 10.00f);
-    setFillColor(Color::Red);
-
-    e_mx = 2;
-    e_my = 2;
-
-    kill_point = 10;
-    vie = 1;
-    damage = 5;
-
-    d_radius = 25;
-    my_behaviour = ATTACK;
-    my_target=0;
-
-    cout << "Vous ne devriez pas construire un Zombie de cette façon" << endl;
-    cout << "New Zombie at : " << this << endl;
-}
 
 Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
+    :Ennemy(init_Position, init_Target)
 {
 
 sf::Vector2f my_size;
@@ -38,7 +15,6 @@ my_size.x=50;
 my_size.y=50;
     setSize(my_size);
     setOrigin(Vector2f(25,25));
-    setPosition(init_Position);
     setFillColor(Color::Red);
 
     vie = 1;
@@ -51,7 +27,6 @@ my_size.y=50;
 
     d_radius = 25;
     my_behaviour = ATTACK;
-    my_target = &init_Target;
         //cout << "New Zombie at : " << this << endl;
 }
 
@@ -59,8 +34,6 @@ void Zombie::update()
 {
     if(my_behaviour == ATTACK)
         {
-
-
             float mvx;
             float mvy;
 

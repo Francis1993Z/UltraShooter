@@ -15,6 +15,7 @@
 <lWaves>
 	<wave>
 		<ennemy type="zombie" number="5"/>
+		<ennemy type="splitter" number="5"/>
 		<ennemy type="test" number="20"/>
 	</wave>
 </lWaves>

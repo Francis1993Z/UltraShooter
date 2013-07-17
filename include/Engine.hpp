@@ -35,15 +35,19 @@ public:
     //void addEnnemy(Ennemy *e);
     Map* getMap() const;
     Player* getPlayer() const;
-    CollisionManager* getCollisionManager() const;
 
+    CollisionManager* getCollisionManager() const;
     MusicManager* getMusicManager();
+
+    bool loadNextMap();
 
 private:
 
     MusicManager mManager;
 
     Engine(sf::VideoMode mode, bool fullscreen); // Le constructeur est privé car on ne doit pas pouvoir construire la classe sans passer par la méthode getInstance().
+
+    int mapNumber;
 
     bool IsRunning;
     static bool isAlreadyInstancied; // Permet de savoir si une instance d'Engine existe déjà ou non.
