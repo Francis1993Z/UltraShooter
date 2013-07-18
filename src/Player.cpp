@@ -105,10 +105,31 @@ sf::FloatRect Player::getCollisionBox()
     return getGlobalBounds();
 }
 
-void Player::addPoints(int p)
+void Player::addPoints(int points)
 {
-    Score=Score+p;
+    Score+=points;
+    cout<<Score<<endl;
     hud.updateScore(Score);
+}
+
+void Player::modifierVie(int pv){
+
+    Life+=pv;
+    cout << Life << endl;
+    hud.updateLife(Life);
+}
+
+bool Player::alive() const
+{
+    if (Life > 0)
+        return true;
+    else if(Life <= 0)
+        return false;
+}
+
+void Player::subirDegats(unsigned int p_damage){
+
+    modifierVie(-p_damage);
 }
 
 Player::~Player()

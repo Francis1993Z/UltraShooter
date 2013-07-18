@@ -44,12 +44,15 @@ public:
     void move_myhud(float vx, float vy);
     void setSizeWindowHud(sf::Vector2f sizeWindow);
     void addPoints(int p);
+    void subirDegats(unsigned int p_damage);
+    void modifierVie(int pv);
 
     float getRayon();
     float getVitesse() const;
     float Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindow);
 
     bool ReadyToShoot() const;
+    bool alive() const;
 
     ~Player();
 

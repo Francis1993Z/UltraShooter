@@ -20,7 +20,6 @@ public:
     void SetTarget(Player &NewTarget);
     void ChangeBehaviour(Behaviour NewBehaviour);
     void subirDegats(unsigned int p_damage);
-    void takeDamage(unsigned int damage);
 
     unsigned int getDamage() const;
     int getKillPoint() const;

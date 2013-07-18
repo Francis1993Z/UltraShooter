@@ -202,11 +202,9 @@ void Map::update(RenderWindow* game)
 
     for(unsigned int n=0; n < EnnemyArray.size(); n++)
         {
-            if(EnnemyArray.at(n)->getVie() <= 0)
+            if(!EnnemyArray.at(n)->alive())
                 {
-
-                    int killpoints = EnnemyArray.at(n)->die();
-                    player->addPoints(killpoints);
+                    player->addPoints(EnnemyArray.at(n)->die());
                     //EnnemyArray.erase(EnnemyArray.begin()+n);
                     deleteEnnemyat(n);
                 }
@@ -215,9 +213,21 @@ void Map::update(RenderWindow* game)
                 {
                     EnnemyArray.at(n)->update();
 
-                    if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(EnnemyArray.at(n)->getPosition().x, EnnemyArray.at(n)->getPosition().y, 0.0f, 0.0f, 5.0f))
+                    if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(EnnemyArray.at(n)->getPosition().x, EnnemyArray.at(n)->getPosition().y, 0.0f, 0.0f, 5.0f)){
+
                         EnnemyArray.erase(EnnemyArray.begin()+n);
+                    }
+                    else if(Engine::getInstance()->getCollisionManager()->CollisionContreJoueur(EnnemyArray.at(n)->getCollisionBox())){
+
+                        player->subirDegats(EnnemyArray.at(n)->getDamage());
+                        EnnemyArray.erase(EnnemyArray.begin()+n);
+                    }
                 }
+        }
+
+        if(!player->alive()){
+
+            gameOver = true;
         }
 
     for(unsigned int n=0; n < AllBullets.size(); n++)
@@ -280,4 +290,9 @@ Map::~Map()
 {
     for(vector<Ennemy *>::iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
         delete *it;
+}
+
+bool Map::getGameOver() const{
+
+    return gameOver;
 }

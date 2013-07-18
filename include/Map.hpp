@@ -43,6 +43,8 @@ class Map
     Ennemy* EnnemyTouche;
     Player* player;
 
+    bool gameOver;
+
 public:
 
     Map(std::string mapPath);
@@ -72,6 +74,7 @@ public:
 
     std::list<Obstacle> getListeObstacles() const;
 
+    bool getGameOver() const;
 };
 
 

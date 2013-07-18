@@ -139,18 +139,6 @@ int Engine::Run()
                 {
                     localMousePosition = sf::Mouse::getPosition(Game);
 
-                    /*
-                    sf::Time ennemy_time = ennemy_clock.getElapsedTime();
-                    if(ennemy_time.asSeconds()>=1)
-                    {
-                        srand (time(NULL));
-                        float x=rand()%100;
-                        float y=rand()%100;
-                        gameMap->addZombie(Zombie(sf::Vector2f(x,y)));
-                        cout<<"create zombie"<<endl;
-                    }*/
-
-                    //Pour la répétition il faut utiliser les lignes ci-dessous.
                     x=0.0f;
                     y=0.0f;
 

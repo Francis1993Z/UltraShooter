@@ -1,6 +1,8 @@
 #include "CollisionManager.hpp"
 #include <iostream>
 
+using namespace std;
+
 inline float Distance(sf::Vector2f o1, sf::Vector2f o2)
 {
     float TCoteopposer=o2.y-o1.y;
@@ -31,7 +33,6 @@ CollisionManager::CollisionManager(Player& p_player, Map& p_gameMap):player(p_pl
 
 bool CollisionManager::CollisionJoueur(float x, float y)
 {
-
     collision = false;
     update_x = false;
     update_y = false;
@@ -40,7 +41,6 @@ bool CollisionManager::CollisionJoueur(float x, float y)
 
     if(CheckIfOutOfWindow(player.getPosition().x, player.getPosition().y, x, y, player.getRayon()))
         {
-
             collision = true;
             CalculDistanceAParcourirBordMap(x, y);
         }
@@ -117,6 +117,18 @@ bool CollisionManager::CollisionEnnemy(sf::FloatRect rect, std::vector<Ennemy *>
     return collision;
 }
 
+bool  CollisionManager::CollisionContreJoueur(sf::FloatRect rect){
+
+    collision = false;
+
+    if(rect.intersects(player.getCollisionBox())){
+
+        collision = true;
+    }
+
+    return collision;
+}
+
 bool CollisionManager::CheckIfOutOfWindow(float pos_x, float pos_y, float p_deplacement_x, float p_deplacement_y, float rayon)
 {
     if( static_cast<int>(pos_x-rayon) < 0                    ||
@@ -172,18 +184,35 @@ void CollisionManager::update_repulsion(std::vector<Ennemy *>& EnnemyArray)
 void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, sf::FloatRect rect)
 {
 
-    if(p_deplacement_x>0 && rect.left-player.getPosition().x-p_deplacement_x-player.getRayon() < player.getVitesse())
+    if(p_deplacement_x>0 && rect.left-player.getPosition().x-p_deplacement_x-player.getRayon() < player.getVitesse()){
+
         deplacement_x=rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon();
+        update_x=true;
+    }
+    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width < player.getVitesse()){
 
-    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width < player.getVitesse())
         deplacement_x= -(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width);
+        update_x=true;
+    }
+    if(p_deplacement_y>0 && rect.top -player.getPosition().y-p_deplacement_y-player.getRayon() < player.getVitesse()){
 
-    if(p_deplacement_y>0 && rect.top -player.getPosition().y-p_deplacement_y-player.getRayon() < player.getVitesse())
         deplacement_y=rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon();
+        update_y=true;
+    }
+    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height < player.getVitesse()){
 
-    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height < player.getVitesse())
         deplacement_y= -(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height);
+        update_y=true;
+    }
 
+    if(!update_x){
+
+        deplacement_x =p_deplacement_x;
+    }
+    if(!update_y){
+
+        deplacement_y =p_deplacement_y;
+    }
     //std::cout << deplacement_x << std::endl;
 }
 
