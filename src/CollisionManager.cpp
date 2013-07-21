@@ -174,25 +174,47 @@ void CollisionManager::update_repulsion(vector<Ennemy *>& EnnemyArray)
 void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, FloatRect rect)
 {
 
-    if(p_deplacement_x>0 && rect.left-player.getPosition().x-p_deplacement_x-player.getRayon() < player.getVitesse()){
+    if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() < player.getVitesse()){
 
-        deplacement_x=rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon();
-        update_x=true;
+        if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() >= 0){
+
+            deplacement_x=rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon();
+            update_x=true;
+        }
     }
     if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width < player.getVitesse()){
 
-        deplacement_x= -(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width);
-        update_x=true;
-    }
-    if(p_deplacement_y>0 && rect.top -player.getPosition().y-p_deplacement_y-player.getRayon() < player.getVitesse()){
+        if(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width >= 0){
 
-        deplacement_y=rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon();
-        update_y=true;
+            deplacement_x= -(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width);
+            update_x=true;
+        }
+    }
+    if(p_deplacement_y>0 && rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() < player.getVitesse()){
+
+        if(rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() >= 0){
+
+            deplacement_y=rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon();
+            update_y=true;
+        }
     }
     if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height < player.getVitesse()){
 
-        deplacement_y= -(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height);
-        update_y=true;
+        if(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height >= 0){
+
+            deplacement_y= -(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height);
+            update_y=true;
+        }
+    }
+
+    if(p_deplacement_x != 0 && deplacement_x == 0 && update_y){
+
+        update_x = false;
+    }
+
+    if(p_deplacement_y != 0 && deplacement_y == 0 && update_x){
+
+        update_y = false;
     }
 
     if(!update_x){

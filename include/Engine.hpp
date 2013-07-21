@@ -12,6 +12,7 @@
 #include "Map.hpp"
 #include "CollisionManager.hpp"
 #include "MusicManager.hpp"
+#include "Menu.hpp"
 
 class Map;
 class CollisionManager; /* Permet d'éviter l'interdépendance, en effet, Engine a besoin de connaître Map mais Map a besoin de Connaître Engine
@@ -35,6 +36,7 @@ public:
     //void addEnnemy(Ennemy *e);
     Map* getMap() const;
     Player* getPlayer() const;
+    sf::RenderWindow* getRenderWindow() const;
 
     CollisionManager* getCollisionManager() const;
     MusicManager* getMusicManager();
@@ -46,6 +48,12 @@ private:
     MusicManager mManager;
 
     Engine(sf::VideoMode mode, bool fullscreen); // Le constructeur est privé car on ne doit pas pouvoir construire la classe sans passer par la méthode getInstance().
+    void updateView();
+    void drawGame();
+    void drawMenu();
+    void lookIfGameOver();
+    void nextWaveAndMap();
+    void gestionEvenements();
 
     int mapNumber;
 
@@ -56,6 +64,7 @@ private:
     Map* gameMap;   // On utilise un pointeur pour éviter le soucis d'interdépendance.
     Player* player;
     CollisionManager* collisionManager;
+    Menu* menu;
 
     sf::Vector2i localMousePosition;
     sf::Event WindowEvent;
