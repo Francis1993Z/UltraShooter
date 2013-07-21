@@ -61,8 +61,8 @@ bool Ennemy::alive() const
 {
     if (vie > 0)
         return true;
-    else if(vie <= 0)
-        return false;
+
+    return false;
 }
 
 int Ennemy::getKillPoint() const

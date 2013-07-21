@@ -24,13 +24,13 @@ public:
 protected:
 private:
 
-    std::stringstream ss;
-
-    sf::Vector2f sizeWindow;
-    sf::Font font;
-
     sf::Text t_life;
     sf::Text t_score;
+    sf::Font font;
+
+    sf::Vector2f sizeWindow;
+
+    std::stringstream ss;
 };
 
 #endif // HUD_H

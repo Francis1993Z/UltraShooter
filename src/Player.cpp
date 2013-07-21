@@ -5,15 +5,17 @@
 using namespace std;
 using namespace sf;
 
+const float Player::vitesse = 15.0f;
+
 
 Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow):Life(100), Score(0), hud(Life, Score, font, sizeWindow)
 {
     rayon=50.f;
 
-    Player::setRadius(rayon);
-    Player::setFillColor(sf::Color::Blue);
-    Player::setPosition(init_position);
-    Player::setOrigin(50.f, 50.f);
+    setRadius(rayon);
+    setFillColor(sf::Color::Blue);
+    setPosition(init_position);
+    setOrigin(50.f, 50.f);
 }
 
 /*void Player::SetRenderWindow(sf::RenderWindow &mynewWindow)
@@ -108,14 +110,14 @@ sf::FloatRect Player::getCollisionBox()
 void Player::addPoints(int points)
 {
     Score+=points;
-    cout<<Score<<endl;
+
     hud.updateScore(Score);
 }
 
 void Player::modifierVie(int pv){
 
     Life+=pv;
-    cout << Life << endl;
+
     hud.updateLife(Life);
 }
 
@@ -123,8 +125,8 @@ bool Player::alive() const
 {
     if (Life > 0)
         return true;
-    else if(Life <= 0)
-        return false;
+
+    return false;
 }
 
 void Player::subirDegats(unsigned int p_damage){

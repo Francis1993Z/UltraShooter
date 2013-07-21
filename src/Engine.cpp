@@ -41,7 +41,7 @@ Engine* Engine::getInstance()
             int init_height;
             int init_bitmode;
             bool is_fullscreen;
-            std::string configPath(getCWD()+"/config/config");
+            string configPath(getCWD()+"/config/config");
             TiXmlDocument doc(configPath.c_str());
 
             if(!doc.LoadFile())
@@ -69,14 +69,14 @@ Engine* Engine::getInstance()
 
             /***********************************************************************************************/
 
-            Engine::instanceOfEngine = new Engine(sf::VideoMode(init_width, init_height, init_bitmode), is_fullscreen); // Crée une nouvelle instance de l'Engine.
+            Engine::instanceOfEngine = new Engine(VideoMode(init_width, init_height, init_bitmode), is_fullscreen); // Crée une nouvelle instance de l'Engine.
             isAlreadyInstancied = true;
         }
 
     return instanceOfEngine;
 }
 
-Engine::Engine(sf::VideoMode mode, bool fullscreen)
+Engine::Engine(VideoMode mode, bool fullscreen)
 {
     mapNumber = 1;
 
@@ -96,8 +96,8 @@ Engine::Engine(sf::VideoMode mode, bool fullscreen)
 
 int Engine::Run()
 {
-    sf::Clock fps_clock;
-    sf::Font font;
+    Clock fps_clock;
+    Font font;
     float x(0);
     float y(0);
 
@@ -106,7 +106,7 @@ int Engine::Run()
 
     //Game.setVerticalSyncEnabled(true);
     Game.setFramerateLimit(60);
-    sf::Vector2u screen_size=Game.getSize();
+    Vector2u screen_size=Game.getSize();
     MainView.setSize(screen_size.x, screen_size.y);
     MainView.setCenter(screen_size.x/2, screen_size.y/2);
     //MainView.setSize(1024, 768);
@@ -250,7 +250,7 @@ int Engine::Run()
                             Game.setView(MainView);
                         }
 
-                    if(object_pixel_position.x > Game.getSize().x-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
+                    if( (unsigned) object_pixel_position.x > Game.getSize().x-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
                         {
                             MainView.move(player->getVitesse(), 0.f);
                             player->move_myhud(player->getVitesse(), 0.f);
@@ -264,7 +264,7 @@ int Engine::Run()
                             Game.setView(MainView);
                         }
 
-                    if(object_pixel_position.y > Game.getSize().y-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
+                    if((unsigned) object_pixel_position.y > Game.getSize().y-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
                         {
                             MainView.move(0.f, player->getVitesse());
                             player->move_myhud(0.f, player->getVitesse());

@@ -14,16 +14,15 @@ class Player : public sf::CircleShape
     bool IamImmune;
 
     float rayon, ImmuneTime;
-    const float vitesse = 15.0f;
+    static const float vitesse;
 
-    //Immunity Timer
-    unsigned long Score;
     unsigned short Life;
+    unsigned long Score;
+
+    Hud hud;
 
     sf::FloatRect rect;
     sf::Clock weapon_clock;
-
-    Hud hud;
 
     //sf::RenderWindow myWindow;
 

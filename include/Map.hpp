@@ -58,7 +58,6 @@ public:
     void addEnnemy(Ennemy* e);
     void addObstacle(std::string obstacleTexturePath, int x, int y);
     void addWave(Wave w);
-    void deleteEnnemyat(unsigned int n);
 
     bool loadNextWave();
     bool isCurrentWaveOver() const;

@@ -2,8 +2,9 @@
 #include <iostream>
 
 using namespace std;
+using namespace sf;
 
-inline float Distance(sf::Vector2f o1, sf::Vector2f o2)
+inline float Distance(Vector2f o1, Vector2f o2)
 {
     float TCoteopposer=o2.y-o1.y;
     float TCoteadjacent=o2.x-o1.x;
@@ -14,7 +15,7 @@ inline float Distance(sf::Vector2f o1, sf::Vector2f o2)
 }
 
 
-inline float GetAngle(sf::Vector2f vec1, sf::Vector2f vec2)
+inline float GetAngle(Vector2f vec1, Vector2f vec2)
 {
     float a=vec2.x-vec1.x;
     float o=vec2.y-vec1.y;
@@ -39,25 +40,25 @@ bool CollisionManager::CollisionJoueur(float x, float y)
     deplacement_x = 0.0f;
     deplacement_y = 0.0f;
 
-    if(CheckIfOutOfWindow(player.getPosition().x, player.getPosition().y, x, y, player.getRayon()))
-        {
-            collision = true;
-            CalculDistanceAParcourirBordMap(x, y);
-        }
+    if(CheckIfOutOfWindow(player.getPosition().x, player.getPosition().y, player.getRayon()))
+    {
+        collision = true;
+        CalculDistanceAParcourirBordMap(x, y);
+    }
     else
-        {
+    {
 
-            for(std::list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it)
-                {
+        for(std::list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it)
+            {
 
-                    if(player.getCollisionBox().intersects(it->getCollisionBox()))
-                        {
+                if(player.getCollisionBox().intersects(it->getCollisionBox()))
+                    {
 
-                            collision = true;
-                            CalculDistanceAParcourir(x, y, it->getCollisionBox());
-                        }
-                }
-        }
+                        collision = true;
+                        CalculDistanceAParcourir(x, y, it->getCollisionBox());
+                    }
+            }
+    }
 
     return collision;
 }
@@ -85,56 +86,48 @@ bool CollisionManager::CollisionObstacles(int x, int y)
 
     collision = false;
 
-    for(std::list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it)
-        {
-
-            if((it->getCollisionBox().contains(x, y)))
-                {
-
-                    collision = true;
-                }
-        }
+    for(list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it)
+        if((it->getCollisionBox().contains(x, y)))
+                collision = true;
 
     return collision;
 }
 
-bool CollisionManager::CollisionEnnemy(sf::FloatRect rect, std::vector<Ennemy *>& EnnemyArray)
+bool CollisionManager::CollisionEnnemy(FloatRect rect, vector<Ennemy *>& EnnemyArray)
 {
 
     collision = false;
 
-    for(unsigned int n=0; n < EnnemyArray.size(); n++)
+    for(vector<Ennemy *>::const_iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
+    {
+        if(rect.intersects((*it)->getCollisionBox()))
         {
 
-            if(rect.intersects(EnnemyArray.at(n)->getCollisionBox()))
-                {
-
-                    collision = true;
-                    adresseEnnemyTouche = &*(EnnemyArray.at(n));//attention
-                }
+            collision = true;
+            adresseEnnemyTouche = &*(*it);//attention
         }
-
-    return collision;
-}
-
-bool  CollisionManager::CollisionContreJoueur(sf::FloatRect rect){
-
-    collision = false;
-
-    if(rect.intersects(player.getCollisionBox())){
-
-        collision = true;
     }
 
+
     return collision;
 }
 
-bool CollisionManager::CheckIfOutOfWindow(float pos_x, float pos_y, float p_deplacement_x, float p_deplacement_y, float rayon)
+bool  CollisionManager::CollisionContreJoueur(FloatRect rect){
+
+    collision = false;
+
+    if(rect.intersects(player.getCollisionBox()))
+        collision = true;
+
+    return collision;
+}
+
+bool CollisionManager::CheckIfOutOfWindow(float pos_x, float pos_y, float rayon)
 {
     if( static_cast<int>(pos_x-rayon) < 0                    ||
-            static_cast<unsigned int>(pos_x+rayon) > gameMap.getWidth() ||
+            static_cast<unsigned int>(pos_x+rayon) > (unsigned) gameMap.getWidth() ||
             static_cast<int>(pos_y-rayon) < 0                    ||
-            static_cast<unsigned int>(pos_y+rayon) > gameMap.getHeight())
+            static_cast<unsigned int>(pos_y+rayon) > (unsigned) gameMap.getHeight())
 
         return true;
 
@@ -142,28 +135,27 @@ bool CollisionManager::CheckIfOutOfWindow(float pos_x, float pos_y, float p_depl
         return false;
 }
 
-void CollisionManager::update_repulsion(std::vector<Ennemy *>& EnnemyArray)
+void CollisionManager::update_repulsion(vector<Ennemy *>& EnnemyArray)
 {
-    for(unsigned int n=0; n < EnnemyArray.size(); n++)
+    for(vector<Ennemy *>::const_iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
         {
-            for(unsigned int m=0; m < EnnemyArray.size(); m++)
+            for(vector<Ennemy *>::const_iterator it2 = EnnemyArray.begin(); it2 != EnnemyArray.end(); ++it2)
                 {
-                    if(n != m)
+                    if(it != it2)
                         {
-                            float distance = Distance(EnnemyArray.at(n)->getPosition(), EnnemyArray.at(m)->getPosition());
-                            float drn =  EnnemyArray.at(n)->get_dRadius();
-                            float drm =  EnnemyArray.at(m)->get_dRadius();
+                            float distance = Distance((*it)->getPosition(), (*it2)->getPosition());
+                            float drn =  (*it)->get_dRadius();
+                            float drm =  (*it2)->get_dRadius();
                             float drnm = drn + drm;
                             float D = distance - drnm;
 
                             if(D < 0)
                                 {
-                                    float angle = GetAngle(EnnemyArray.at(n)->getPosition(), EnnemyArray.at(m)->getPosition());
-                                    float e_m=EnnemyArray.at(n)->getSpeed();
+                                    float angle = GetAngle((*it)->getPosition(), (*it2)->getPosition());
+                                    float e_m=(*it)->getSpeed();
 
-                                    sf::Vector2f fv;
-                                    sf::Vector2f e_Repulsion;
-
+                                    Vector2f fv;
+                                    Vector2f e_Repulsion;
 
 
                                     e_Repulsion.x=-(e_m/2);
@@ -172,16 +164,14 @@ void CollisionManager::update_repulsion(std::vector<Ennemy *>& EnnemyArray)
                                     fv.x=cos(angle) * e_Repulsion.x;
                                     fv.y=sin(angle) * e_Repulsion.y;
 
-                                    //EnnemyArray.at(n).ApplyForce(-fv.x, -fv.y);
-                                    EnnemyArray.at(m)->ApplyForce(-fv.x, -fv.y);
-                                    //cout<<"Ennemy : "<<m<<" fv.x : "<<fv.x<<" fv.y"<<fv.y<<endl;
+                                    (*it2)->ApplyForce(-fv.x, -fv.y);
                                 }
                         }
                 }
         }
 }
 
-void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, sf::FloatRect rect)
+void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, FloatRect rect)
 {
 
     if(p_deplacement_x>0 && rect.left-player.getPosition().x-p_deplacement_x-player.getRayon() < player.getVitesse()){

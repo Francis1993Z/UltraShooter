@@ -24,7 +24,7 @@ class CollisionManager
         bool CollisionObstacles(sf::FloatRect rect);
         bool CollisionObstacles(int x, int y);
         bool CollisionEnnemy(sf::FloatRect rect, std::vector<Ennemy *>& EnnemyArray);
-        bool CheckIfOutOfWindow(float pos_x, float pos_y, float deplacement_x, float deplacement_y, float rayon);
+        bool CheckIfOutOfWindow(float pos_x, float pos_y, float rayon);
         bool CollisionContreJoueur(sf::FloatRect rect);
 
         void update_repulsion(std::vector<Ennemy *>& EnnemyArray);

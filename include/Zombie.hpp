@@ -12,7 +12,8 @@ class Zombie : public Ennemy
   public:
 
     Zombie(sf::Vector2f init_Position, Player& init_Target);
-unsigned int die() const;
+
+    unsigned int die() const;
     void  update();
 
 

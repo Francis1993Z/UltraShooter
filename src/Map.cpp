@@ -26,7 +26,7 @@ inline float GetAngle(sf::Vector2f vec1, sf::Vector2f vec2)
     return angle;
 }
 
-Map::Map(std::string mapPath)
+Map::Map(string mapPath)
 {
     string backgroundPath;
 
@@ -80,7 +80,7 @@ Map::Map(std::string mapPath)
             elem->QueryIntAttribute("coordX", &x);
             elem->QueryIntAttribute("coordY", &y);
 
-            std::string path(getCWD() + "/" + elem->Attribute("path"));
+            string path(getCWD() + "/" + elem->Attribute("path"));
 
             if(x > 0 && x < width && y > 0 && y < height)
                 addObstacle(path.c_str(), x, y);
@@ -177,65 +177,73 @@ void Map::drawObstacles(RenderWindow* window) const
 
 void Map::update(RenderWindow* game)
 {
+    CollisionManager& collisionManager = *Engine::getInstance()->getCollisionManager();
 
-    for(unsigned int n=0; n < AllBullets.size(); n++)
+    vector<Bullet>::iterator it = AllBullets.begin();
+    vector<Ennemy *>::iterator itEnnemy = EnnemyArray.begin();
+
+    while(it != AllBullets.end())
+    {
+        it->UpdatePosition();
+
+        if(collisionManager.CheckIfOutOfWindow(it->getPosition().x, it->getPosition().y, 0.0f))
+            it = AllBullets.erase(it);
+        else if(collisionManager.CollisionObstacles(it->getGlobalBounds()))
+            it = AllBullets.erase(it);
+        else if(collisionManager.CollisionEnnemy(it->getGlobalBounds(), EnnemyArray))
         {
-            AllBullets.at(n).UpdatePosition();
 
-            if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(AllBullets.at(n).getPosition().x, AllBullets.at(n).getPosition().y, 0.0f, 0.0f, 0.0f) == true)
-                AllBullets.erase(AllBullets.begin()+n);
-            else if(Engine::getInstance()->getCollisionManager()->CollisionObstacles(AllBullets.at(n).getGlobalBounds()))
-                {
+            EnnemyTouche = collisionManager.getAdresseEnnemyTouche();
+            EnnemyTouche->subirDegats(it->getDamage());
 
-                    AllBullets.erase(AllBullets.begin()+n);
-                }
-            else if(Engine::getInstance()->getCollisionManager()->CollisionEnnemy(AllBullets.at(n).getGlobalBounds(), EnnemyArray))
-                {
-
-                    EnnemyTouche = Engine::getInstance()->getCollisionManager()->getAdresseEnnemyTouche();
-                    EnnemyTouche->subirDegats(AllBullets.at(n).getDamage());
-                }
         }
+        else
+            ++it;
+    }
 
     Engine::getInstance()->getCollisionManager()->update_repulsion(EnnemyArray);
 
 
-    for(unsigned int n=0; n < EnnemyArray.size(); n++)
+    while(itEnnemy != EnnemyArray.end())
+    {
+        if(!(*itEnnemy)->alive())
         {
-            if(!EnnemyArray.at(n)->alive())
-                {
-                    player->addPoints(EnnemyArray.at(n)->die());
-                    //EnnemyArray.erase(EnnemyArray.begin()+n);
-                    deleteEnnemyat(n);
-                }
+            player->addPoints((*itEnnemy)->die());
 
+            delete *itEnnemy;
+            itEnnemy = EnnemyArray.erase(itEnnemy);
+        }
+        else
+        {
+            (*itEnnemy)->update();
+
+            if(collisionManager.CheckIfOutOfWindow((*itEnnemy)->getPosition().x, (*itEnnemy)->getPosition().y, 5.0f))
+            {
+                delete *itEnnemy;
+                itEnnemy = EnnemyArray.erase(itEnnemy);
+            }
+            else if(collisionManager.CollisionContreJoueur((*itEnnemy)->getCollisionBox()))
+            {
+
+                player->subirDegats((*itEnnemy)->getDamage());
+
+                delete *itEnnemy;
+                itEnnemy = EnnemyArray.erase(itEnnemy);
+            }
             else
-                {
-                    EnnemyArray.at(n)->update();
-
-                    if(Engine::getInstance()->getCollisionManager()->CheckIfOutOfWindow(EnnemyArray.at(n)->getPosition().x, EnnemyArray.at(n)->getPosition().y, 0.0f, 0.0f, 5.0f)){
-
-                        EnnemyArray.erase(EnnemyArray.begin()+n);
-                    }
-                    else if(Engine::getInstance()->getCollisionManager()->CollisionContreJoueur(EnnemyArray.at(n)->getCollisionBox())){
-
-                        player->subirDegats(EnnemyArray.at(n)->getDamage());
-                        EnnemyArray.erase(EnnemyArray.begin()+n);
-                    }
-                }
+                ++itEnnemy;
         }
+    }
 
-        if(!player->alive()){
+    if(!player->alive())
+        gameOver = true;
 
-            gameOver = true;
-        }
-
-    for(unsigned int n=0; n < AllBullets.size(); n++)
-        game->draw(AllBullets.at(n));
+    for(it = AllBullets.begin(); it != AllBullets.end(); ++it)
+        game->draw(*it);
 
 
-    for(unsigned int n=0; n < EnnemyArray.size(); n++)
-        game->draw(*EnnemyArray.at(n));
+    for(itEnnemy = EnnemyArray.begin(); itEnnemy != EnnemyArray.end(); ++itEnnemy)
+        game->draw(*(*itEnnemy));
 }
 
 Sprite Map::getBackground() const
@@ -246,12 +254,6 @@ Sprite Map::getBackground() const
 void Map::setPlayer(Player& newPlayer)
 {
     player=&newPlayer;
-}
-
-void Map::deleteEnnemyat(unsigned int n)
-{
-    delete EnnemyArray.at(n);
-    EnnemyArray.erase(EnnemyArray.begin()+n);
 }
 
 bool Map::loadNextWave()
@@ -281,7 +283,7 @@ FloatRect Map::getCollisionBox() const
     return background.getGlobalBounds();
 }
 
-std::list <Obstacle> Map::getListeObstacles() const
+list <Obstacle> Map::getListeObstacles() const
 {
     return lObstacles;
 }
