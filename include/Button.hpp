@@ -10,8 +10,8 @@
 class Button
 {
     public:
-        Button(int p_posX, int p_posY, std::string p_text, int p_id);
-        void draw(sf::RenderWindow& game);
+        Button(int p_posX, int p_posY, std::string p_text);
+        void draw();
         sf::FloatRect getCollisionBox() const;
         void setSurvolSouris(bool p_survol);
         virtual ~Button();

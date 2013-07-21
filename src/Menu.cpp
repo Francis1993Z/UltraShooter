@@ -15,14 +15,12 @@ Menu::Menu()
 
         sprite.setTexture(texture);
         sprite.scale(sf::Vector2f(0.7f, 0.65f));
-        addWidget(Button(0, 0, "Jouer", 0));
+        addWidget(Button(0, 0, "Jouer"));
     }
 }
 
-void Menu::draw(sf::RenderWindow& game){
-
-    game.draw(sprite);
-    drawWidgets(game);
+void Menu::draw(){
+    drawWidgets();
 }
 
 bool Menu::getJouer() const{

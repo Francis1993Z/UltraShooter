@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-Button::Button(int p_posX, int p_posY, std::string p_text, int p_id)
+Button::Button(int p_posX, int p_posY, std::string p_text)
 {
     survol = false;
 
@@ -25,7 +25,7 @@ Button::Button(int p_posX, int p_posY, std::string p_text, int p_id)
     }
 }
 
-void Button::draw(sf::RenderWindow& game){
+void Button::draw(){
 
     if(survol){
 

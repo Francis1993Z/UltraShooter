@@ -9,7 +9,6 @@
 
 #include <tinyxml.h>
 
-
 #include "Engine.hpp"
 #include "Player.hpp"
 
@@ -98,8 +97,6 @@ int Engine::Run()
 {
     Clock fps_clock;
     Font font;
-    float x(0);
-    float y(0);
 
     if (!font.loadFromFile("ressources/fonts/arial.ttf"))
         cerr<<"ERROR : Can't load the font for the HUD"<<endl;
@@ -331,7 +328,7 @@ void Engine::updateView(){
 void Engine::drawMenu(){
 
     Game.clear(Color(0,0,0));
-    menu->draw(Game);
+    menu->draw();
     Game.display();
 }
 

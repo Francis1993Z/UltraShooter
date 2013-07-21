@@ -1,6 +1,8 @@
 #ifndef WIDGETLISTENER_INCLUDED_HPP
 #define WIDGETLISTENER_INCLUDED_HPP
 
+#include <list>
+
 #include "Button.hpp"
 
 class WidgetListener
@@ -8,12 +10,12 @@ class WidgetListener
     public:
         WidgetListener();
         void addWidget(Button button);
-        void drawWidgets(sf::RenderWindow& game);
+        void drawWidgets();
         virtual ~WidgetListener();
     protected:
     private:
         bool ajouter;
-        std::vector<Button> listeButtons;
+        std::list<Button> listeButtons;
 };
 
 #endif // WIDGETLISTENER_INCLUDED_HPP

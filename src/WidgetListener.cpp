@@ -1,5 +1,7 @@
 #include "WidgetListener.hpp"
-#include <iostream>
+
+using namespace std;
+using namespace sf;
 
 WidgetListener::WidgetListener()
 {
@@ -11,12 +13,13 @@ void WidgetListener::addWidget(Button button){
     listeButtons.push_back(button);
 }
 
-void WidgetListener::drawWidgets(sf::RenderWindow& game){
+void WidgetListener::drawWidgets()
+{
+    list<Button>::iterator it;
 
-    for(unsigned int n=0; n < listeButtons.size(); n++){
+    for(it = listeButtons.begin(); it != listeButtons.end(); ++it)
+        it->draw();
 
-        listeButtons.at(n).draw(game);
-    }
 }
 
 WidgetListener::~WidgetListener()

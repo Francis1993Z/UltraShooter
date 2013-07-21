@@ -15,7 +15,7 @@ class Menu : public WidgetListener
     public:
         Menu();
         virtual ~Menu();
-        void draw(sf::RenderWindow& game);
+        void draw();
         bool getJouer() const;
     protected:
     private:
