@@ -16,6 +16,7 @@ class Menu : public WidgetListener
         Menu();
         virtual ~Menu();
         void draw();
+        void action(int id);
         bool getJouer() const;
     protected:
     private:

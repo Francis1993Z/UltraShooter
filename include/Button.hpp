@@ -10,10 +10,12 @@
 class Button
 {
     public:
-        Button(int p_posX, int p_posY, std::string p_text);
+        Button(int p_posX, int p_posY, std::string p_text, int p_id);
         void draw();
         sf::FloatRect getCollisionBox() const;
         void setSurvolSouris(bool p_survol);
+        void setClicSouris(bool p_clic);
+        int getId() const;
         virtual ~Button();
     protected:
     private:

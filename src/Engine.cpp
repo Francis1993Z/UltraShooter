@@ -87,34 +87,34 @@ Engine::Engine(VideoMode mode, bool fullscreen)
     else
         gameMap = new Map(getCWD()+"/ressources/maps/" + oss.str() + ".map");
 
+        loadFiles = new LoadFiles();
+        Game = new RenderWindow();
+
     if(fullscreen)
-        Game.create(mode, "Ultra Shooter 0.2", sf::Style::Fullscreen);
+        Game->create(mode, "Ultra Shooter 0.2", sf::Style::Fullscreen);
     else
-        Game.create(mode, "Ultra Shooter 0.2");
+        Game->create(mode, "Ultra Shooter 0.2");
 }
 
 int Engine::Run()
 {
     Clock fps_clock;
-    Font font;
-
-    if (!font.loadFromFile("ressources/fonts/arial.ttf"))
-        cerr<<"ERROR : Can't load the font for the HUD"<<endl;
-
     //Game.setVerticalSyncEnabled(true);
-    Game.setFramerateLimit(60);
-    Vector2u screen_size=Game.getSize();
+    Game->setFramerateLimit(60);
+    Vector2u screen_size=Game->getSize();
     MainView.setSize(screen_size.x, screen_size.y);
     MainView.setCenter(screen_size.x/2, screen_size.y/2);
     //MainView.setSize(1024, 768);
 
-    player = new Player(sf::Vector2f(200.f, 200.f), font, MainView.getSize());
+    player = new Player(sf::Vector2f(200.f, 200.f), *(loadFiles->getPoliceArial()), MainView.getSize());
     collisionManager = new CollisionManager(*player, *gameMap);
     menu = new Menu();
+    widgetManager.setPause(false);
+    widgetManager.setCurrentWidgetListener(menu);
 
     gameMap->setPlayer(*player);
 
-    Game.setView(MainView);
+    Game->setView(MainView);
 
     mManager.playTheme(gameMap->getTheme());
 
@@ -125,13 +125,13 @@ int Engine::Run()
     IsRunning=true;
     while(IsRunning)
         {
-            while(Game.isOpen())//Fenetre
+            while(Game->isOpen())//Fenetre
                 {
 
                     gestionEvenements(); //Gère tous les évènements.
 
                     if(menu->getJouer()){
-
+                        widgetManager.setPause(true);
 
                         updateView(); //Mets à jour la position de la caméra.
                         drawGame(); //Dessine tous les composants du jeu lors d'une partie.
@@ -168,6 +168,16 @@ MusicManager* Engine::getMusicManager()
     return &mManager;
 }
 
+LoadFiles* Engine::getLoadFiles() const{
+
+    return loadFiles;
+}
+
+RenderWindow* Engine::getRenderWindow() const{
+
+    return Game;
+}
+
 void Engine::gestionEvenements(){
 
     if(menu->getJouer()){
@@ -195,31 +205,27 @@ void Engine::gestionEvenements(){
     }
 
 //Pour des touches séparées(avec délai du système), il vaut mieux utiliser ces lignes là(pollEvent).
-    while (Game.pollEvent(WindowEvent))
+    while (Game->pollEvent(WindowEvent))
     {
         if (WindowEvent.type == Event::Closed)
         {
-            Game.close();
+            Game->close();
             IsRunning=false;
         }
-                            /* else if (WindowEvent.type == Event::MouseMoved)
-                             {
-                                 MousePosition.x=WindowEvent.mouseMove.x;
-                                 MousePosition.y=WindowEvent.mouseMove.y;
-                             }*/
+        if (WindowEvent.type == Event::MouseMoved && !widgetManager.getPause())
+        {
+            widgetManager.updatePosSouris(WindowEvent.mouseMove.x, WindowEvent.mouseMove.y);
+        }
         if (WindowEvent.type == sf::Event::Resized)
         {
-            // on met à jour la vue, avec la nouvelle taille de la fenêtre
             MainView.setSize(WindowEvent.size.width, WindowEvent.size.height);
-            //sf::FloatRect visibleArea(0, 0, WindowEvent.size.width, WindowEvent.size.height);
-            //Game.setView(sf::View(visibleArea));
-            Game.setView(MainView);
+            Game->setView(MainView);
         }
         if (WindowEvent.type == Event::KeyPressed)
         {
             if (WindowEvent.key.code == sf::Keyboard::Escape)
             {
-                Game.close();
+                Game->close();
                 IsRunning=false;
             }
             if (WindowEvent.key.code == sf::Keyboard::Space)
@@ -250,14 +256,14 @@ void Engine::gestionEvenements(){
             else if(WindowEvent.mouseWheel.delta < 0)
                 MainView.zoom(1.8);
 
-            Game.setView(MainView);
+            Game->setView(MainView);
         }
 
     }//pollEvent
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        localMousePosition = sf::Mouse::getPosition(Game);
+        localMousePosition = sf::Mouse::getPosition(*Game);
 
         if (menu->getJouer() && player->ReadyToShoot()==true)
         {
@@ -265,7 +271,18 @@ void Engine::gestionEvenements(){
             converted_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
             converted_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
 
-            gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, Game)));
+            gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, *Game)));
+        }
+        else if(!menu->getJouer() && !widgetManager.getPause()){
+
+            widgetManager.positionClicSouris(localMousePosition.x, localMousePosition.y);
+        }
+    }
+    if(WindowEvent.type == sf::Event::MouseButtonReleased){
+
+        if (WindowEvent.mouseButton.button == sf::Mouse::Left && !widgetManager.getPause())
+        {
+            widgetManager.positionRelachementSouris(WindowEvent.mouseButton.x, WindowEvent.mouseButton.y);
         }
     }
 }
@@ -297,51 +314,51 @@ bool Engine::loadNextMap()
 
 void Engine::updateView(){
 
-    Vector2i object_pixel_position=Game.mapCoordsToPixel(player->getPosition(), MainView);
+    Vector2i object_pixel_position=Game->mapCoordsToPixel(player->getPosition(), MainView);
 
     if(object_pixel_position.x < 300)
     {
         MainView.move(-player->getVitesse(), 0.f);
         player->move_myhud(-player->getVitesse(), 0.f);//On met à jour la position de la HUD
-        Game.setView(MainView);
+        Game->setView(MainView);
     }
-    if((unsigned)object_pixel_position.x > Game.getSize().x-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
+    if((unsigned)object_pixel_position.x > Game->getSize().x-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
     {
         MainView.move(player->getVitesse(), 0.f);
         player->move_myhud(player->getVitesse(), 0.f);
-        Game.setView(MainView);
+        Game->setView(MainView);
     }
     if(object_pixel_position.y < 300)
     {
         MainView.move(0.f, -player->getVitesse());
         player->move_myhud(0.f, -player->getVitesse());
-        Game.setView(MainView);
+        Game->setView(MainView);
     }
-    if((unsigned)object_pixel_position.y > Game.getSize().y-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
+    if((unsigned)object_pixel_position.y > Game->getSize().y-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
     {
         MainView.move(0.f, player->getVitesse());
         player->move_myhud(0.f, player->getVitesse());
-        Game.setView(MainView);
+        Game->setView(MainView);
     }
 }
 
 void Engine::drawMenu(){
 
-    Game.clear(Color(0,0,0));
+    Game->clear(Color(0,0,0));
     menu->draw();
-    Game.display();
+    Game->display();
 }
 
 void Engine::drawGame(){
 
-    Game.clear(Color(0,0,0));
-    Game.draw(gameMap->getBackground());
-    gameMap->update(&Game);
-    gameMap->drawObstacles(&Game);
-    Game.draw(*player);
-    Game.draw(player->getScoreHud());
-    Game.draw(player->getLifeHud());
-    Game.display();
+    Game->clear(Color(0,0,0));
+    Game->draw(gameMap->getBackground());
+    gameMap->update(Game);
+    gameMap->drawObstacles(Game);
+    Game->draw(*player);
+    Game->draw(player->getScoreHud());
+    Game->draw(player->getLifeHud());
+    Game->display();
 }
 
 void Engine::nextWaveAndMap(){
@@ -352,10 +369,7 @@ void Engine::nextWaveAndMap(){
         {
             if(!loadNextMap())
             {
-                Game.close();
-                IsRunning=false;
-
-                cout << "Jeu termine !" << endl;
+                leaveGame("Jeu termine !");
             }
         }
     }
@@ -365,22 +379,28 @@ void Engine::lookIfGameOver(){
 
     if(gameMap->getGameOver()){
 
-        Game.close();
-        IsRunning=false;
-
-        cout << "Game Over !" << endl;
+        leaveGame("Game Over !");
     }
+}
+
+void Engine::leaveGame(string cause){
+
+    cout<<cause<<endl;
+    Game->close();
+    IsRunning=false;
 }
 
 
 Engine::~Engine()
 {
     isAlreadyInstancied = false;
+    Game->close();
+    IsRunning=false;
 
+    delete Game;
     delete gameMap;
     delete player;
     delete collisionManager;
     delete menu;
-
-    Game.close();
+    delete loadFiles;
 }

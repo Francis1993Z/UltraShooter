@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <vector>
+#include <string>
 
 #include "Player.hpp"
 #include "Bullet.hpp"
@@ -13,6 +14,8 @@
 #include "CollisionManager.hpp"
 #include "MusicManager.hpp"
 #include "Menu.hpp"
+#include "LoadFiles.hpp"
+#include "WidgetManager.hpp"
 
 class Map;
 class CollisionManager; /* Permet d'éviter l'interdépendance, en effet, Engine a besoin de connaître Map mais Map a besoin de Connaître Engine
@@ -32,14 +35,16 @@ public:
 
     bool CheckIfOutOfWindow(sf::Vector2f Position, float deplacement_x, float deplacement_y, float rayon);
 
+    void leaveGame(std::string cause);
+
     static Engine* getInstance(); //Permet de récupérer l'instance (adresse) de la classe Engine partout dans le programme.
     //void addEnnemy(Ennemy *e);
     Map* getMap() const;
     Player* getPlayer() const;
     sf::RenderWindow* getRenderWindow() const;
-
     CollisionManager* getCollisionManager() const;
     MusicManager* getMusicManager();
+    LoadFiles* getLoadFiles() const;
 
     bool loadNextMap();
 
@@ -65,10 +70,12 @@ private:
     Player* player;
     CollisionManager* collisionManager;
     Menu* menu;
+    LoadFiles* loadFiles;
+    WidgetManager widgetManager;
 
     sf::Vector2i localMousePosition;
     sf::Event WindowEvent;
-    sf::RenderWindow Game;
+    sf::RenderWindow* Game;
     sf::View MainView;
 };
 

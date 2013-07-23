@@ -9,13 +9,16 @@ class WidgetListener
 {
     public:
         WidgetListener();
-        void addWidget(Button button);
-        void drawWidgets();
+        std::list<Button *>* getListeWidgets();
+        virtual void action(int idWidgetClique) = 0;
+        virtual void draw() = 0;
         virtual ~WidgetListener();
     protected:
+        void addWidget(Button* button);
+        void drawWidgets();
+        void errorId(int id);
     private:
-        bool ajouter;
-        std::list<Button> listeButtons;
+        std::list<Button *> listeButtons;
 };
 
 #endif // WIDGETLISTENER_INCLUDED_HPP
