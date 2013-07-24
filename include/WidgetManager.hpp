@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Button.hpp"
+#include "Widget.hpp"
 #include "WidgetListener.hpp"
 
 #include <list>
@@ -22,7 +22,7 @@ class WidgetManager
         virtual ~WidgetManager();
     protected:
     private:
-        std::list<Button *>* listeButtons;
+        std::list<Widget *>* listeWidgets;
         int idWidgetClique;
         bool pause;
         WidgetListener* widgetListener;

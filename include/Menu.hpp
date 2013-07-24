@@ -13,7 +13,7 @@
 class Menu : public WidgetListener
 {
     public:
-        Menu();
+        Menu(sf::Vector2u sizeWindow);
         virtual ~Menu();
         void draw();
         void action(int id);

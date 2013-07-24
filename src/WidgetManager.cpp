@@ -10,12 +10,12 @@ WidgetManager::WidgetManager()
 void WidgetManager::setCurrentWidgetListener(WidgetListener* p_widgetListener){
 
     widgetListener = p_widgetListener;
-    listeButtons = p_widgetListener->getListeWidgets();
+    listeWidgets = p_widgetListener->getListeWidgets();
 }
 
 void WidgetManager::updatePosSouris(float pos_x, float pos_y){
 
-    for(list<Button *>::iterator it = listeButtons->begin(); it != listeButtons->end(); ++it){
+    for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it){
 
         if((*it)->getCollisionBox().contains(pos_x, pos_y)){
 
@@ -30,7 +30,7 @@ void WidgetManager::updatePosSouris(float pos_x, float pos_y){
 
 void WidgetManager::positionClicSouris(float pos_x, float pos_y){
 
-    for(list<Button *>::iterator it = listeButtons->begin(); it != listeButtons->end(); ++it){
+    for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it){
 
         if((*it)->getCollisionBox().contains(pos_x, pos_y)){
 
@@ -46,7 +46,7 @@ void WidgetManager::positionClicSouris(float pos_x, float pos_y){
 
 void WidgetManager::positionRelachementSouris(float pos_x, float pos_y){
 
-    for(list<Button *>::iterator it = listeButtons->begin(); it != listeButtons->end(); ++it){
+    for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it){
 
         if((*it)->getCollisionBox().contains(pos_x, pos_y) && (*it)->getId() == idWidgetClique){
 
@@ -67,6 +67,5 @@ void WidgetManager::setPause(bool p_pause){
 
 WidgetManager::~WidgetManager()
 {
-    delete widgetListener;
-    delete listeButtons;
+
 }

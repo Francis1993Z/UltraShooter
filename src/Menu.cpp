@@ -5,12 +5,16 @@
 
 using namespace std;
 
-Menu::Menu()
+Menu::Menu(sf::Vector2u sizeWindow)
 {
     jouer = false;
 
     sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgBackgroundMenu()));
-    sprite.scale(sf::Vector2f(0.7f, 0.65f));
+    float a(sprite.getTexture()->getSize().x);
+    float b(sizeWindow.x);
+    float c(sizeWindow.y);
+    float d(sprite.getTexture()->getSize().y);
+    sprite.scale(sf::Vector2f(b/a, c/d));
     addWidget(new Button(0, 0, "Jouer", 0));
     addWidget(new Button(0, 50, "Quitter", 1));
 }

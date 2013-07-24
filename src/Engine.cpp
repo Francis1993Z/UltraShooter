@@ -108,7 +108,7 @@ int Engine::Run()
 
     player = new Player(sf::Vector2f(200.f, 200.f), *(loadFiles->getPoliceArial()), MainView.getSize());
     collisionManager = new CollisionManager(*player, *gameMap);
-    menu = new Menu();
+    menu = new Menu(screen_size);
     widgetManager.setPause(false);
     widgetManager.setCurrentWidgetListener(menu);
 

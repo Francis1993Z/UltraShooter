@@ -41,11 +41,6 @@ void Button::setSurvolSouris(bool p_survol){
     }
 }
 
-int Button::getId() const{
-
-    return id;
-}
-
 void Button::setClicSouris(bool p_clic){
 
     if(p_clic){

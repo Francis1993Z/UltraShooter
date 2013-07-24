@@ -10,23 +10,26 @@ WidgetListener::WidgetListener()
 
 }
 
-void WidgetListener::addWidget(Button* button){
+void WidgetListener::addWidget(Widget* widget){
 
-    listeButtons.push_back(button);
+    listeWidgets.push_back(widget);
 }
 
 void WidgetListener::drawWidgets()
 {
-    list<Button *>::iterator it;
+    list<Widget *>::iterator it;
+    cerr<<"***************"<<endl;
 
-    for(it = listeButtons.begin(); it != listeButtons.end(); ++it)
+    for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it){
+cerr<<"adresse "<<&(*it)<<endl;
         (*it)->draw();
+    }
 
 }
 
-list<Button *>* WidgetListener::getListeWidgets() {
+list<Widget *>* WidgetListener::getListeWidgets() {
 
-    return &listeButtons;
+    return &listeWidgets;
 }
 
 void WidgetListener::errorId(int id){
@@ -37,8 +40,11 @@ void WidgetListener::errorId(int id){
 
 WidgetListener::~WidgetListener()
 {
-    list<Button *>::iterator it;
-
-    for(it = listeButtons.begin(); it != listeButtons.end(); ++it)
+    list<Widget *>::iterator it;
+cerr<<"-------------------"<<endl;
+//cerr<<listeWidgets.size()<<endl;
+    for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it){
+            cerr<<"adresse "<<&(*it)<<endl;
         delete *it;
+    }
 }
