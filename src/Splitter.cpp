@@ -51,9 +51,9 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
     setOrigin(Vector2f(my_size.x / 2, my_size.y / 2));
     setFillColor(Color::Green);
 
-    d_radius=m_size;
+    d_radius=n_size;
 
-    my_behaviour=ATTACK;
+    my_behaviour=STANDBY;
 
     Vector2f t_pos=my_target->getPosition();
 

@@ -26,7 +26,7 @@ Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
     e_my = e_m;
 
     d_radius = 25;
-    my_behaviour = ATTACK;
+    my_behaviour = STANDBY;
     //cout << "New Zombie at : " << this << endl;
 }
 
@@ -49,6 +49,24 @@ void Zombie::update()
             Vector2f v;
             v.x = cos(TargetDirection) * e_mx;
             v.y = sin(TargetDirection) * e_my;
+            //std::cout<<this<<" : x : "<<Myposition.x<<" y : "<<Myposition.y<<" angle : "<<TargetDirection<<std::endl;
+
+            mvx = v.x + m_fx;
+            mvy = v.y + m_fy;
+
+            move(mvx, -mvy);
+
+            m_fy = 0;
+            m_fx = 0;
+        }
+            if(my_behaviour == STANDBY)
+        {
+            float mvx;
+            float mvy;
+
+            Vector2f v;
+            v.x = 0.00f;
+            v.y = 0.00f;
             //std::cout<<this<<" : x : "<<Myposition.x<<" y : "<<Myposition.y<<" angle : "<<TargetDirection<<std::endl;
 
             mvx = v.x + m_fx;
