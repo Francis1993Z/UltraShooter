@@ -13,8 +13,12 @@
 *.a
 
 *.cbp
+*.pl
 *.depend
 *.layout
+*.proj
 .directory
 bin
 obj
+SNDB4
+build

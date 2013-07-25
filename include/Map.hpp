@@ -11,9 +11,10 @@
 #include <string>
 
 #include "Bullet.hpp"
-#include "Player.hpp"
+
 #include "Engine.hpp"
-#include "Zombie.hpp"
+#include "Ennemy.hpp"
+#include "Player.hpp"
 #include "Splitter.hpp"
 #include "Obstacle.hpp"
 #include "Wave.hpp"

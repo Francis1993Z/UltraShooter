@@ -18,6 +18,8 @@
 #include "WidgetManager.hpp"
 
 class Map;
+
+
 class CollisionManager; /* Permet d'éviter l'interdépendance, en effet, Engine a besoin de connaître Map mais Map a besoin de Connaître Engine
               On prévient juste le compilateur que Map sera définit plus tard */
 

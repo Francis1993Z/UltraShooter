@@ -16,6 +16,7 @@ Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindo
     setFillColor(sf::Color::Blue);
     setPosition(init_position);
     setOrigin(50.f, 50.f);
+    my_weapon.push_back(new AutomaticWeapon());
 }
 
 /*void Player::SetRenderWindow(sf::RenderWindow &mynewWindow)

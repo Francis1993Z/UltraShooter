@@ -7,6 +7,10 @@
 
 #include "GlobalFunctions.h"
 #include "Hud.hpp"
+#include <list>
+
+#include "Weapon.hpp"
+#include "AutomaticWeapon.hpp"
 
 class Player : public sf::CircleShape
 {
@@ -25,7 +29,7 @@ class Player : public sf::CircleShape
     sf::Clock weapon_clock;
 
     //sf::RenderWindow myWindow;
-
+    std::list<Weapon *> my_weapon;
     std::string PlayerName;
 
 public:
