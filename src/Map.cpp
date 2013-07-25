@@ -93,28 +93,29 @@ Map::Map(string mapPath)
     int number;
 
     while(node)
-    {
-        Wave w;
-        elem = node->FirstChildElement();
-
-        if(!elem)
         {
-            cerr << "Map 01.map corrompue !" << endl;
-            exit(2);
+            Wave w;
+            elem = node->FirstChildElement();
+
+            if(!elem)
+                {
+                    cerr << "Map 01.map corrompue !" << endl;
+                    exit(2);
+                }
+
+            while(elem)
+                {
+                    elem->QueryIntAttribute("number", &number);
+                    w.addEnnemy(elem->Attribute("type"), number);
+
+                    elem = elem->NextSiblingElement();
+                }
+
+            addWave(w);
+
+            node = node->NextSibling(); // iteration
         }
-
-        while(elem)
-        {
-            elem->QueryIntAttribute("number", &number);
-            w.addEnnemy(elem->Attribute("type"), number);
-
-            elem = elem->NextSiblingElement();
-        }
-
-        addWave(w);
-
-        node = node->NextSibling(); // iteration
-    }
+        gameOver=false;
 }
 
 
@@ -183,57 +184,57 @@ void Map::update(RenderWindow* game)
     vector<Ennemy *>::iterator itEnnemy = EnnemyArray.begin();
 
     while(it != AllBullets.end())
-    {
-        it->UpdatePosition();
-
-        if(collisionManager.CheckIfOutOfWindow(it->getPosition().x, it->getPosition().y, 0.0f))
-            it = AllBullets.erase(it);
-        else if(collisionManager.CollisionObstacles(it->getGlobalBounds()))
-            it = AllBullets.erase(it);
-        else if(collisionManager.CollisionEnnemy(it->getGlobalBounds(), EnnemyArray))
         {
+            it->UpdatePosition();
 
-            EnnemyTouche = collisionManager.getAdresseEnnemyTouche();
-            EnnemyTouche->subirDegats(it->getDamage());
+            if(collisionManager.CheckIfOutOfWindow(it->getPosition().x, it->getPosition().y, 0.0f))
+                it = AllBullets.erase(it);
+            else if(collisionManager.CollisionObstacles(it->getGlobalBounds()))
+                it = AllBullets.erase(it);
+            else if(collisionManager.CollisionEnnemy(it->getGlobalBounds(), EnnemyArray))
+                {
 
+                    EnnemyTouche = collisionManager.getAdresseEnnemyTouche();
+                    EnnemyTouche->subirDegats(it->getDamage());
+                it = AllBullets.erase(it);
+                }
+            else
+                ++it;
         }
-        else
-            ++it;
-    }
 
     Engine::getInstance()->getCollisionManager()->update_repulsion(EnnemyArray);
 
 
     while(itEnnemy != EnnemyArray.end())
-    {
-        if(!(*itEnnemy)->alive())
         {
-            player->addPoints((*itEnnemy)->die());
+            if(!(*itEnnemy)->alive())
+                {
+                    player->addPoints((*itEnnemy)->die());
 
-            delete *itEnnemy;
-            itEnnemy = EnnemyArray.erase(itEnnemy);
-        }
-        else
-        {
-            (*itEnnemy)->update();
-
-            if(collisionManager.CheckIfOutOfWindow((*itEnnemy)->getPosition().x, (*itEnnemy)->getPosition().y, 5.0f))
-            {
-                delete *itEnnemy;
-                itEnnemy = EnnemyArray.erase(itEnnemy);
-            }
-            else if(collisionManager.CollisionContreJoueur((*itEnnemy)->getCollisionBox()))
-            {
-
-                player->subirDegats((*itEnnemy)->getDamage());
-
-                delete *itEnnemy;
-                itEnnemy = EnnemyArray.erase(itEnnemy);
-            }
+                    delete *itEnnemy;
+                    itEnnemy = EnnemyArray.erase(itEnnemy);
+                }
             else
-                ++itEnnemy;
+                {
+                    (*itEnnemy)->update();
+
+                    if(collisionManager.CheckIfOutOfWindow((*itEnnemy)->getPosition().x, (*itEnnemy)->getPosition().y, 5.0f))
+                        {
+                            delete *itEnnemy;
+                            itEnnemy = EnnemyArray.erase(itEnnemy);
+                        }
+                    else if(collisionManager.CollisionContreJoueur((*itEnnemy)->getCollisionBox()))
+                        {
+
+                            player->subirDegats((*itEnnemy)->getDamage());
+
+                            delete *itEnnemy;
+                            itEnnemy = EnnemyArray.erase(itEnnemy);
+                        }
+                    else
+                        ++itEnnemy;
+                }
         }
-    }
 
     if(!player->alive())
         gameOver = true;
@@ -259,12 +260,12 @@ void Map::setPlayer(Player& newPlayer)
 bool Map::loadNextWave()
 {
     if(!lWaves.empty())
-    {
-        lWaves.front().loadEnnemies(factory);
-        lWaves.pop_front();
+        {
+            lWaves.front().loadEnnemies(factory);
+            lWaves.pop_front();
 
-        return true;
-    }
+            return true;
+        }
 
     return false;
 }
@@ -294,7 +295,8 @@ Map::~Map()
         delete *it;
 }
 
-bool Map::getGameOver() const{
+bool Map::getGameOver() const
+{
 
     return gameOver;
 }

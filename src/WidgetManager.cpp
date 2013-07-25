@@ -7,60 +7,74 @@ WidgetManager::WidgetManager()
     pause = true;
 }
 
-void WidgetManager::setCurrentWidgetListener(WidgetListener* p_widgetListener){
+void WidgetManager::setCurrentWidgetListener(WidgetListener* p_widgetListener)
+{
 
     widgetListener = p_widgetListener;
     listeWidgets = p_widgetListener->getListeWidgets();
 }
 
-void WidgetManager::updatePosSouris(float pos_x, float pos_y){
+void WidgetManager::updatePosSouris(float pos_x, float pos_y)
+{
 
-    for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it){
+    for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it)
+        {
 
-        if((*it)->getCollisionBox().contains(pos_x, pos_y)){
+            if((*it)->getCollisionBox().contains(pos_x, pos_y))
+                {
 
-            (*it)->setSurvolSouris(true);
+                    (*it)->setSurvolSouris(true);
+                }
+            else
+                {
+
+                    (*it)->setSurvolSouris(false);
+                }
         }
-        else{
-
-            (*it)->setSurvolSouris(false);
-        }
-    }
 }
 
-void WidgetManager::positionClicSouris(float pos_x, float pos_y){
+void WidgetManager::positionClicSouris(float pos_x, float pos_y)
+{
 
-    for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it){
+    for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it)
+        {
 
-        if((*it)->getCollisionBox().contains(pos_x, pos_y)){
+            if((*it)->getCollisionBox().contains(pos_x, pos_y))
+                {
 
-            idWidgetClique = (*it)->getId();
-            (*it)->setClicSouris(true);
+                    idWidgetClique = (*it)->getId();
+                    (*it)->setClicSouris(true);
+                }
+            else
+                {
+
+                    (*it)->setClicSouris(false);
+                }
         }
-        else{
-
-            (*it)->setClicSouris(false);
-        }
-    }
 }
 
-void WidgetManager::positionRelachementSouris(float pos_x, float pos_y){
+void WidgetManager::positionRelachementSouris(float pos_x, float pos_y)
+{
 
-    for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it){
+    for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it)
+        {
 
-        if((*it)->getCollisionBox().contains(pos_x, pos_y) && (*it)->getId() == idWidgetClique){
+            if((*it)->getCollisionBox().contains(pos_x, pos_y) && (*it)->getId() == idWidgetClique)
+                {
 
-            widgetListener->action(idWidgetClique);
+                    widgetListener->action(idWidgetClique);
+                }
         }
-    }
 }
 
-bool WidgetManager::getPause() const{
+bool WidgetManager::getPause() const
+{
 
     return pause;
 }
 
-void WidgetManager::setPause(bool p_pause){
+void WidgetManager::setPause(bool p_pause)
+{
 
     pause = p_pause;
 }

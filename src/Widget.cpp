@@ -5,7 +5,8 @@ Widget::Widget()
     //ctor
 }
 
-int Widget::getId() const{
+int Widget::getId() const
+{
 
     return id;
 }

@@ -49,10 +49,10 @@ bool fileExists(const char * path)
 
     fp = fopen( path, "rb" );
     if( fp != NULL )
-    {
-        fclose( fp );
-        return true;
-    }
+        {
+            fclose( fp );
+            return true;
+        }
 
     return false;
 }

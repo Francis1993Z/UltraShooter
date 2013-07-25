@@ -114,7 +114,8 @@ void Player::addPoints(int points)
     hud.updateScore(Score);
 }
 
-void Player::modifierVie(int pv){
+void Player::modifierVie(int pv)
+{
 
     Life+=pv;
 
@@ -129,7 +130,8 @@ bool Player::alive() const
     return false;
 }
 
-void Player::subirDegats(unsigned int p_damage){
+void Player::subirDegats(unsigned int p_damage)
+{
 
     modifierVie(-p_damage);
 }

@@ -18,39 +18,47 @@ Button::Button(int p_posX, int p_posY, std::string p_text, int p_id)
     text.setPosition(p_posX+(sprite.getGlobalBounds().width/2)-(text.getGlobalBounds().width/2), p_posY+(sprite.getGlobalBounds().height/2)-(text.getGlobalBounds().height/2));
 }
 
-void Button::draw(){
+void Button::draw()
+{
 
     Engine::getInstance()->getRenderWindow()->draw(sprite);
     Engine::getInstance()->getRenderWindow()->draw(text);
 }
 
-sf::FloatRect Button::getCollisionBox() const{
+sf::FloatRect Button::getCollisionBox() const
+{
 
     return sprite.getGlobalBounds();
 }
 
-void Button::setSurvolSouris(bool p_survol){
+void Button::setSurvolSouris(bool p_survol)
+{
 
-    if(p_survol){
+    if(p_survol)
+        {
 
-        sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgButtonSurvol()));
-    }
-    else{
+            sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgButtonSurvol()));
+        }
+    else
+        {
 
-        sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgButton()));
-    }
+            sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgButton()));
+        }
 }
 
-void Button::setClicSouris(bool p_clic){
+void Button::setClicSouris(bool p_clic)
+{
 
-    if(p_clic){
+    if(p_clic)
+        {
 
-        sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgButtonClic()));
-    }
-    else{
+            sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgButtonClic()));
+        }
+    else
+        {
 
-        sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgButton()));
-    }
+            sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgButton()));
+        }
 }
 
 Button::~Button()

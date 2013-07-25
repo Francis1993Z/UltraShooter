@@ -10,9 +10,9 @@ Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
     :Ennemy(init_Position, init_Target)
 {
 
-sf::Vector2f my_size;
-my_size.x=50;
-my_size.y=50;
+    sf::Vector2f my_size;
+    my_size.x=50;
+    my_size.y=50;
     setSize(my_size);
     setOrigin(Vector2f(25,25));
     setFillColor(Color::Red);
@@ -27,7 +27,7 @@ my_size.y=50;
 
     d_radius = 25;
     my_behaviour = ATTACK;
-        //cout << "New Zombie at : " << this << endl;
+    //cout << "New Zombie at : " << this << endl;
 }
 
 void Zombie::update()
@@ -63,5 +63,5 @@ void Zombie::update()
 
 unsigned int Zombie::die() const
 {
-return getKillPoint();
+    return getKillPoint();
 }

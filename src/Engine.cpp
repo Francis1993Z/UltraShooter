@@ -87,8 +87,8 @@ Engine::Engine(VideoMode mode, bool fullscreen)
     else
         gameMap = new Map(getCWD()+"/ressources/maps/" + oss.str() + ".map");
 
-        loadFiles = new LoadFiles();
-        Game = new RenderWindow();
+    loadFiles = new LoadFiles();
+    Game = new RenderWindow();
 
     if(fullscreen)
         Game->create(mode, "Ultra Shooter 0.2", sf::Style::Fullscreen);
@@ -117,7 +117,7 @@ int Engine::Run()
     Game->setView(MainView);
 
     mManager.playTheme(gameMap->getTheme());
-
+    mManager.setVolume(0);
     sf::Clock ennemy_clock;
 
     gameMap->loadNextWave();
@@ -130,18 +130,20 @@ int Engine::Run()
 
                     gestionEvenements(); //Gère tous les évènements.
 
-                    if(menu->getJouer()){
-                        widgetManager.setPause(true);
+                    if(menu->getJouer())
+                        {
+                            widgetManager.setPause(true);
 
-                        updateView(); //Mets à jour la position de la caméra.
-                        drawGame(); //Dessine tous les composants du jeu lors d'une partie.
-                        lookIfGameOver(); //Regarde si il y a "GAME OVER".
-                        nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
-                    }
-                    else{
+                            updateView(); //Mets à jour la position de la caméra.
+                            drawGame(); //Dessine tous les composants du jeu lors d'une partie.
+                            lookIfGameOver(); //Regarde si il y a "GAME OVER".
+                            nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
+                        }
+                    else
+                        {
 
-                        drawMenu(); //Dessine le menu.
-                    }
+                            drawMenu(); //Dessine le menu.
+                        }
                 }
         }
     return 0;
@@ -168,123 +170,131 @@ MusicManager* Engine::getMusicManager()
     return &mManager;
 }
 
-LoadFiles* Engine::getLoadFiles() const{
+LoadFiles* Engine::getLoadFiles() const
+{
 
     return loadFiles;
 }
 
-RenderWindow* Engine::getRenderWindow() const{
+RenderWindow* Engine::getRenderWindow() const
+{
 
     return Game;
 }
 
-void Engine::gestionEvenements(){
+void Engine::gestionEvenements()
+{
 
-    if(menu->getJouer()){
-
-        float x=0.0f;
-        float y=0.0f;
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-            x+=-player->getVitesse();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-            x+=player->getVitesse();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-            y+=-player->getVitesse();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-            y+=player->getVitesse();
-
-        player->move(x, y);
-
-        if(collisionManager->CollisionJoueur(x, y))
+    if(menu->getJouer())
         {
-            mManager.playEvent("ressources/sounds/events/impact.ogg");
-            player->move(-x, -y);
-            player->move(collisionManager->getDeplacementX(), collisionManager->getDeplacementY());
+
+            float x=0.0f;
+            float y=0.0f;
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                x+=-player->getVitesse();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                x+=player->getVitesse();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                y+=-player->getVitesse();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                y+=player->getVitesse();
+
+            player->move(x, y);
+
+            if(collisionManager->CollisionJoueur(x, y))
+                {
+                    mManager.playEvent("ressources/sounds/events/impact.ogg");
+                    player->move(-x, -y);
+                    player->move(collisionManager->getDeplacementX(), collisionManager->getDeplacementY());
+                }
         }
-    }
 
 //Pour des touches séparées(avec délai du système), il vaut mieux utiliser ces lignes là(pollEvent).
     while (Game->pollEvent(WindowEvent))
-    {
-        if (WindowEvent.type == Event::Closed)
         {
-            Game->close();
-            IsRunning=false;
-        }
-        if (WindowEvent.type == Event::MouseMoved && !widgetManager.getPause())
-        {
-            widgetManager.updatePosSouris(WindowEvent.mouseMove.x, WindowEvent.mouseMove.y);
-        }
-        if (WindowEvent.type == sf::Event::Resized)
-        {
-            MainView.setSize(WindowEvent.size.width, WindowEvent.size.height);
-            Game->setView(MainView);
-        }
-        if (WindowEvent.type == Event::KeyPressed)
-        {
-            if (WindowEvent.key.code == sf::Keyboard::Escape)
-            {
-                Game->close();
-                IsRunning=false;
-            }
-            if (WindowEvent.key.code == sf::Keyboard::Space)
-            {
-                if(menu->getJouer()){
-
-                    gameMap->addEnnemy(new Zombie(sf::Vector2f(500,500), *player));
+            if (WindowEvent.type == Event::Closed)
+                {
+                    Game->close();
+                    IsRunning=false;
                 }
-            }
-            if (WindowEvent.key.code == sf::Keyboard::Numpad0)
-            {
-                if(menu->getJouer()){
-
-                    gameMap->addEnnemy(new Splitter(sf::Vector2f(300,500), *player, 1));
+            if (WindowEvent.type == Event::MouseMoved && !widgetManager.getPause())
+                {
+                    widgetManager.updatePosSouris(WindowEvent.mouseMove.x, WindowEvent.mouseMove.y);
                 }
-            }
-        }
-        if (WindowEvent.type == sf::Event::MouseButtonPressed)
-            if (WindowEvent.mouseButton.button == sf::Mouse::Right)
-                cout << "the right button was pressed" << std::endl;
+            if (WindowEvent.type == sf::Event::Resized)
+                {
+                    MainView.setSize(WindowEvent.size.width, WindowEvent.size.height);
+                    Game->setView(MainView);
+                }
+            if (WindowEvent.type == Event::KeyPressed)
+                {
+                    if (WindowEvent.key.code == sf::Keyboard::Escape)
+                        {
+                            Game->close();
+                            IsRunning=false;
+                        }
+                    if (WindowEvent.key.code == sf::Keyboard::Space)
+                        {
+                            if(menu->getJouer())
+                                {
 
-        if (WindowEvent.type == sf::Event::MouseWheelMoved)
-        {
-            cout << "wheel movement: " << WindowEvent.mouseWheel.delta << endl;
+                                    gameMap->addEnnemy(new Zombie(sf::Vector2f(500,500), *player));
+                                }
+                        }
+                    if (WindowEvent.key.code == sf::Keyboard::Numpad0)
+                        {
+                            if(menu->getJouer())
+                                {
 
-            if(WindowEvent.mouseWheel.delta > 0)
-                MainView.zoom(0.8);
-            else if(WindowEvent.mouseWheel.delta < 0)
-                MainView.zoom(1.8);
+                                    gameMap->addEnnemy(new Splitter(sf::Vector2f(300,500), *player, 1));
+                                }
+                        }
+                }
+            if (WindowEvent.type == sf::Event::MouseButtonPressed)
+                if (WindowEvent.mouseButton.button == sf::Mouse::Right)
+                    cout << "the right button was pressed" << std::endl;
 
-            Game->setView(MainView);
-        }
+            if (WindowEvent.type == sf::Event::MouseWheelMoved)
+                {
+                    cout << "wheel movement: " << WindowEvent.mouseWheel.delta << endl;
 
-    }//pollEvent
+                    if(WindowEvent.mouseWheel.delta > 0)
+                        MainView.zoom(0.8);
+                    else if(WindowEvent.mouseWheel.delta < 0)
+                        MainView.zoom(1.8);
+
+                    Game->setView(MainView);
+                }
+
+        }//pollEvent
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        localMousePosition = sf::Mouse::getPosition(*Game);
-
-        if (menu->getJouer() && player->ReadyToShoot()==true)
         {
-            sf::Vector2f converted_coord;//la position de la souris est en int
-            converted_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
-            converted_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
+            localMousePosition = sf::Mouse::getPosition(*Game);
 
-            gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, *Game)));
+            if (menu->getJouer() && player->ReadyToShoot()==true)
+                {
+                    sf::Vector2f converted_coord;//la position de la souris est en int
+                    converted_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
+                    converted_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
+
+                    gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, *Game)));
+                }
+            else if(!menu->getJouer() && !widgetManager.getPause())
+                {
+
+                    widgetManager.positionClicSouris(localMousePosition.x, localMousePosition.y);
+                }
         }
-        else if(!menu->getJouer() && !widgetManager.getPause()){
-
-            widgetManager.positionClicSouris(localMousePosition.x, localMousePosition.y);
-        }
-    }
-    if(WindowEvent.type == sf::Event::MouseButtonReleased){
-
-        if (WindowEvent.mouseButton.button == sf::Mouse::Left && !widgetManager.getPause())
+    if(WindowEvent.type == sf::Event::MouseButtonReleased)
         {
-            widgetManager.positionRelachementSouris(WindowEvent.mouseButton.x, WindowEvent.mouseButton.y);
+
+            if (WindowEvent.mouseButton.button == sf::Mouse::Left && !widgetManager.getPause())
+                {
+                    widgetManager.positionRelachementSouris(WindowEvent.mouseButton.x, WindowEvent.mouseButton.y);
+                }
         }
-    }
 }
 
 bool Engine::loadNextMap()
@@ -302,54 +312,57 @@ bool Engine::loadNextMap()
         path = getCWD()+"/ressources/maps/" + oss.str() + ".map";
 
     if(fileExists(path.c_str()))
-    {
-        delete gameMap;
-        gameMap = new Map(path);
+        {
+            delete gameMap;
+            gameMap = new Map(path);
 
-        return true;
-    }
+            return true;
+        }
 
     return false;
 }
 
-void Engine::updateView(){
+void Engine::updateView()
+{
 
     Vector2i object_pixel_position=Game->mapCoordsToPixel(player->getPosition(), MainView);
 
     if(object_pixel_position.x < 300)
-    {
-        MainView.move(-player->getVitesse(), 0.f);
-        player->move_myhud(-player->getVitesse(), 0.f);//On met à jour la position de la HUD
-        Game->setView(MainView);
-    }
+        {
+            MainView.move(-player->getVitesse(), 0.f);
+            player->move_myhud(-player->getVitesse(), 0.f);//On met à jour la position de la HUD
+            Game->setView(MainView);
+        }
     if((unsigned)object_pixel_position.x > Game->getSize().x-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
-    {
-        MainView.move(player->getVitesse(), 0.f);
-        player->move_myhud(player->getVitesse(), 0.f);
-        Game->setView(MainView);
-    }
+        {
+            MainView.move(player->getVitesse(), 0.f);
+            player->move_myhud(player->getVitesse(), 0.f);
+            Game->setView(MainView);
+        }
     if(object_pixel_position.y < 300)
-    {
-        MainView.move(0.f, -player->getVitesse());
-        player->move_myhud(0.f, -player->getVitesse());
-        Game->setView(MainView);
-    }
+        {
+            MainView.move(0.f, -player->getVitesse());
+            player->move_myhud(0.f, -player->getVitesse());
+            Game->setView(MainView);
+        }
     if((unsigned)object_pixel_position.y > Game->getSize().y-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
-    {
-        MainView.move(0.f, player->getVitesse());
-        player->move_myhud(0.f, player->getVitesse());
-        Game->setView(MainView);
-    }
+        {
+            MainView.move(0.f, player->getVitesse());
+            player->move_myhud(0.f, player->getVitesse());
+            Game->setView(MainView);
+        }
 }
 
-void Engine::drawMenu(){
+void Engine::drawMenu()
+{
 
     Game->clear(Color(0,0,0));
     menu->draw();
     Game->display();
 }
 
-void Engine::drawGame(){
+void Engine::drawGame()
+{
 
     Game->clear(Color(0,0,0));
     Game->draw(gameMap->getBackground());
@@ -361,29 +374,33 @@ void Engine::drawGame(){
     Game->display();
 }
 
-void Engine::nextWaveAndMap(){
+void Engine::nextWaveAndMap()
+{
 
     if(gameMap->isCurrentWaveOver())
-    {
-        if(!gameMap->loadNextWave())
         {
-            if(!loadNextMap())
-            {
-                leaveGame("Jeu termine !");
-            }
+            if(!gameMap->loadNextWave())
+                {
+                    if(!loadNextMap())
+                        {
+                            leaveGame("Jeu termine !");
+                        }
+                }
         }
-    }
 }
 
-void Engine::lookIfGameOver(){
+void Engine::lookIfGameOver()
+{
 
-    if(gameMap->getGameOver()){
+    if(gameMap->getGameOver())
+        {
 
-        leaveGame("Game Over !");
-    }
+            leaveGame("Game Over !");
+        }
 }
 
-void Engine::leaveGame(string cause){
+void Engine::leaveGame(string cause)
+{
 
     cout<<cause<<endl;
     Game->close();

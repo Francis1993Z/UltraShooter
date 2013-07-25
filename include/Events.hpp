@@ -7,12 +7,12 @@
 
 class Events
 {
-    public:
-        Events();
-        void updateEvents();
-        virtual ~Events();
-    protected:
-    private:
+public:
+    Events();
+    void updateEvents();
+    virtual ~Events();
+protected:
+private:
 };
 
 #endif // EVENTS_INCLUDED_HPP

@@ -41,24 +41,24 @@ bool CollisionManager::CollisionJoueur(float x, float y)
     deplacement_y = 0.0f;
 
     if(CheckIfOutOfWindow(player.getPosition().x, player.getPosition().y, player.getRayon()))
-    {
-        collision = true;
-        CalculDistanceAParcourirBordMap(x, y);
-    }
+        {
+            collision = true;
+            CalculDistanceAParcourirBordMap(x, y);
+        }
     else
-    {
+        {
 
-        for(std::list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it)
-            {
+            for(std::list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it)
+                {
 
-                if(player.getCollisionBox().intersects(it->getCollisionBox()))
-                    {
+                    if(player.getCollisionBox().intersects(it->getCollisionBox()))
+                        {
 
-                        collision = true;
-                        CalculDistanceAParcourir(x, y, it->getCollisionBox());
-                    }
-            }
-    }
+                            collision = true;
+                            CalculDistanceAParcourir(x, y, it->getCollisionBox());
+                        }
+                }
+        }
 
     return collision;
 }
@@ -88,7 +88,7 @@ bool CollisionManager::CollisionObstacles(int x, int y)
 
     for(list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it)
         if((it->getCollisionBox().contains(x, y)))
-                collision = true;
+            collision = true;
 
     return collision;
 }
@@ -99,20 +99,21 @@ bool CollisionManager::CollisionEnnemy(FloatRect rect, vector<Ennemy *>& EnnemyA
     collision = false;
 
     for(vector<Ennemy *>::const_iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
-    {
-        if(rect.intersects((*it)->getCollisionBox()))
         {
+            if(rect.intersects((*it)->getCollisionBox()))
+                {
 
-            collision = true;
-            adresseEnnemyTouche = &*(*it);//attention
+                    collision = true;
+                    adresseEnnemyTouche = &*(*it);//attention
+                }
         }
-    }
 
 
     return collision;
 }
 
-bool  CollisionManager::CollisionContreJoueur(FloatRect rect){
+bool  CollisionManager::CollisionContreJoueur(FloatRect rect)
+{
 
     collision = false;
 
@@ -174,57 +175,69 @@ void CollisionManager::update_repulsion(vector<Ennemy *>& EnnemyArray)
 void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, FloatRect rect)
 {
 
-    if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() < player.getVitesse()){
+    if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() < player.getVitesse())
+        {
 
-        if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() >= 0){
+            if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() >= 0)
+                {
 
-            deplacement_x=rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon();
-            update_x=true;
+                    deplacement_x=rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon();
+                    update_x=true;
+                }
         }
-    }
-    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width < player.getVitesse()){
+    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width < player.getVitesse())
+        {
 
-        if(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width >= 0){
+            if(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width >= 0)
+                {
 
-            deplacement_x= -(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width);
-            update_x=true;
+                    deplacement_x= -(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width);
+                    update_x=true;
+                }
         }
-    }
-    if(p_deplacement_y>0 && rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() < player.getVitesse()){
+    if(p_deplacement_y>0 && rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() < player.getVitesse())
+        {
 
-        if(rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() >= 0){
+            if(rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() >= 0)
+                {
 
-            deplacement_y=rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon();
-            update_y=true;
+                    deplacement_y=rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon();
+                    update_y=true;
+                }
         }
-    }
-    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height < player.getVitesse()){
+    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height < player.getVitesse())
+        {
 
-        if(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height >= 0){
+            if(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height >= 0)
+                {
 
-            deplacement_y= -(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height);
-            update_y=true;
+                    deplacement_y= -(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height);
+                    update_y=true;
+                }
         }
-    }
 
-    if(p_deplacement_x != 0 && deplacement_x == 0 && update_y){
+    if(p_deplacement_x != 0 && deplacement_x == 0 && update_y)
+        {
 
-        update_x = false;
-    }
+            update_x = false;
+        }
 
-    if(p_deplacement_y != 0 && deplacement_y == 0 && update_x){
+    if(p_deplacement_y != 0 && deplacement_y == 0 && update_x)
+        {
 
-        update_y = false;
-    }
+            update_y = false;
+        }
 
-    if(!update_x){
+    if(!update_x)
+        {
 
-        deplacement_x =p_deplacement_x;
-    }
-    if(!update_y){
+            deplacement_x =p_deplacement_x;
+        }
+    if(!update_y)
+        {
 
-        deplacement_y =p_deplacement_y;
-    }
+            deplacement_y =p_deplacement_y;
+        }
     //std::cout << deplacement_x << std::endl;
 }
 

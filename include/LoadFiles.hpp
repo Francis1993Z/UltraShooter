@@ -9,23 +9,23 @@
 
 class LoadFiles
 {
-    public:
-        LoadFiles();
-        sf::Font* getPoliceArial() const;
-        sf::Texture* getImgBackgroundMenu() const;
-        sf::Texture* getImgButton() const;
-        sf::Texture* getImgButtonSurvol() const;
-        sf::Texture* getImgButtonClic() const;
-        virtual ~LoadFiles();
-    protected:
-    private:
-        sf::Font* policeArial;
-        sf::Texture* imgBackgroundMenu;
-        sf::Texture* imgButton;
-        sf::Texture* imgButtonSurvol;
-        sf::Texture* imgButtonClic;
+public:
+    LoadFiles();
+    sf::Font* getPoliceArial() const;
+    sf::Texture* getImgBackgroundMenu() const;
+    sf::Texture* getImgButton() const;
+    sf::Texture* getImgButtonSurvol() const;
+    sf::Texture* getImgButtonClic() const;
+    virtual ~LoadFiles();
+protected:
+private:
+    sf::Font* policeArial;
+    sf::Texture* imgBackgroundMenu;
+    sf::Texture* imgButton;
+    sf::Texture* imgButtonSurvol;
+    sf::Texture* imgButtonClic;
 
-        std::string fichierIntrouvable;
+    std::string fichierIntrouvable;
 };
 
 #endif // LOADFILES_INCLUDED_HPP

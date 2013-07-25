@@ -8,13 +8,13 @@
 #include <stdio.h>  /* defines FILENAME_MAX */
 
 #ifdef WINDOWS
-    #include <direct.h>
-    #define GetCurrentDir _getcwd
+#include <direct.h>
+#define GetCurrentDir _getcwd
 #else
-    #include <unistd.h>
-    #include <errno.h>
+#include <unistd.h>
+#include <errno.h>
 
-    #define GetCurrentDir getcwd
+#define GetCurrentDir getcwd
 #endif
 
 #include "SFML/System.hpp"

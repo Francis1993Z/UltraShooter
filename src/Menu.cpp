@@ -19,29 +19,33 @@ Menu::Menu(sf::Vector2u sizeWindow)
     addWidget(new Button(0, 50, "Quitter", 1));
 }
 
-void Menu::draw(){
+void Menu::draw()
+{
 
     Engine::getInstance()->getRenderWindow()->draw(sprite);
     drawWidgets();
 }
 
-void Menu::action(int idWidgetClique){
+void Menu::action(int idWidgetClique)
+{
 
-    switch (idWidgetClique){
+    switch (idWidgetClique)
+        {
 
-    case 0:
-        jouer = true;
-        break;
-    case 1:
-        Engine::getInstance()->leaveGame("Quitter Menu");
-        break;
-    default:
-        errorId(idWidgetClique);
-        break;
-    }
+        case 0:
+            jouer = true;
+            break;
+        case 1:
+            Engine::getInstance()->leaveGame("Quitter Menu");
+            break;
+        default:
+            errorId(idWidgetClique);
+            break;
+        }
 }
 
-bool Menu::getJouer() const{
+bool Menu::getJouer() const
+{
 
     return jouer;
 }

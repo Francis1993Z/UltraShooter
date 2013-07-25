@@ -7,62 +7,73 @@ using namespace sf;
 
 LoadFiles::LoadFiles()
 {
-        fichierIntrouvable = "";
-        policeArial = new Font();
-        imgBackgroundMenu = new Texture();
-        imgButton = new Texture();
-        imgButtonSurvol = new Texture();
-        imgButtonClic = new Texture();
+    fichierIntrouvable = "";
+    policeArial = new Font();
+    imgBackgroundMenu = new Texture();
+    imgButton = new Texture();
+    imgButtonSurvol = new Texture();
+    imgButtonClic = new Texture();
 
-       if (!policeArial->loadFromFile("ressources/fonts/arial.ttf")){
+    if (!policeArial->loadFromFile("ressources/fonts/arial.ttf"))
+        {
 
             fichierIntrouvable = "arial.ttf";
-       }
-       else if(!imgBackgroundMenu->loadFromFile("ressources/backgrounds/menu.png")){
+        }
+    else if(!imgBackgroundMenu->loadFromFile("ressources/backgrounds/menu.png"))
+        {
 
             fichierIntrouvable = "menu.png";
-       }
-       else if(!imgButton->loadFromFile("ressources/widgets/button.png")){
+        }
+    else if(!imgButton->loadFromFile("ressources/widgets/button.png"))
+        {
 
             fichierIntrouvable = "button.png";
-       }
-       else if(!imgButtonSurvol->loadFromFile("ressources/widgets/buttonSurvol.png")){
+        }
+    else if(!imgButtonSurvol->loadFromFile("ressources/widgets/buttonSurvol.png"))
+        {
 
             fichierIntrouvable = "buttonSurvol.png";
-       }
-       else if(!imgButtonClic->loadFromFile("ressources/widgets/buttonClic.png")){
+        }
+    else if(!imgButtonClic->loadFromFile("ressources/widgets/buttonClic.png"))
+        {
 
             fichierIntrouvable = "buttonClic.png";
-       }
+        }
 
-       if(fichierIntrouvable != ""){
+    if(fichierIntrouvable != "")
+        {
 
             cerr<<"ERROR : Can't load "+fichierIntrouvable+" in LoadFiles.cpp"<<endl;
             exit(15);
-       }
+        }
 }
 
-Font* LoadFiles::getPoliceArial() const{
+Font* LoadFiles::getPoliceArial() const
+{
 
     return policeArial;
 }
 
-Texture* LoadFiles::getImgBackgroundMenu() const{
+Texture* LoadFiles::getImgBackgroundMenu() const
+{
 
     return imgBackgroundMenu;
 }
 
-Texture* LoadFiles::getImgButton() const{
+Texture* LoadFiles::getImgButton() const
+{
 
     return imgButton;
 }
 
-Texture* LoadFiles::getImgButtonSurvol() const{
+Texture* LoadFiles::getImgButtonSurvol() const
+{
 
     return imgButtonSurvol;
 }
 
-Texture* LoadFiles::getImgButtonClic() const{
+Texture* LoadFiles::getImgButtonClic() const
+{
 
     return imgButtonClic;
 }
