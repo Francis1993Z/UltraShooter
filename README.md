@@ -5,11 +5,12 @@ UltraShooter
 
 Compilation avec CMake :
 Dans le dossier racine, ouvrez un terminal et entrez ces commandes
-mkdir build
-cd build
-cmake .. -G "Unix Makefiles"
-make
+
+$mkdir build
+$cd build
+$cmake .. -G "Unix Makefiles"
+$make
 
 exécution
-cd ..
-./ultrashooter
+$cd ..
+$./ultrashooter

@@ -64,6 +64,8 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
     float myrotation = angle;
 
     setRotation(myrotation);
+
+
 }
 
 
