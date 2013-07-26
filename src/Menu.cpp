@@ -10,11 +10,7 @@ Menu::Menu(sf::Vector2u sizeWindow)
     jouer = false;
 
     sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgBackgroundMenu()));
-    float a(sprite.getTexture()->getSize().x);
-    float b(sizeWindow.x);
-    float c(sizeWindow.y);
-    float d(sprite.getTexture()->getSize().y);
-    sprite.scale(sf::Vector2f(b/a, c/d));
+    sprite.scale(sf::Vector2f(sizeWindow.x/((float)sprite.getTexture()->getSize().x), sizeWindow.y/((float)sprite.getTexture()->getSize().y)));
     addWidget(new Button(0, 0, "Jouer", 0));
     addWidget(new Button(0, 50, "Quitter", 1));
 }

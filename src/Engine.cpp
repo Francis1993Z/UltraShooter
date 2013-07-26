@@ -112,6 +112,8 @@ int Engine::Run()
     widgetManager.setPause(false);
     widgetManager.setCurrentWidgetListener(menu);
 
+    gameEnded = new GameEnded();
+
     gameMap->setPlayer(*player);
 
     Game->setView(MainView);
@@ -127,23 +129,30 @@ int Engine::Run()
         {
             while(Game->isOpen())//Fenetre
                 {
-
                     gestionEvenements(); //Gère tous les évènements.
+                    if(menu->getJouer() && !gameEnded->isActif()){
 
-                    if(menu->getJouer())
-                        {
-                            widgetManager.setPause(true);
+                        widgetManager.setPause(true);
 
-                            updateView(); //Mets à jour la position de la caméra.
-                            drawGame(); //Dessine tous les composants du jeu lors d'une partie.
-                            lookIfGameOver(); //Regarde si il y a "GAME OVER".
-                            nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
-                        }
-                    else
-                        {
+                        updateView(); //Mets à jour la position de la caméra.
+                        Game->clear(Color(0,0,0));
+                        drawGame(); //Dessine tous les composants du jeu lors d'une partie.
+                        Game->display();
+                        lookIfGameOver(); //Regarde si il y a "GAME OVER".
+                        nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
+                    }
+                    else if(gameEnded->isActif()){
 
-                            drawMenu(); //Dessine le menu.
-                        }
+                        Game->clear(Color(0,0,0));
+                        gameEnded->draw();
+                        Game->display();
+                    }
+                    else if(!menu->getJouer()){
+
+                        Game->clear(Color(0,0,0));
+                        drawMenu(); //Dessine le menu.
+                        Game->display();
+                    }
                 }
         }
     return 0;
@@ -222,6 +231,21 @@ void Engine::gestionEvenements()
                 {
                     widgetManager.updatePosSouris(WindowEvent.mouseMove.x, WindowEvent.mouseMove.y);
                 }
+<<<<<<< HEAD
+            }
+            if(!widgetManager.getPause()){
+
+
+            }
+        }
+        if (WindowEvent.type == Event::TextEntered && !widgetManager.getPause()){
+
+            widgetManager.codeKeyPressed(WindowEvent.text.unicode);
+        }
+        if (WindowEvent.type == sf::Event::MouseButtonPressed)
+            if (WindowEvent.mouseButton.button == sf::Mouse::Right)
+                cout << "the right button was pressed" << std::endl;
+=======
             if (WindowEvent.type == sf::Event::Resized)
                 {
                     MainView.setSize(WindowEvent.size.width, WindowEvent.size.height);
@@ -254,6 +278,7 @@ void Engine::gestionEvenements()
             if (WindowEvent.type == sf::Event::MouseButtonPressed)
                 if (WindowEvent.mouseButton.button == sf::Mouse::Right)
                     cout << "the right button was pressed" << std::endl;
+>>>>>>> 52198cd7b1372493f1d740e8c02cc8b57bf19a28
 
             if (WindowEvent.type == sf::Event::MouseWheelMoved)
                 {
@@ -273,11 +298,17 @@ void Engine::gestionEvenements()
         {
             localMousePosition = sf::Mouse::getPosition(*Game);
 
+<<<<<<< HEAD
+            gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, *Game)));
+        }
+        else if(!widgetManager.getPause()){
+=======
             if (menu->getJouer() && player->ReadyToShoot()==true)
                 {
                     sf::Vector2f converted_coord;//la position de la souris est en int
                     converted_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
                     converted_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
+>>>>>>> 52198cd7b1372493f1d740e8c02cc8b57bf19a28
 
                     gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, *Game)));
                 }
@@ -356,22 +387,18 @@ void Engine::updateView()
 void Engine::drawMenu()
 {
 
-    Game->clear(Color(0,0,0));
     menu->draw();
-    Game->display();
 }
 
 void Engine::drawGame()
 {
 
-    Game->clear(Color(0,0,0));
     Game->draw(gameMap->getBackground());
     gameMap->update(Game);
     gameMap->drawObstacles(Game);
     Game->draw(*player);
     Game->draw(player->getScoreHud());
     Game->draw(player->getLifeHud());
-    Game->display();
 }
 
 void Engine::nextWaveAndMap()
@@ -379,6 +406,18 @@ void Engine::nextWaveAndMap()
 
     if(gameMap->isCurrentWaveOver())
         {
+<<<<<<< HEAD
+            if(!loadNextMap())
+            {
+                //leaveGame("Jeu termine !");
+                gameEnded->setActif(true, false);
+                MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
+                Game->setView(MainView);
+
+                widgetManager.setCurrentWidgetListener(gameEnded);
+                widgetManager.setPause(false);
+            }
+=======
             if(!gameMap->loadNextWave())
                 {
                     if(!loadNextMap())
@@ -386,6 +425,7 @@ void Engine::nextWaveAndMap()
                             leaveGame("Jeu termine !");
                         }
                 }
+>>>>>>> 52198cd7b1372493f1d740e8c02cc8b57bf19a28
         }
 }
 
@@ -395,8 +435,19 @@ void Engine::lookIfGameOver()
     if(gameMap->getGameOver())
         {
 
+<<<<<<< HEAD
+        //leaveGame("Game Over !");
+        gameEnded->setActif(true, true);
+        MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
+        Game->setView(MainView);
+
+        widgetManager.setCurrentWidgetListener(gameEnded);
+        widgetManager.setPause(false);
+    }
+=======
             leaveGame("Game Over !");
         }
+>>>>>>> 52198cd7b1372493f1d740e8c02cc8b57bf19a28
 }
 
 void Engine::leaveGame(string cause)
@@ -406,7 +457,6 @@ void Engine::leaveGame(string cause)
     Game->close();
     IsRunning=false;
 }
-
 
 Engine::~Engine()
 {
@@ -420,4 +470,5 @@ Engine::~Engine()
     delete collisionManager;
     delete menu;
     delete loadFiles;
+    delete gameEnded;
 }

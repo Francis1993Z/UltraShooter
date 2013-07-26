@@ -16,6 +16,7 @@
 #include "Menu.hpp"
 #include "LoadFiles.hpp"
 #include "WidgetManager.hpp"
+#include "GameEnded.hpp"
 
 class Map;
 
@@ -72,6 +73,7 @@ private:
     Player* player;
     CollisionManager* collisionManager;
     Menu* menu;
+    GameEnded* gameEnded;
     LoadFiles* loadFiles;
     WidgetManager widgetManager;
 

@@ -17,6 +17,7 @@ class Button : public Widget
         sf::FloatRect getCollisionBox() const;
         void setSurvolSouris(bool p_survol);
         void setClicSouris(bool p_clic);
+        void codeKeyPressed(int code);
         virtual ~Button();
     protected:
     private:

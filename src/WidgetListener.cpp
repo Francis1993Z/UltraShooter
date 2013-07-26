@@ -19,14 +19,11 @@ void WidgetListener::addWidget(Widget* widget)
 void WidgetListener::drawWidgets()
 {
     list<Widget *>::iterator it;
-    //cerr<<"***************"<<endl;
 
-    for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it)
-        {
-//cerr<<"adresse "<<&(*it)<<endl;
-            (*it)->draw();
-        }
+    for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it){
 
+        (*it)->draw();
+    }
 }
 
 list<Widget *>* WidgetListener::getListeWidgets()
@@ -45,6 +42,14 @@ void WidgetListener::errorId(int id)
 WidgetListener::~WidgetListener()
 {
     list<Widget *>::iterator it;
+<<<<<<< HEAD
+
+//cerr<<listeWidgets.size()<<endl;
+    for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it){
+
+        delete *it;
+    }
+=======
     //cerr<<"-------------------"<<endl;
 //cerr<<listeWidgets.size()<<endl;
     for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it)
@@ -52,4 +57,5 @@ WidgetListener::~WidgetListener()
             //cerr<<"adresse "<<&(*it)<<endl;
             delete *it;
         }
+>>>>>>> 52198cd7b1372493f1d740e8c02cc8b57bf19a28
 }

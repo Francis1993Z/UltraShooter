@@ -61,6 +61,11 @@ void Button::setClicSouris(bool p_clic)
         }
 }
 
+void Button::codeKeyPressed(int code){
+
+
+}
+
 Button::~Button()
 {
     //dtor

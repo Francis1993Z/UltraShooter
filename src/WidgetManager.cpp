@@ -67,6 +67,14 @@ void WidgetManager::positionRelachementSouris(float pos_x, float pos_y)
         }
 }
 
+void WidgetManager::codeKeyPressed(int code){
+
+    for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it){
+
+        (*it)->codeKeyPressed(code);
+    }
+}
+
 bool WidgetManager::getPause() const
 {
 

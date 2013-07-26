@@ -28,6 +28,8 @@ inline float GetAngle(sf::Vector2f vec1, sf::Vector2f vec2)
 
 Map::Map(string mapPath)
 {
+    gameOver = false;
+
     string backgroundPath;
 
     TiXmlDocument doc(mapPath.c_str());
