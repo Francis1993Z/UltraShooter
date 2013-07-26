@@ -231,13 +231,7 @@ void Engine::gestionEvenements()
                 {
                     widgetManager.updatePosSouris(WindowEvent.mouseMove.x, WindowEvent.mouseMove.y);
                 }
-<<<<<<< HEAD
-            }
-            if(!widgetManager.getPause()){
 
-
-            }
-        }
         if (WindowEvent.type == Event::TextEntered && !widgetManager.getPause()){
 
             widgetManager.codeKeyPressed(WindowEvent.text.unicode);
@@ -245,7 +239,7 @@ void Engine::gestionEvenements()
         if (WindowEvent.type == sf::Event::MouseButtonPressed)
             if (WindowEvent.mouseButton.button == sf::Mouse::Right)
                 cout << "the right button was pressed" << std::endl;
-=======
+
             if (WindowEvent.type == sf::Event::Resized)
                 {
                     MainView.setSize(WindowEvent.size.width, WindowEvent.size.height);
@@ -275,10 +269,6 @@ void Engine::gestionEvenements()
                                 }
                         }
                 }
-            if (WindowEvent.type == sf::Event::MouseButtonPressed)
-                if (WindowEvent.mouseButton.button == sf::Mouse::Right)
-                    cout << "the right button was pressed" << std::endl;
->>>>>>> 52198cd7b1372493f1d740e8c02cc8b57bf19a28
 
             if (WindowEvent.type == sf::Event::MouseWheelMoved)
                 {
@@ -298,21 +288,15 @@ void Engine::gestionEvenements()
         {
             localMousePosition = sf::Mouse::getPosition(*Game);
 
-<<<<<<< HEAD
-            gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, *Game)));
-        }
-        else if(!widgetManager.getPause()){
-=======
             if (menu->getJouer() && player->ReadyToShoot()==true)
                 {
                     sf::Vector2f converted_coord;//la position de la souris est en int
                     converted_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
                     converted_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
->>>>>>> 52198cd7b1372493f1d740e8c02cc8b57bf19a28
 
                     gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, *Game)));
                 }
-            else if(!menu->getJouer() && !widgetManager.getPause())
+            else if(!widgetManager.getPause())
                 {
 
                     widgetManager.positionClicSouris(localMousePosition.x, localMousePosition.y);
@@ -406,7 +390,6 @@ void Engine::nextWaveAndMap()
 
     if(gameMap->isCurrentWaveOver())
         {
-<<<<<<< HEAD
             if(!loadNextMap())
             {
                 //leaveGame("Jeu termine !");
@@ -417,15 +400,6 @@ void Engine::nextWaveAndMap()
                 widgetManager.setCurrentWidgetListener(gameEnded);
                 widgetManager.setPause(false);
             }
-=======
-            if(!gameMap->loadNextWave())
-                {
-                    if(!loadNextMap())
-                        {
-                            leaveGame("Jeu termine !");
-                        }
-                }
->>>>>>> 52198cd7b1372493f1d740e8c02cc8b57bf19a28
         }
 }
 
@@ -434,8 +408,6 @@ void Engine::lookIfGameOver()
 
     if(gameMap->getGameOver())
         {
-
-<<<<<<< HEAD
         //leaveGame("Game Over !");
         gameEnded->setActif(true, true);
         MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
@@ -444,10 +416,6 @@ void Engine::lookIfGameOver()
         widgetManager.setCurrentWidgetListener(gameEnded);
         widgetManager.setPause(false);
     }
-=======
-            leaveGame("Game Over !");
-        }
->>>>>>> 52198cd7b1372493f1d740e8c02cc8b57bf19a28
 }
 
 void Engine::leaveGame(string cause)

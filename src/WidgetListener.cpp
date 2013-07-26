@@ -42,20 +42,9 @@ void WidgetListener::errorId(int id)
 WidgetListener::~WidgetListener()
 {
     list<Widget *>::iterator it;
-<<<<<<< HEAD
 
-//cerr<<listeWidgets.size()<<endl;
     for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it){
 
         delete *it;
     }
-=======
-    //cerr<<"-------------------"<<endl;
-//cerr<<listeWidgets.size()<<endl;
-    for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it)
-        {
-            //cerr<<"adresse "<<&(*it)<<endl;
-            delete *it;
-        }
->>>>>>> 52198cd7b1372493f1d740e8c02cc8b57bf19a28
 }
