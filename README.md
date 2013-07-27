@@ -5,6 +5,10 @@ UltraShooter
 
 UltraShooter requiert SFML 2.
 
+Compilation
+
+Linux
+
 Compilation avec CMake :
 Dans le dossier racine, ouvrez un terminal et entrez ces commandes
 
