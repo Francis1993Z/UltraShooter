@@ -272,6 +272,14 @@ void Engine::gestionEvenements()
                                     gameMap->addEnnemy(new Splitter(sf::Vector2f(300,500), *player, 1));
                                 }
                         }
+                            if (WindowEvent.key.code == sf::Keyboard::Numpad1)
+                        {
+                            if(menu->getJouer())
+                                {
+
+                                    gameMap->addEnnemy(new Raider(sf::Vector2f(300,500), *player));
+                                }
+                        }
                 }
 
             if (WindowEvent.type == sf::Event::MouseWheelMoved)

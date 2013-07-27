@@ -10,7 +10,7 @@ inline float Distance(float TheObj_X, float TheObj_Y, float MyObj_X, float MyObj
     return Thypothenuse;
 }
 
-inline float Distance(sf::Vector2f o1, sf::Vector2f o2)
+inline float Distance_v2f(sf::Vector2f o1, sf::Vector2f o2)
 {
     float TCoteopposer=o2.y-o1.y;
     float TCoteadjacent=o2.x-o1.x;

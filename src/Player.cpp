@@ -32,20 +32,7 @@ void Player::Shoot()
     my_weapon.at(actual_weapon)->fire();
 }
 
-void Player::change_Weapon(int delta)
-{
-    int weapon_size=(int)my_weapon.size();
-    if(delta>0)
-        {
-            if(actual_weapon==weapon_size-1) actual_weapon=0;
-            else actual_weapon++;
-        }
-    else if(delta<0)
-        {
-            if(actual_weapon==0) actual_weapon=weapon_size-1;
-            else actual_weapon--;
-        }
-}
+
 
 bool Player::ReadyToShoot() const
 {

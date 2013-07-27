@@ -20,9 +20,9 @@
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
-
 extern "C"
 {
+
     ///int myGlobalFunction(); // tells compiler that there is a function defined somewhere
     float GetAngle(float, float, float, float);
     float GetAngle_v2f(sf::Vector2f vec1, sf::Vector2f vec2);

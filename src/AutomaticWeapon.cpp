@@ -5,7 +5,7 @@
 using namespace std;
 using namespace sf;
 
-AutomaticWeapon::AutomaticWeapon(Player const& my_user)
+AutomaticWeapon::AutomaticWeapon(sf::Shape const& my_user)
 {
     user=&my_user;
     fire_intervale = 150.00f;

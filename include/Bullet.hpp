@@ -19,7 +19,7 @@ public:
 
     ~Bullet();
 
-    void UpdatePosition();
+    virtual void UpdatePosition();
 
 };
 

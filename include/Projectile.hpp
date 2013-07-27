@@ -12,7 +12,7 @@ class Projectile
 public :
 
     unsigned int getDamage() const;
-
+ virtual void UpdatePosition();
 protected :
 
     sf::Vector2f myPosition;

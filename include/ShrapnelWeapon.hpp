@@ -6,7 +6,7 @@
 class ShrapnelWeapon : public Weapon
 {
 public:
-    ShrapnelWeapon(Player const& my_user);
+    ShrapnelWeapon(sf::Shape const& my_user);
     void fire();
 };
 

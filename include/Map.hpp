@@ -16,6 +16,7 @@
 #include "Ennemy.hpp"
 #include "Player.hpp"
 #include "Splitter.hpp"
+#include "Raider.hpp"
 #include "Obstacle.hpp"
 #include "Wave.hpp"
 #include "EnnemyFactory.hpp"

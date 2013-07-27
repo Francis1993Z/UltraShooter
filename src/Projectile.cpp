@@ -7,3 +7,9 @@ unsigned int Projectile::getDamage() const
 {
     return damage;
 }
+
+
+void Projectile::UpdatePosition()
+ {
+
+ }

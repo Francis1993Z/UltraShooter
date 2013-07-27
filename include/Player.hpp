@@ -7,14 +7,12 @@
 
 #include "GlobalFunctions.h"
 #include "Hud.hpp"
-#include <vector>
-
-#include "Weapon.hpp"
-#include "AutomaticWeapon.hpp"
-#include "ShrapnelWeapon.hpp"
 
 
-class Player : public sf::CircleShape
+#include "EntityWithWeapon.hpp"
+
+
+class Player : public sf::CircleShape, public EntityWithWeapon
 {
 
     bool IamImmune;
@@ -25,15 +23,13 @@ class Player : public sf::CircleShape
     unsigned short Life;
     unsigned long Score;
 
-    int actual_weapon;
-
     Hud hud;
 
     sf::FloatRect rect;
     sf::Clock weapon_clock;
 
     //sf::RenderWindow myWindow;
-    std::vector<Weapon *> my_weapon;
+
     std::string PlayerName;
 
 public:
@@ -53,7 +49,7 @@ public:
     void addPoints(int p);
     void subirDegats(unsigned int p_damage);
     void modifierVie(int pv);
-    void change_Weapon(int delta);
+
 
     float getRayon();
     float getVitesse() const;

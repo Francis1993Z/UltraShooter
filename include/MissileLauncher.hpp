@@ -3,11 +3,15 @@
 
 #include "Weapon.hpp"
 
-class MissileLauncher : protected Weapon
+class Ennemy;
+
+class MissileLauncher : public Weapon
 {
 public:
+    MissileLauncher(sf::Shape const& my_user);
     void fire();
 private:
+const Ennemy* my_target;
 };
 
 #endif // MISSILELAUNCHER_HPP_INCLUDED

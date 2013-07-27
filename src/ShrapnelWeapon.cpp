@@ -5,7 +5,7 @@
 using namespace std;
 using namespace sf;
 
-ShrapnelWeapon::ShrapnelWeapon(Player const& my_user)
+ShrapnelWeapon::ShrapnelWeapon(sf::Shape const& my_user)
 {
     user=&my_user;
     fire_intervale = 150.00f;
