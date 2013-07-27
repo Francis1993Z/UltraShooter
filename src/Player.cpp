@@ -16,7 +16,9 @@ Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindo
     setFillColor(sf::Color::Blue);
     setPosition(init_position);
     setOrigin(50.f, 50.f);
-    my_weapon.push_back(new AutomaticWeapon());
+    actual_weapon=0;
+    my_weapon.push_back(new AutomaticWeapon(*this));
+    my_weapon.push_back(new ShrapnelWeapon(*this));
 }
 
 /*void Player::SetRenderWindow(sf::RenderWindow &mynewWindow)
@@ -25,34 +27,24 @@ mynewWindow.co;
 
 }*/
 
-float Player::Shoot(sf::Vector2f TargetPosition, sf::RenderWindow &myRenderWindow)
+void Player::Shoot()
 {
-    Vector2i player_pixel_position = GetWindowPosition(myRenderWindow);
+    my_weapon.at(actual_weapon)->fire();
+}
 
-    Vector2f converted_player_coord;
-    converted_player_coord.x=(float)player_pixel_position.x;
-    converted_player_coord.y=(float)player_pixel_position.y;
-
-    float x1 = converted_player_coord.x;
-    float y1 = converted_player_coord.y;
-
-    float x2 = TargetPosition.x;
-    float y2 = TargetPosition.y;
-
-    float a = x2 - x1;
-    float o = y2 - y1;
-    float angle;
-
-    weapon_clock.restart();
-
-    converted_player_coord.x=(float)player_pixel_position.x;
-    converted_player_coord.y=(float)player_pixel_position.y;
-
-    Engine::getInstance()->getMusicManager()->playEvent("ressources/sounds/events/sf_laser_18.ogg");
-
-    return  angle = atan2(-o, a);
-
-//return GetAngle_v2f(Player::getPosition(), TargetPosition);
+void Player::change_Weapon(int delta)
+{
+    int weapon_size=(int)my_weapon.size();
+    if(delta>0)
+        {
+            if(actual_weapon==weapon_size-1) actual_weapon=0;
+            else actual_weapon++;
+        }
+    else if(delta<0)
+        {
+            if(actual_weapon==0) actual_weapon=weapon_size-1;
+            else actual_weapon--;
+        }
 }
 
 bool Player::ReadyToShoot() const

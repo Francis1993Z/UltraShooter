@@ -3,13 +3,13 @@
 
 #include "Weapon.hpp"
 
+
 class AutomaticWeapon : public Weapon
 {
 public:
-    AutomaticWeapon();
-    void fire(sf::Vector2f TargetPosition, sf::Vector2f player_pos);
-private:
-    sf::Clock fire_intervale;
+    AutomaticWeapon(Player const& my_user);
+    void fire();
+
 };
 
 #endif // AUTOMATICWEAPON_HPP_INCLUDED

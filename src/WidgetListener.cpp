@@ -20,10 +20,11 @@ void WidgetListener::drawWidgets()
 {
     list<Widget *>::iterator it;
 
-    for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it){
+    for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it)
+        {
 
-        (*it)->draw();
-    }
+            (*it)->draw();
+        }
 }
 
 list<Widget *>* WidgetListener::getListeWidgets()
@@ -43,8 +44,9 @@ WidgetListener::~WidgetListener()
 {
     list<Widget *>::iterator it;
 
-    for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it){
+    for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it)
+        {
 
-        delete *it;
-    }
+            delete *it;
+        }
 }

@@ -13,8 +13,8 @@ public:
 
     Zombie(sf::Vector2f init_Position, Player& init_Target);
 
-    unsigned int die() const;
-    void  update();
+    virtual unsigned int die() const;
+    virtual void  update();
 
 
 };

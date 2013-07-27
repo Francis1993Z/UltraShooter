@@ -20,43 +20,51 @@ TextField::TextField(int p_posX, int p_posY, int p_id)
     contenuChamps.setPosition(p_posX, p_posY);
 }
 
-void TextField::draw(){
+void TextField::draw()
+{
 
     Engine::getInstance()->getRenderWindow()->draw(champs);
     Engine::getInstance()->getRenderWindow()->draw(contenuChamps);
 }
 
-sf::FloatRect TextField::getCollisionBox() const{
+sf::FloatRect TextField::getCollisionBox() const
+{
 
     return champs.getGlobalBounds();
 }
 
-void TextField::setSurvolSouris(bool p_survol){
+void TextField::setSurvolSouris(bool p_survol)
+{
 
 }
 
-void TextField::setClicSouris(bool p_clic){
+void TextField::setClicSouris(bool p_clic)
+{
 
 
 }
 
-void TextField::codeKeyPressed(int code){
+void TextField::codeKeyPressed(int code)
+{
 
     cout<<code<<endl;
 
-    if(code != 13 && code != 32){
+    if(code != 13 && code != 32)
+        {
 
-        if(code == 8){
+            if(code == 8)
+                {
 
-            str = str.substr(0, str.size()-1);
+                    str = str.substr(0, str.size()-1);
+                }
+            else if(str.size() < 15)
+                {
+
+                    str+=code;
+                }
+
+            contenuChamps.setString(str);
         }
-        else if(str.size() < 15){
-
-            str+=code;
-        }
-
-        contenuChamps.setString(str);
-    }
 }
 
 TextField::~TextField()

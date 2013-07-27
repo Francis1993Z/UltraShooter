@@ -11,7 +11,8 @@ int Widget::getId() const
     return id;
 }
 
-Type Widget::getType() const{
+Type Widget::getType() const
+{
 
     return type;
 }

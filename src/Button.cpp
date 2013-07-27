@@ -61,7 +61,8 @@ void Button::setClicSouris(bool p_clic)
         }
 }
 
-void Button::codeKeyPressed(int code){
+void Button::codeKeyPressed(int code)
+{
 
 
 }

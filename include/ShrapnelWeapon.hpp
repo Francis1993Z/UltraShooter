@@ -3,9 +3,10 @@
 
 #include "Weapon.hpp"
 
-class ShrapnelWeapon : protected Weapon
+class ShrapnelWeapon : public Weapon
 {
 public:
+    ShrapnelWeapon(Player const& my_user);
     void fire();
 };
 

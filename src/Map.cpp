@@ -117,7 +117,7 @@ Map::Map(string mapPath)
 
             node = node->NextSibling(); // iteration
         }
-        gameOver=false;
+    gameOver=false;
 }
 
 
@@ -198,7 +198,7 @@ void Map::update(RenderWindow* game)
 
                     EnnemyTouche = collisionManager.getAdresseEnnemyTouche();
                     EnnemyTouche->subirDegats(it->getDamage());
-                it = AllBullets.erase(it);
+                    it = AllBullets.erase(it);
                 }
             else
                 ++it;

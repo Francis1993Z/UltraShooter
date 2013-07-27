@@ -24,8 +24,8 @@ Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
     e_m = 8;
     e_mx = e_m;
     e_my = e_m;
-m_fx=0.00f;
-m_fy=0.00f;
+    m_fx=0.00f;
+    m_fy=0.00f;
     d_radius = 25;
     my_behaviour = STANDBY;
     //cout << "New Zombie at : " << this << endl;
@@ -60,7 +60,7 @@ void Zombie::update()
             m_fy = 0;
             m_fx = 0;
         }
-            if(my_behaviour == STANDBY)
+    if(my_behaviour == STANDBY)
         {
             float mvx;
             float mvy;

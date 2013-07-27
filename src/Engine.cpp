@@ -130,29 +130,32 @@ int Engine::Run()
             while(Game->isOpen())//Fenetre
                 {
                     gestionEvenements(); //Gère tous les évènements.
-                    if(menu->getJouer() && !gameEnded->isActif()){
+                    if(menu->getJouer() && !gameEnded->isActif())
+                        {
 
-                        widgetManager.setPause(true);
+                            widgetManager.setPause(true);
 
-                        updateView(); //Mets à jour la position de la caméra.
-                        Game->clear(Color(0,0,0));
-                        drawGame(); //Dessine tous les composants du jeu lors d'une partie.
-                        Game->display();
-                        lookIfGameOver(); //Regarde si il y a "GAME OVER".
-                        nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
-                    }
-                    else if(gameEnded->isActif()){
+                            updateView(); //Mets à jour la position de la caméra.
+                            Game->clear(Color(0,0,0));
+                            drawGame(); //Dessine tous les composants du jeu lors d'une partie.
+                            Game->display();
+                            lookIfGameOver(); //Regarde si il y a "GAME OVER".
+                            nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
+                        }
+                    else if(gameEnded->isActif())
+                        {
 
-                        Game->clear(Color(0,0,0));
-                        gameEnded->draw();
-                        Game->display();
-                    }
-                    else if(!menu->getJouer()){
+                            Game->clear(Color(0,0,0));
+                            gameEnded->draw();
+                            Game->display();
+                        }
+                    else if(!menu->getJouer())
+                        {
 
-                        Game->clear(Color(0,0,0));
-                        drawMenu(); //Dessine le menu.
-                        Game->display();
-                    }
+                            Game->clear(Color(0,0,0));
+                            drawMenu(); //Dessine le menu.
+                            Game->display();
+                        }
                 }
         }
     return 0;
@@ -232,13 +235,14 @@ void Engine::gestionEvenements()
                     widgetManager.updatePosSouris(WindowEvent.mouseMove.x, WindowEvent.mouseMove.y);
                 }
 
-        if (WindowEvent.type == Event::TextEntered && !widgetManager.getPause()){
+            if (WindowEvent.type == Event::TextEntered && !widgetManager.getPause())
+                {
 
-            widgetManager.codeKeyPressed(WindowEvent.text.unicode);
-        }
-        if (WindowEvent.type == sf::Event::MouseButtonPressed)
-            if (WindowEvent.mouseButton.button == sf::Mouse::Right)
-                cout << "the right button was pressed" << std::endl;
+                    widgetManager.codeKeyPressed(WindowEvent.text.unicode);
+                }
+            if (WindowEvent.type == sf::Event::MouseButtonPressed)
+                if (WindowEvent.mouseButton.button == sf::Mouse::Right)
+                    cout << "the right button was pressed" << std::endl;
 
             if (WindowEvent.type == sf::Event::Resized)
                 {
@@ -272,29 +276,26 @@ void Engine::gestionEvenements()
 
             if (WindowEvent.type == sf::Event::MouseWheelMoved)
                 {
-                    cout << "wheel movement: " << WindowEvent.mouseWheel.delta << endl;
-
-                    if(WindowEvent.mouseWheel.delta > 0)
-                        MainView.zoom(0.8);
-                    else if(WindowEvent.mouseWheel.delta < 0)
-                        MainView.zoom(1.8);
-
-                    Game->setView(MainView);
+                    /*
+                                        if(WindowEvent.mouseWheel.delta > 0)
+                                            MainView.zoom(0.8);
+                                        else if(WindowEvent.mouseWheel.delta < 0)
+                                            MainView.zoom(1.8);
+                    */
+                    player->change_Weapon(WindowEvent.mouseWheel.delta);
                 }
 
         }//pollEvent
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            localMousePosition = sf::Mouse::getPosition(*Game);
 
+            localMousePosition = sf::Mouse::getPosition(*Game);
             if (menu->getJouer() && player->ReadyToShoot()==true)
                 {
-                    sf::Vector2f converted_coord;//la position de la souris est en int
-                    converted_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
-                    converted_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
 
-                    gameMap->addBullet(Bullet(player->getPosition(), player->Shoot(converted_coord, *Game)));
+                    player->Shoot();
+
                 }
             else if(!widgetManager.getPause())
                 {
@@ -391,15 +392,15 @@ void Engine::nextWaveAndMap()
     if(gameMap->isCurrentWaveOver())
         {
             if(!loadNextMap())
-            {
-                //leaveGame("Jeu termine !");
-                gameEnded->setActif(true, false);
-                MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
-                Game->setView(MainView);
+                {
+                    //leaveGame("Jeu termine !");
+                    gameEnded->setActif(true, false);
+                    MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
+                    Game->setView(MainView);
 
-                widgetManager.setCurrentWidgetListener(gameEnded);
-                widgetManager.setPause(false);
-            }
+                    widgetManager.setCurrentWidgetListener(gameEnded);
+                    widgetManager.setPause(false);
+                }
         }
 }
 
@@ -408,14 +409,14 @@ void Engine::lookIfGameOver()
 
     if(gameMap->getGameOver())
         {
-        //leaveGame("Game Over !");
-        gameEnded->setActif(true, true);
-        MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
-        Game->setView(MainView);
+            //leaveGame("Game Over !");
+            gameEnded->setActif(true, true);
+            MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
+            Game->setView(MainView);
 
-        widgetManager.setCurrentWidgetListener(gameEnded);
-        widgetManager.setPause(false);
-    }
+            widgetManager.setCurrentWidgetListener(gameEnded);
+            widgetManager.setPause(false);
+        }
 }
 
 void Engine::leaveGame(string cause)
