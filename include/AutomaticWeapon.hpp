@@ -7,7 +7,7 @@
 class AutomaticWeapon : public Weapon
 {
 public:
-    AutomaticWeapon(sf::Shape const& my_user);
+    AutomaticWeapon(Entity const& my_user);
     void fire();
 
 };

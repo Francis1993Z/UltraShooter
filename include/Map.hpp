@@ -24,7 +24,6 @@
 class Map
 {
     std::vector<Bullet> AllBullets;
-    std::vector<Bullet> EnnemyBullets;
     std::vector<Ennemy *> EnnemyArray;
     std::vector<Player *> player;
     std::list<Obstacle> lObstacles;

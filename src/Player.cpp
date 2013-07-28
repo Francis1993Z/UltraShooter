@@ -21,6 +21,7 @@ Life=100;
     actual_weapon=0;
     my_weapon.push_back(new AutomaticWeapon(*this));
     my_weapon.push_back(new ShrapnelWeapon(*this));
+    my_team=TEAM1;
 }
 
 /*void Player::SetRenderWindow(sf::RenderWindow &mynewWindow)

@@ -13,3 +13,8 @@ void Projectile::UpdatePosition()
  {
 
  }
+
+TEAM Projectile::getmyTeam() const
+{
+return   my_team;
+}

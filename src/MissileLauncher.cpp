@@ -5,7 +5,7 @@
 using namespace std;
 using namespace sf;
 
-MissileLauncher::MissileLauncher(sf::Shape const& my_user)
+MissileLauncher::MissileLauncher(Entity const& my_user)
 {
     user=&my_user;
     fire_intervale = 500.00f;

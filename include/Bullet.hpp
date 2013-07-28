@@ -6,7 +6,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "Projectile.hpp"
-#include <iostream>
 
 
 class Bullet : public sf::CircleShape, public Projectile
@@ -14,8 +13,8 @@ class Bullet : public sf::CircleShape, public Projectile
 
 public:
 
-    Bullet(sf::Vector2f myInitPosition, float myangle);
-    Bullet(sf::Vector2f myInitPosition, float myangle, sf::Color myColor, int myDamage, float myvitesse);
+    Bullet(sf::Vector2f myInitPosition, float myangle, TEAM y_TEAM);
+    Bullet(sf::Vector2f myInitPosition, float myangle, sf::Color myColor, int myDamage, float myvitesse, TEAM y_TEAM);
 
     ~Bullet();
 

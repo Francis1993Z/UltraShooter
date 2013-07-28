@@ -93,6 +93,51 @@ bool CollisionManager::CollisionObstacles(int x, int y)
     return collision;
 }
 
+template<class T> bool CollisionManager::Collision(FloatRect rect, TEAM projectile_team, std::vector<T*>& vec)
+{
+ collision = false;
+
+    for(class vector<T *>::const_iterator it = vec.begin(); it != vec.end(); ++it)
+        {
+        TEAM tmpEntityteam=(*it)->getmyTeam();
+        if((projectile_team & tmpEntityteam) == NO_TEAMS)
+        {
+            if(rect.intersects((*it)->getGlobalBounds()))
+                {
+
+                    collision = true;
+                    adresseEntityTouche = &*(*it);
+                }
+                }
+        }
+
+
+    return collision;
+}
+
+bool CollisionManager::CollisionEntity(FloatRect rect, TEAM projectile_team, vector<Entity *>& EntityArray)
+{
+
+    collision = false;
+
+    for(vector<Entity *>::const_iterator it = EntityArray.begin(); it != EntityArray.end(); ++it)
+        {
+        TEAM tmpEntityteam=(*it)->getmyTeam();
+        if((projectile_team & tmpEntityteam) == NO_TEAMS)
+        {
+            if(rect.intersects((*it)->getGlobalBounds()))
+                {
+
+                    collision = true;
+                    adresseEntityTouche = &*(*it);
+                }
+                }
+        }
+
+
+    return collision;
+}
+
 bool CollisionManager::CollisionEnnemy(FloatRect rect, vector<Ennemy *>& EnnemyArray)
 {
 

@@ -1,9 +1,6 @@
 #ifndef COLLISIONMANAGER_HPP_INCLUDED
 #define COLLISIONMANAGER_HPP_INCLUDED
 
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
 
 #include <list>
 
@@ -11,7 +8,6 @@
 #include "Map.hpp"
 #include "Obstacle.hpp"
 #include "Zombie.hpp"
-#include "Entity.hpp"
 
 class Map;
 
@@ -24,6 +20,8 @@ public:
     bool CollisionJoueur(float x, float y);
     bool CollisionObstacles(sf::FloatRect rect);
     bool CollisionObstacles(int x, int y);
+    template<class T> bool Collision(sf::FloatRect rect, TEAM projectile_team,std::vector<T*>& vec);
+    bool CollisionEntity(sf::FloatRect rect, TEAM projectile_team, std::vector<Entity *>& EntityArray);
     bool CollisionEnnemy(sf::FloatRect rect, std::vector<Ennemy *>& EnnemyArray);
     bool CollisionPlayer(sf::FloatRect rect, std::vector<Player *>& PlayerArray);
     bool CheckIfOutOfWindow(float pos_x, float pos_y, float rayon);

@@ -6,6 +6,7 @@ Ennemy::Ennemy(sf::Vector2f init_Position, Player& init_Target)
 {
     setPosition(init_Position);
     my_target = &init_Target;
+        my_team=TEAM2;
 }
 
 void Ennemy::update()

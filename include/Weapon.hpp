@@ -1,11 +1,10 @@
 #ifndef WEAPON_HPP_INCLUDED
 #define WEAPON_HPP_INCLUDED
 
-#include <SFML/System.hpp>
-#include <SFML/Graphics/Shape.hpp>
+
 #include "Bullet.hpp"
 
-
+#include "Entity.hpp"
 
 class Weapon
 {
@@ -16,6 +15,6 @@ protected:
     int damage;
     sf::Clock fire_intervale_clock;
     float fire_intervale;
-    const sf::Shape* user;
+    const Entity* user;
 };
 #endif // WEAPON_HPP_INCLUDED
