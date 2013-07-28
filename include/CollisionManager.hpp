@@ -25,7 +25,7 @@ public:
     bool CollisionObstacles(sf::FloatRect rect);
     bool CollisionObstacles(int x, int y);
     bool CollisionEnnemy(sf::FloatRect rect, std::vector<Ennemy *>& EnnemyArray);
-    bool CollisionPlayer(sf::FloatRect rect, std::vector<Player>& PlayerArray);
+    bool CollisionPlayer(sf::FloatRect rect, std::vector<Player *>& PlayerArray);
     bool CheckIfOutOfWindow(float pos_x, float pos_y, float rayon);
     bool CollisionContreJoueur(sf::FloatRect rect);
 
@@ -36,14 +36,14 @@ public:
     float getDeplacementX();
     float getDeplacementY();
 
-    Entity* getAdresseEnnemyTouche();
+    Entity* getAdresseEntityTouche();
 
     virtual ~CollisionManager();
 
 protected:
 private:
 
-    Player& player;
+    Player& localplayer;
 
     Map& gameMap;
 

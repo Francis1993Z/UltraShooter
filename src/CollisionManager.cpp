@@ -27,7 +27,7 @@ inline float GetAngle(Vector2f vec1, Vector2f vec2)
 }
 
 
-CollisionManager::CollisionManager(Player& p_player, Map& p_gameMap):player(p_player), gameMap(p_gameMap), lObstacles(p_gameMap.getListeObstacles())
+CollisionManager::CollisionManager(Player& p_player, Map& p_gameMap):localplayer(p_player), gameMap(p_gameMap), lObstacles(p_gameMap.getListeObstacles())
 {
 
 }
@@ -40,7 +40,7 @@ bool CollisionManager::CollisionJoueur(float x, float y)
     deplacement_x = 0.0f;
     deplacement_y = 0.0f;
 
-    if(CheckIfOutOfWindow(player.getPosition().x, player.getPosition().y, player.getRayon()))
+    if(CheckIfOutOfWindow(localplayer.getPosition().x, localplayer.getPosition().y, localplayer.getRayon()))
         {
             collision = true;
             CalculDistanceAParcourirBordMap(x, y);
@@ -51,7 +51,7 @@ bool CollisionManager::CollisionJoueur(float x, float y)
             for(std::list<Obstacle>::const_iterator it = lObstacles.begin(); it != lObstacles.end() && !collision; ++it)
                 {
 
-                    if(player.getCollisionBox().intersects(it->getCollisionBox()))
+                    if(localplayer.getCollisionBox().intersects(it->getCollisionBox()))
                         {
 
                             collision = true;
@@ -112,18 +112,18 @@ bool CollisionManager::CollisionEnnemy(FloatRect rect, vector<Ennemy *>& EnnemyA
     return collision;
 }
 
-bool CollisionManager::CollisionPlayer(FloatRect rect, vector<Player>& PlayerArray)
+bool CollisionManager::CollisionPlayer(FloatRect rect, vector<Player *>& PlayerArray)
 {
 
     collision = false;
 
-    for(vector<Player>::const_iterator it = PlayerArray.begin(); it != PlayerArray.end(); ++it)
+    for(vector<Player *>::const_iterator it = PlayerArray.begin(); it != PlayerArray.end(); ++it)
         {
-            if(rect.intersects((it)->getGlobalBounds()))
+            if(rect.intersects((*it)->getGlobalBounds()))
                 {
 
                     collision = true;
-                    adresseEntityTouche = &(*it);
+                    adresseEntityTouche = &*(*it);
                 }
         }
 
@@ -136,7 +136,7 @@ bool  CollisionManager::CollisionContreJoueur(FloatRect rect)
 
     collision = false;
 
-    if(rect.intersects(player.getCollisionBox()))
+    if(rect.intersects(localplayer.getCollisionBox()))
         collision = true;
 
     return collision;
@@ -194,43 +194,43 @@ void CollisionManager::update_repulsion(vector<Ennemy *>& EnnemyArray)
 void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, FloatRect rect)
 {
 
-    if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() < player.getVitesse())
+    if(p_deplacement_x>0 && rect.left-(localplayer.getPosition().x-p_deplacement_x)-localplayer.getRayon() < localplayer.getVitesse())
         {
 
-            if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() >= 0)
+            if(p_deplacement_x>0 && rect.left-(localplayer.getPosition().x-p_deplacement_x)-localplayer.getRayon() >= 0)
                 {
 
-                    deplacement_x=rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon();
+                    deplacement_x=rect.left-(localplayer.getPosition().x-p_deplacement_x)-localplayer.getRayon();
                     update_x=true;
                 }
         }
-    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width < player.getVitesse())
+    if(p_deplacement_x<0 && localplayer.getPosition().x-p_deplacement_x-localplayer.getRayon()-rect.left-rect.width < localplayer.getVitesse())
         {
 
-            if(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width >= 0)
+            if(localplayer.getPosition().x-p_deplacement_x-localplayer.getRayon()-rect.left-rect.width >= 0)
                 {
 
-                    deplacement_x= -(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width);
+                    deplacement_x= -(localplayer.getPosition().x-p_deplacement_x-localplayer.getRayon()-rect.left-rect.width);
                     update_x=true;
                 }
         }
-    if(p_deplacement_y>0 && rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() < player.getVitesse())
+    if(p_deplacement_y>0 && rect.top-(localplayer.getPosition().y-p_deplacement_y)-localplayer.getRayon() < localplayer.getVitesse())
         {
 
-            if(rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() >= 0)
+            if(rect.top-(localplayer.getPosition().y-p_deplacement_y)-localplayer.getRayon() >= 0)
                 {
 
-                    deplacement_y=rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon();
+                    deplacement_y=rect.top-(localplayer.getPosition().y-p_deplacement_y)-localplayer.getRayon();
                     update_y=true;
                 }
         }
-    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height < player.getVitesse())
+    if(p_deplacement_y<0 && localplayer.getPosition().y-p_deplacement_y-localplayer.getRayon()-rect.top-rect.height < localplayer.getVitesse())
         {
 
-            if(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height >= 0)
+            if(localplayer.getPosition().y-p_deplacement_y-localplayer.getRayon()-rect.top-rect.height >= 0)
                 {
 
-                    deplacement_y= -(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height);
+                    deplacement_y= -(localplayer.getPosition().y-p_deplacement_y-localplayer.getRayon()-rect.top-rect.height);
                     update_y=true;
                 }
         }
@@ -263,28 +263,28 @@ void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_d
 void CollisionManager::CalculDistanceAParcourirBordMap(float p_deplacement_x, float p_deplacement_y)
 {
 
-    if(p_deplacement_x>0 && gameMap.getWidth()-player.getPosition().x-p_deplacement_x-player.getRayon() < player.getVitesse())
+    if(p_deplacement_x>0 && gameMap.getWidth()-localplayer.getPosition().x-p_deplacement_x-localplayer.getRayon() < localplayer.getVitesse())
         {
 
-            deplacement_x=gameMap.getWidth()-(player.getPosition().x-p_deplacement_x)-player.getRayon();
+            deplacement_x=gameMap.getWidth()-(localplayer.getPosition().x-p_deplacement_x)-localplayer.getRayon();
             update_x=true;
         }
-    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon() < player.getVitesse())
+    if(p_deplacement_x<0 && localplayer.getPosition().x-p_deplacement_x-localplayer.getRayon() < localplayer.getVitesse())
         {
 
-            deplacement_x=-(player.getPosition().x-p_deplacement_x)+player.getRayon();
+            deplacement_x=-(localplayer.getPosition().x-p_deplacement_x)+localplayer.getRayon();
             update_x=true;
         }
-    if(p_deplacement_y>0 && gameMap.getHeight()-player.getPosition().y-p_deplacement_y-player.getRayon() < player.getVitesse())
+    if(p_deplacement_y>0 && gameMap.getHeight()-localplayer.getPosition().y-p_deplacement_y-localplayer.getRayon() < localplayer.getVitesse())
         {
 
-            deplacement_y=gameMap.getHeight()-(player.getPosition().y-p_deplacement_y)-player.getRayon();
+            deplacement_y=gameMap.getHeight()-(localplayer.getPosition().y-p_deplacement_y)-localplayer.getRayon();
             update_y=true;
         }
-    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon() < player.getVitesse())
+    if(p_deplacement_y<0 && localplayer.getPosition().y-p_deplacement_y-localplayer.getRayon() < localplayer.getVitesse())
         {
 
-            deplacement_y=-(player.getPosition().y-p_deplacement_y)+player.getRayon();
+            deplacement_y=-(localplayer.getPosition().y-p_deplacement_y)+localplayer.getRayon();
             update_y=true;
         }
 
@@ -307,7 +307,7 @@ float CollisionManager::getDeplacementY()
     return deplacement_y;
 }
 
-Entity* CollisionManager::getAdresseEnnemyTouche()
+Entity* CollisionManager::getAdresseEntityTouche()
 {
 
     return adresseEntityTouche;

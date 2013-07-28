@@ -16,7 +16,7 @@ Raider::Raider(sf::Vector2f init_Position, Player& init_Target) : Ennemy(init_Po
     setOrigin(Vector2f(25,25));
     setFillColor(Color::Magenta);
 
-    vie = 1;
+    Life = 50;
     damage = 5;
     kill_point = 15;
 

@@ -49,6 +49,7 @@ public:
     void addPoints(int p);
 
     void modifierVie(int pv);
+void subirDegats(unsigned int p_damage);
 
 
     float getRayon();

@@ -8,9 +8,9 @@ using namespace sf;
 const float Player::vitesse = 15.0f;
 
 
-Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow):Life(100), Score(0), hud(Life, Score, font, sizeWindow)
+Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow): Score(0), hud(Life, Score, font, sizeWindow)
 {
-
+Life=100;
   sf::Vector2f my_size;
     my_size.x=50;
     my_size.y=50;
@@ -34,6 +34,11 @@ void Player::Shoot()
     my_weapon.at(actual_weapon)->fire();
 }
 
+void Player::subirDegats(unsigned int p_damage)
+{
+    Life-=p_damage;
+        hud.updateLife(Life);
+}
 
 
 bool Player::ReadyToShoot() const
@@ -73,13 +78,11 @@ void Player::setSizeWindowHud(Vector2f sizeWindow)
 
 float Player::getRayon()
 {
-
     return rayon;
 }
 
 float Player::getVitesse() const
 {
-
     return vitesse;
 }
 
@@ -99,13 +102,6 @@ void Player::modifierVie(int pv)
     hud.updateLife(Life);
 }
 
-bool Player::alive() const
-{
-    if (Life > 0)
-        return true;
-
-    return false;
-}
 
 Player::~Player()
 {

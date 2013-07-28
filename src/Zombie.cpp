@@ -17,7 +17,7 @@ Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
     setOrigin(Vector2f(25,25));
     setFillColor(Color::Red);
 
-    vie = 1;
+    Life = 1;
     damage = 5;
     kill_point = 10;
 

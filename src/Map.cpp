@@ -142,6 +142,10 @@ void Map::addEnnemy(Ennemy* e)
     EnnemyArray.push_back(e);
 }
 
+void Map::addPlayer(Player* newPlayer)
+{
+    player.push_back(newPlayer);
+}
 
 void Map::addObstacle(std::string obstacleTexturePath, int x, int y)
 {
@@ -183,11 +187,11 @@ void Map::update(RenderWindow* game)
     CollisionManager& collisionManager = *Engine::getInstance()->getCollisionManager();
 
     vector<Bullet>::iterator e_it = EnnemyBullets.begin();
-    vector<Player>::iterator itPlayer = player.begin();
+    vector<Player *>::iterator itPlayer = player.begin();
     vector<Bullet>::iterator it = AllBullets.begin();
     vector<Ennemy *>::iterator itEnnemy = EnnemyArray.begin();
 
-    while(it != AllBullets.end())
+    while(it != AllBullets.end())///Projectiles Joueur
         {
             it->UpdatePosition();
 
@@ -198,7 +202,7 @@ void Map::update(RenderWindow* game)
             else if(collisionManager.CollisionEnnemy(it->getGlobalBounds(), EnnemyArray))
                 {
 
-                    entityTouche = collisionManager.getAdresseEnnemyTouche();
+                    entityTouche = collisionManager.getAdresseEntityTouche();
                     entityTouche->subirDegats(it->getDamage());
                     it = AllBullets.erase(it);
                 }
@@ -206,18 +210,18 @@ void Map::update(RenderWindow* game)
                 ++it;
         }
 
-         while(e_it != EnnemyBullets.end())
+         while(e_it != EnnemyBullets.end())///Projectiles Ennemi
         {
             e_it->UpdatePosition();
-
+cout<<"hello"<<endl;
             if(collisionManager.CheckIfOutOfWindow(e_it->getPosition().x, e_it->getPosition().y, 0.0f))
                 e_it = EnnemyBullets.erase(e_it);
             else if(collisionManager.CollisionObstacles(e_it->getGlobalBounds()))
                 e_it = EnnemyBullets.erase(e_it);
-            else if(collisionManager.CollisionEnnemy(e_it->getGlobalBounds(), player))
+            else if(collisionManager.CollisionPlayer(e_it->getGlobalBounds(), player))
                 {
 
-                    entityTouche = collisionManager.getAdresseEnnemyTouche();
+                    entityTouche = collisionManager.getAdresseEntityTouche();
                     entityTouche->subirDegats(e_it->getDamage());
                     e_it = EnnemyBullets.erase(e_it);
                 }
@@ -232,7 +236,7 @@ void Map::update(RenderWindow* game)
         {
             if(!(*itEnnemy)->alive())
                 {
-                    player->addPoints((*itEnnemy)->die());
+                    player.back()->addPoints((*itEnnemy)->die());
 
                     delete *itEnnemy;
                     itEnnemy = EnnemyArray.erase(itEnnemy);
@@ -249,7 +253,7 @@ void Map::update(RenderWindow* game)
                     else if(collisionManager.CollisionContreJoueur((*itEnnemy)->getCollisionBox()))
                         {
 
-                            player->subirDegats((*itEnnemy)->getDamage());
+                            player.back()->subirDegats((*itEnnemy)->getDamage());
 
                             delete *itEnnemy;
                             itEnnemy = EnnemyArray.erase(itEnnemy);
@@ -259,11 +263,14 @@ void Map::update(RenderWindow* game)
                 }
         }
 
-    if(!player->alive())
+    if(!player.back()->alive())
         gameOver = true;
 
     for(it = AllBullets.begin(); it != AllBullets.end(); ++it)
         game->draw(*it);
+
+            for(it = EnnemyBullets.begin(); e_it != EnnemyBullets.end(); ++it)
+        game->draw(*e_it);
 
 
     for(itEnnemy = EnnemyArray.begin(); itEnnemy != EnnemyArray.end(); ++itEnnemy)
@@ -275,10 +282,7 @@ Sprite Map::getBackground() const
     return background;
 }
 
-void Map::addPlayer(Player* newPlayer)
-{
-    player.push_back(newPlayer);
-}
+
 
 bool Map::loadNextWave()
 {
