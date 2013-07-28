@@ -11,6 +11,7 @@
 
 #include "Engine.hpp"
 #include "Player.hpp"
+#include "Raider.hpp"
 
 using namespace std;
 using namespace sf;

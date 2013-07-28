@@ -12,7 +12,7 @@
 #include "EntityWithWeapon.hpp"
 
 
-class Player : public sf::CircleShape, public EntityWithWeapon
+class Player : public sf::RectangleShape, public EntityWithWeapon
 {
 
     bool IamImmune;

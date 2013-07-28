@@ -10,12 +10,14 @@ const float Player::vitesse = 15.0f;
 
 Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow):Life(100), Score(0), hud(Life, Score, font, sizeWindow)
 {
-    rayon=50.f;
 
-    setRadius(rayon);
+  sf::Vector2f my_size;
+    my_size.x=50;
+    my_size.y=50;
+    setSize(my_size);
     setFillColor(sf::Color::Blue);
     setPosition(init_position);
-    setOrigin(50.f, 50.f);
+    setOrigin(25.f, 25.f);
     actual_weapon=0;
     my_weapon.push_back(new AutomaticWeapon(*this));
     my_weapon.push_back(new ShrapnelWeapon(*this));
