@@ -107,15 +107,15 @@ int Engine::Run()
     MainView.setCenter(screen_size.x/2, screen_size.y/2);
     //MainView.setSize(1024, 768);
 
-    player = new Player(sf::Vector2f(200.f, 200.f), *(loadFiles->getPoliceArial()), MainView.getSize());
-    collisionManager = new CollisionManager(*player, *gameMap);
+    localplayer = new Player(sf::Vector2f(200.f, 200.f), *(loadFiles->getPoliceArial()), MainView.getSize());
+    collisionManager = new CollisionManager(*localplayer, *gameMap);
     menu = new Menu(screen_size);
     widgetManager.setPause(false);
     widgetManager.setCurrentWidgetListener(menu);
 
     gameEnded = new GameEnded();
 
-    gameMap->setPlayer(*player);
+    gameMap->addPlayer(localplayer);
 
     Game->setView(MainView);
 
@@ -169,7 +169,7 @@ Map* Engine::getMap() const
 
 Player* Engine::getPlayer() const
 {
-    return player;
+    return localplayer;
 }
 
 CollisionManager* Engine::getCollisionManager() const
@@ -205,21 +205,21 @@ void Engine::gestionEvenements()
             float y=0.0f;
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                x+=-player->getVitesse();
+                x+=-localplayer->getVitesse();
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                x+=player->getVitesse();
+                x+=localplayer->getVitesse();
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                y+=-player->getVitesse();
+                y+=-localplayer->getVitesse();
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                y+=player->getVitesse();
+                y+=localplayer->getVitesse();
 
-            player->move(x, y);
+            localplayer->move(x, y);
 
             if(collisionManager->CollisionJoueur(x, y))
                 {
                     mManager.playEvent("ressources/sounds/events/impact.ogg");
-                    player->move(-x, -y);
-                    player->move(collisionManager->getDeplacementX(), collisionManager->getDeplacementY());
+                    localplayer->move(-x, -y);
+                    localplayer->move(collisionManager->getDeplacementX(), collisionManager->getDeplacementY());
                 }
         }
 
@@ -262,7 +262,7 @@ void Engine::gestionEvenements()
                             if(menu->getJouer())
                                 {
 
-                                    gameMap->addEnnemy(new Zombie(sf::Vector2f(500,500), *player));
+                                    gameMap->addEnnemy(new Zombie(sf::Vector2f(500,500), *localplayer));
                                 }
                         }
                     if (WindowEvent.key.code == sf::Keyboard::Numpad0)
@@ -270,7 +270,7 @@ void Engine::gestionEvenements()
                             if(menu->getJouer())
                                 {
 
-                                    gameMap->addEnnemy(new Splitter(sf::Vector2f(300,500), *player, 1));
+                                    gameMap->addEnnemy(new Splitter(sf::Vector2f(300,500), *localplayer, 1));
                                 }
                         }
                             if (WindowEvent.key.code == sf::Keyboard::Numpad1)
@@ -278,7 +278,7 @@ void Engine::gestionEvenements()
                             if(menu->getJouer())
                                 {
 
-                                    gameMap->addEnnemy(new Raider(sf::Vector2f(300,500), *player));
+                                    gameMap->addEnnemy(new Raider(sf::Vector2f(300,500), *localplayer));
                                 }
                         }
                 }
@@ -291,7 +291,7 @@ void Engine::gestionEvenements()
                                         else if(WindowEvent.mouseWheel.delta < 0)
                                             MainView.zoom(1.8);
                     */
-                    player->change_Weapon(WindowEvent.mouseWheel.delta);
+                    localplayer->change_Weapon(WindowEvent.mouseWheel.delta);
                 }
 
         }//pollEvent
@@ -300,10 +300,10 @@ void Engine::gestionEvenements()
         {
 
             localMousePosition = sf::Mouse::getPosition(*Game);
-            if (menu->getJouer() && player->ReadyToShoot()==true)
+            if (menu->getJouer() && localplayer->ReadyToShoot()==true)
                 {
 
-                    player->Shoot();
+                    localplayer->Shoot();
 
                 }
             else if(!widgetManager.getPause())
@@ -350,30 +350,30 @@ bool Engine::loadNextMap()
 void Engine::updateView()
 {
 
-    Vector2i object_pixel_position=Game->mapCoordsToPixel(player->getPosition(), MainView);
+    Vector2i object_pixel_position=Game->mapCoordsToPixel(localplayer->getPosition(), MainView);
 
     if(object_pixel_position.x < 300)
         {
-            MainView.move(-player->getVitesse(), 0.f);
-            player->move_myhud(-player->getVitesse(), 0.f);//On met à jour la position de la HUD
+            MainView.move(-localplayer->getVitesse(), 0.f);
+            localplayer->move_myhud(-localplayer->getVitesse(), 0.f);//On met à jour la position de la HUD
             Game->setView(MainView);
         }
     if((unsigned)object_pixel_position.x > Game->getSize().x-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
         {
-            MainView.move(player->getVitesse(), 0.f);
-            player->move_myhud(player->getVitesse(), 0.f);
+            MainView.move(localplayer->getVitesse(), 0.f);
+            localplayer->move_myhud(localplayer->getVitesse(), 0.f);
             Game->setView(MainView);
         }
     if(object_pixel_position.y < 300)
         {
-            MainView.move(0.f, -player->getVitesse());
-            player->move_myhud(0.f, -player->getVitesse());
+            MainView.move(0.f, -localplayer->getVitesse());
+            localplayer->move_myhud(0.f, -localplayer->getVitesse());
             Game->setView(MainView);
         }
     if((unsigned)object_pixel_position.y > Game->getSize().y-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
         {
-            MainView.move(0.f, player->getVitesse());
-            player->move_myhud(0.f, player->getVitesse());
+            MainView.move(0.f, localplayer->getVitesse());
+            localplayer->move_myhud(0.f, localplayer->getVitesse());
             Game->setView(MainView);
         }
 }
@@ -390,9 +390,9 @@ void Engine::drawGame()
     Game->draw(gameMap->getBackground());
     gameMap->update(Game);
     gameMap->drawObstacles(Game);
-    Game->draw(*player);
-    Game->draw(player->getScoreHud());
-    Game->draw(player->getLifeHud());
+    Game->draw(*localplayer);
+    Game->draw(localplayer->getScoreHud());
+    Game->draw(localplayer->getLifeHud());
 }
 
 void Engine::nextWaveAndMap()
@@ -444,7 +444,7 @@ Engine::~Engine()
 
     delete Game;
     delete gameMap;
-    delete player;
+    delete localplayer;
     delete collisionManager;
     delete menu;
     delete loadFiles;

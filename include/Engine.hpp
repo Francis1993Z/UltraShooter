@@ -70,7 +70,7 @@ private:
     static Engine* instanceOfEngine; // Permet de retenir l'adresse de l'instance d'Engine qui a été crée.
 
     Map* gameMap;   // On utilise un pointeur pour éviter le soucis d'interdépendance.
-    Player* player;
+    Player* localplayer;
     CollisionManager* collisionManager;
     Menu* menu;
     GameEnded* gameEnded;

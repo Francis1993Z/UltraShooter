@@ -93,18 +93,18 @@ bool CollisionManager::CollisionObstacles(int x, int y)
     return collision;
 }
 
-bool CollisionManager::CollisionEnnemy(FloatRect rect, vector<Ennemy *>& EnnemyArray)
+bool CollisionManager::CollisionEnnemy(FloatRect rect, vector<sf::RectangleShape *>& EnnemyArray)
 {
 
     collision = false;
 
-    for(vector<Ennemy *>::const_iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
+    for(vector<sf::RectangleShape *>::const_iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
         {
-            if(rect.intersects((*it)->getCollisionBox()))
+            if(rect.intersects((*it)->getGlobalBounds()))
                 {
 
                     collision = true;
-                    adresseEnnemyTouche = &*(*it);//attention
+                    adresseEntityTouche = &*(*it);
                 }
         }
 
@@ -288,10 +288,10 @@ float CollisionManager::getDeplacementY()
     return deplacement_y;
 }
 
-Ennemy* CollisionManager::getAdresseEnnemyTouche()
+sf::RectangleShape* CollisionManager::getAdresseEnnemyTouche()
 {
 
-    return adresseEnnemyTouche;
+    return adresseEntityTouche;
 }
 
 CollisionManager::~CollisionManager()

@@ -182,6 +182,8 @@ void Map::update(RenderWindow* game)
 {
     CollisionManager& collisionManager = *Engine::getInstance()->getCollisionManager();
 
+    vector<Bullet>::iterator e_it = EnnemyBullets.begin();
+    vector<Player>::iterator itPlayer = player.begin();
     vector<Bullet>::iterator it = AllBullets.begin();
     vector<Ennemy *>::iterator itEnnemy = EnnemyArray.begin();
 
@@ -196,12 +198,31 @@ void Map::update(RenderWindow* game)
             else if(collisionManager.CollisionEnnemy(it->getGlobalBounds(), EnnemyArray))
                 {
 
-                    EnnemyTouche = collisionManager.getAdresseEnnemyTouche();
-                    EnnemyTouche->subirDegats(it->getDamage());
+                    entityTouche = collisionManager.getAdresseEnnemyTouche();
+                    entityTouche->subirDegats(it->getDamage());
                     it = AllBullets.erase(it);
                 }
             else
                 ++it;
+        }
+
+         while(e_it != EnnemyBullets.end())
+        {
+            e_it->UpdatePosition();
+
+            if(collisionManager.CheckIfOutOfWindow(e_it->getPosition().x, e_it->getPosition().y, 0.0f))
+                e_it = EnnemyBullets.erase(e_it);
+            else if(collisionManager.CollisionObstacles(e_it->getGlobalBounds()))
+                e_it = EnnemyBullets.erase(e_it);
+            else if(collisionManager.CollisionEnnemy(e_it->getGlobalBounds(), player))
+                {
+
+                    entityTouche = collisionManager.getAdresseEnnemyTouche();
+                    entityTouche->subirDegats(e_it->getDamage());
+                    e_it = EnnemyBullets.erase(e_it);
+                }
+            else
+                ++e_it;
         }
 
     Engine::getInstance()->getCollisionManager()->update_repulsion(EnnemyArray);
@@ -254,9 +275,9 @@ Sprite Map::getBackground() const
     return background;
 }
 
-void Map::setPlayer(Player& newPlayer)
+void Map::addPlayer(Player* newPlayer)
 {
-    player=&newPlayer;
+    player.push_back(newPlayer);
 }
 
 bool Map::loadNextWave()

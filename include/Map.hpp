@@ -24,8 +24,9 @@
 class Map
 {
     std::vector<Bullet> AllBullets;
+    std::vector<Bullet> EnnemyBullets;
     std::vector<Ennemy *> EnnemyArray;
-
+    std::vector<Player> player;
     std::list<Obstacle> lObstacles;
     std::list<Wave> lWaves;
 
@@ -42,8 +43,8 @@ class Map
 
     std::string theme;
 
-    Ennemy* EnnemyTouche;
-    Player* player;
+    sf::RectangleShape* entityTouche;
+
 
     bool gameOver;
 
@@ -55,7 +56,7 @@ public:
     int getWidth() const;
     int getHeight() const;
 
-    void setPlayer(Player& newPlayer);
+    void addPlayer(Player* newPlayer);
     void addBullet(Bullet bullet);
     void addEnnemy(Ennemy* e);
     void addObstacle(std::string obstacleTexturePath, int x, int y);
