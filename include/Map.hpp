@@ -43,7 +43,7 @@ class Map
 
     std::string theme;
 
-    sf::RectangleShape* entityTouche;
+    Entity* entityTouche;
 
 
     bool gameOver;

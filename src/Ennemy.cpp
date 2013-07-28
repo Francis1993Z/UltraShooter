@@ -30,11 +30,7 @@ void Ennemy::SetTarget(Player &NewTarget)
     my_target=&NewTarget;
 }
 
-int Ennemy::getVie() const
-{
 
-    return vie;
-}
 
 unsigned int Ennemy::getDamage() const
 {
@@ -57,13 +53,7 @@ Ennemy* Ennemy::getAdresse()
     return  this;
 }
 
-bool Ennemy::alive() const
-{
-    if (vie > 0)
-        return true;
 
-    return false;
-}
 
 int Ennemy::getKillPoint() const
 {
@@ -76,15 +66,5 @@ float Ennemy::getSpeed() const
     return e_m;
 }
 
-void Ennemy::subirDegats(unsigned int p_damage)
-{
-
-    vie-=p_damage;
-}
 
 
-sf::FloatRect Ennemy::getCollisionBox() const
-{
-
-    return getGlobalBounds();
-}

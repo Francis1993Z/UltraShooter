@@ -83,11 +83,6 @@ float Player::getVitesse() const
     return vitesse;
 }
 
-sf::FloatRect Player::getCollisionBox()
-{
-
-    return getGlobalBounds();
-}
 
 void Player::addPoints(int points)
 {
@@ -110,12 +105,6 @@ bool Player::alive() const
         return true;
 
     return false;
-}
-
-void Player::subirDegats(unsigned int p_damage)
-{
-
-    modifierVie(-p_damage);
 }
 
 Player::~Player()

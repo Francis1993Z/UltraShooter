@@ -1,13 +1,13 @@
 #ifndef ENNEMY_HPP_INCLUDED
 #define ENNEMY_HPP_INCLUDED
 
+#include "Entity.hpp"
+
 #include "Player.hpp"
-
-
 
 enum Behaviour {STANDBY, ATTACK, ESCAPE, FOLLOW};
 
-class Ennemy : public sf::RectangleShape
+class Ennemy : public Entity
 {
 
 public:
@@ -19,23 +19,21 @@ public:
     void ApplyForce(float fx, float fy);
     void SetTarget(Player &NewTarget);
     void ChangeBehaviour(Behaviour NewBehaviour);
-    void subirDegats(unsigned int p_damage);
+
 
     unsigned int getDamage() const;
     int getKillPoint() const;
-    int getVie() const;
 
     float get_dRadius() const;
     float getSpeed() const;
-    sf::FloatRect getCollisionBox() const;
-    bool alive() const;
+
+
 
     Ennemy* getAdresse();
 
 protected:
 
 
-    int vie;
     int damage;
     int kill_point;
 
