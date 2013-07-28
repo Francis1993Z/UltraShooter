@@ -112,6 +112,25 @@ bool CollisionManager::CollisionEnnemy(FloatRect rect, vector<Ennemy *>& EnnemyA
     return collision;
 }
 
+bool CollisionManager::CollisionPlayer(FloatRect rect, vector<Player>& PlayerArray)
+{
+
+    collision = false;
+
+    for(vector<Player>::const_iterator it = PlayerArray.begin(); it != PlayerArray.end(); ++it)
+        {
+            if(rect.intersects((it)->getGlobalBounds()))
+                {
+
+                    collision = true;
+                    adresseEntityTouche = &(*it);
+                }
+        }
+
+
+    return collision;
+}
+
 bool  CollisionManager::CollisionContreJoueur(FloatRect rect)
 {
 
