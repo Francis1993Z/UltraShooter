@@ -268,40 +268,29 @@ void Engine::gestionEvenements()
                             Game->close();
                             IsRunning=false;
                         }
+                        if(!menu->isActif())
+                                {
                     if (WindowEvent.key.code == sf::Keyboard::Space)
                         {
-                            if(!menu->isActif())
-                                {
 
                                     gameMap->addEnnemy(new Zombie(sf::Vector2f(500,500), *player));
-                                }
                         }
                     if (WindowEvent.key.code == sf::Keyboard::Numpad0)
                         {
-                            if(!menu->isActif())
-                                {
 
                                     gameMap->addEnnemy(new Splitter(sf::Vector2f(300,500), *player, 1));
-                                }
+
                         }
                             if (WindowEvent.key.code == sf::Keyboard::Numpad1)
                         {
-                            if(menu->getJouer())
-                                {
-
                                     gameMap->addEnnemy(new Raider(sf::Vector2f(300,500), *player));
-                                }
                         }
+
+                         }
                 }
 
-            if (WindowEvent.type == sf::Event::MouseWheelMoved)
+                                    if (WindowEvent.type == sf::Event::MouseWheelMoved)
                 {
-                    /*
-                                        if(WindowEvent.mouseWheel.delta > 0)
-                                            MainView.zoom(0.8);
-                                        else if(WindowEvent.mouseWheel.delta < 0)
-                                            MainView.zoom(1.8);
-                    */
                     player->change_Weapon(WindowEvent.mouseWheel.delta);
                 }
 
@@ -309,24 +298,20 @@ void Engine::gestionEvenements()
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-
-<<<<<<< HEAD
-            if (!menu->isActif() && player->ReadyToShoot()==true)
-=======
-            localMousePosition = sf::Mouse::getPosition(*Game);
-            if (menu->getJouer() && player->ReadyToShoot()==true)
->>>>>>> beeff9d8897d5e7befb0662e5af5f729cfd84158
-                {
-
+           localMousePosition = sf::Mouse::getPosition(*Game);
+            if (!menu->isActif())
+{
                     player->Shoot();
-
                 }
+
             else if(!widgetManager.getPause())
                 {
 
                     widgetManager.positionClicSouris(localMousePosition.x, localMousePosition.y);
                 }
         }
+
+
     if(WindowEvent.type == sf::Event::MouseButtonReleased)
         {
 

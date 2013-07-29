@@ -20,7 +20,6 @@ protected :
 
     float vitesse, angle;
 
-    bool grow;
 };
 
 #endif // PROJECTILE_HPP_INCLUDED
