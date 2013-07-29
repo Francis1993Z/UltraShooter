@@ -116,6 +116,11 @@ void Player::subirDegats(unsigned int p_damage)
     modifierVie(-p_damage);
 }
 
+unsigned long Player::getScore(){
+
+    return Score;
+}
+
 Player::~Player()
 {
 

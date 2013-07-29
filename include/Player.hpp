@@ -44,6 +44,8 @@ public:
     sf::Text getLifeHud();
     sf::Text getScoreHud();
 
+    unsigned long getScore();
+
     void move_myhud(float vx, float vy);
     void setSizeWindowHud(sf::Vector2f sizeWindow);
     void addPoints(int p);

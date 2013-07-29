@@ -65,6 +65,7 @@ private:
 
     int mapNumber;
 
+    bool fenetreFinJeu;
     bool IsRunning;
     static bool isAlreadyInstancied; // Permet de savoir si une instance d'Engine existe déjà ou non.
     static Engine* instanceOfEngine; // Permet de retenir l'adresse de l'instance d'Engine qui a été crée.

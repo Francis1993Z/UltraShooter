@@ -17,12 +17,17 @@ class Menu : public WidgetListener
         virtual ~Menu();
         void draw();
         void action(int id);
-        bool getJouer() const;
+        bool isActif() const;
+        void afficher();
+        void afficherScores();
     protected:
     private:
         sf::Texture texture;
         sf::Sprite sprite;
-        bool jouer;
+        bool actif;
+        bool options;
+        std::list<sf::Text> listeScores;
+
 };
 
 #endif // MENU_INCLUDED_HPP

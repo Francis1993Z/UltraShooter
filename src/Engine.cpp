@@ -109,6 +109,7 @@ int Engine::Run()
     player = new Player(sf::Vector2f(200.f, 200.f), *(loadFiles->getPoliceArial()), MainView.getSize());
     collisionManager = new CollisionManager(*player, *gameMap);
     menu = new Menu(screen_size);
+    menu->afficher();
     widgetManager.setPause(false);
     widgetManager.setCurrentWidgetListener(menu);
 
@@ -124,38 +125,49 @@ int Engine::Run()
 
     gameMap->loadNextWave();
 
+    fenetreFinJeu = false;
     IsRunning=true;
     while(IsRunning)
         {
             while(Game->isOpen())//Fenetre
                 {
                     gestionEvenements(); //Gère tous les évènements.
-                    if(menu->getJouer() && !gameEnded->isActif())
-                        {
 
-                            widgetManager.setPause(true);
+                    if(fenetreFinJeu && !gameEnded->isActif()){
 
-                            updateView(); //Mets à jour la position de la caméra.
-                            Game->clear(Color(0,0,0));
-                            drawGame(); //Dessine tous les composants du jeu lors d'une partie.
-                            Game->display();
-                            lookIfGameOver(); //Regarde si il y a "GAME OVER".
-                            nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
-                        }
-                    else if(gameEnded->isActif())
-                        {
+                        fenetreFinJeu = false;
+                        MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
+                        Game->setView(MainView);
+                        menu->afficher();
+                        widgetManager.setPause(false);
+                        widgetManager.setCurrentWidgetListener(menu);
+                    }
 
-                            Game->clear(Color(0,0,0));
-                            gameEnded->draw();
-                            Game->display();
-                        }
-                    else if(!menu->getJouer())
-                        {
+                    if(!menu->isActif() && !gameEnded->isActif()){
 
-                            Game->clear(Color(0,0,0));
-                            drawMenu(); //Dessine le menu.
-                            Game->display();
-                        }
+                        widgetManager.setPause(true);
+
+                        updateView(); //Mets à jour la position de la caméra.
+                        Game->clear(Color(0,0,0));
+                        drawGame(); //Dessine tous les composants du jeu lors d'une partie.
+                        Game->display();
+                        lookIfGameOver(); //Regarde si il y a "GAME OVER".
+                        nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
+                    }
+                    else if(gameEnded->isActif()){
+
+                        fenetreFinJeu = true;
+
+                        Game->clear(Color(0,0,0));
+                        gameEnded->draw();
+                        Game->display();
+                    }
+                    else if(menu->isActif()){
+
+                        Game->clear(Color(0,0,0));
+                        drawMenu(); //Dessine le menu.
+                        Game->display();
+                    }
                 }
         }
     return 0;
@@ -197,7 +209,7 @@ RenderWindow* Engine::getRenderWindow() const
 void Engine::gestionEvenements()
 {
 
-    if(menu->getJouer())
+    if(!menu->isActif())
         {
 
             float x=0.0f;
@@ -258,7 +270,7 @@ void Engine::gestionEvenements()
                         }
                     if (WindowEvent.key.code == sf::Keyboard::Space)
                         {
-                            if(menu->getJouer())
+                            if(!menu->isActif())
                                 {
 
                                     gameMap->addEnnemy(new Zombie(sf::Vector2f(500,500), *player));
@@ -266,7 +278,7 @@ void Engine::gestionEvenements()
                         }
                     if (WindowEvent.key.code == sf::Keyboard::Numpad0)
                         {
-                            if(menu->getJouer())
+                            if(!menu->isActif())
                                 {
 
                                     gameMap->addEnnemy(new Splitter(sf::Vector2f(300,500), *player, 1));
@@ -298,8 +310,12 @@ void Engine::gestionEvenements()
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
 
+<<<<<<< HEAD
+            if (!menu->isActif() && player->ReadyToShoot()==true)
+=======
             localMousePosition = sf::Mouse::getPosition(*Game);
             if (menu->getJouer() && player->ReadyToShoot()==true)
+>>>>>>> beeff9d8897d5e7befb0662e5af5f729cfd84158
                 {
 
                     player->Shoot();

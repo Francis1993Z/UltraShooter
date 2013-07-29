@@ -5,6 +5,7 @@
 #include <iostream>
 
 using namespace std;
+using namespace sf;
 
 TextField::TextField(int p_posX, int p_posY, int p_id)
 {
@@ -65,6 +66,13 @@ void TextField::codeKeyPressed(int code)
 
             contenuChamps.setString(str);
         }
+}
+
+string TextField::getText() const{
+
+
+
+    return contenuChamps.getString();
 }
 
 TextField::~TextField()
