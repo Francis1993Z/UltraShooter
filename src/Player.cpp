@@ -34,15 +34,6 @@ void Player::Shoot()
 
 
 
-bool Player::ReadyToShoot() const
-{
-    Int32 time=weapon_clock.getElapsedTime().asMilliseconds();
-
-    if (time > 80)
-        return true;
-    else
-        return false;
-}
 
 Vector2i Player::GetWindowPosition(sf::RenderWindow &theRenderWindow) const
 {

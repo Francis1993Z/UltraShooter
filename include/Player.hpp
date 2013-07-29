@@ -57,7 +57,7 @@ public:
     float getVitesse() const;
     void Shoot();
 
-    bool ReadyToShoot() const;
+
     bool alive() const;
 
     ~Player();
