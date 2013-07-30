@@ -105,7 +105,7 @@ int Engine::Run()
     MainView.setSize(screen_size.x, screen_size.y);
     MainView.setCenter(screen_size.x/2, screen_size.y/2);
     //MainView.setSize(1024, 768);
-
+    events = new Events();
     player = new Player(sf::Vector2f(200.f, 200.f), *(loadFiles->getPoliceArial()), MainView.getSize());
     collisionManager = new CollisionManager(*player, *gameMap);
     menu = new Menu(screen_size);
@@ -210,33 +210,15 @@ RenderWindow* Engine::getRenderWindow() const
     return Game;
 }
 
+Menu* Engine::getMenu() const{
+
+    return menu;
+}
+
 void Engine::gestionEvenements()
 {
+    events->updateEvents();
 
-    if(!menu->isActif())
-        {
-
-            float x=0.0f;
-            float y=0.0f;
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                x+=-player->getVitesse();
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                x+=player->getVitesse();
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                y+=-player->getVitesse();
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                y+=player->getVitesse();
-
-            player->move(x, y);
-
-            if(collisionManager->CollisionJoueur(x, y))
-                {
-                    mManager.playEvent("ressources/sounds/events/impact.ogg");
-                    player->move(-x, -y);
-                    player->move(collisionManager->getDeplacementX(), collisionManager->getDeplacementY());
-                }
-        }
 
 //Pour des touches séparées(avec délai du système), il vaut mieux utiliser ces lignes là(pollEvent).
     while (Game->pollEvent(WindowEvent))
@@ -453,4 +435,5 @@ Engine::~Engine()
     delete menu;
     delete loadFiles;
     delete gameEnded;
+    delete events;
 }

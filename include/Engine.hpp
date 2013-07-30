@@ -24,10 +24,11 @@
 #include "LoadFiles.hpp"
 #include "WidgetManager.hpp"
 #include "GameEnded.hpp"
+#include "Events.hpp"
 
 
 class Map;
-
+class Events;
 class CollisionManager; /* Permet d'éviter l'interdépendance, en effet, Engine a besoin de connaître Map mais Map a besoin de Connaître Engine
               On prévient juste le compilateur que Map sera définit plus tard */
 
@@ -54,6 +55,7 @@ public:
     CollisionManager* getCollisionManager() const;
     MusicManager* getMusicManager();
     LoadFiles* getLoadFiles() const;
+    Menu* getMenu() const;
 
     bool loadNextMap();
 
@@ -83,6 +85,7 @@ private:
     GameEnded* gameEnded;
     LoadFiles* loadFiles;
     WidgetManager widgetManager;
+    Events* events;
 
     sf::Vector2i localMousePosition;
     sf::Event WindowEvent;
