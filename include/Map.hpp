@@ -23,8 +23,8 @@
 
 class Map
 {
-    std::vector<Bullet> AllBullets;
-    std::vector<Ennemy *> EnnemyArray;
+    std::list<Bullet> AllBullets;
+    std::list<Ennemy *> EnnemyArray;
 
     std::list<Obstacle> lObstacles;
     std::list<Wave> lWaves;

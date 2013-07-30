@@ -93,12 +93,12 @@ bool CollisionManager::CollisionObstacles(int x, int y)
     return collision;
 }
 
-bool CollisionManager::CollisionEnnemy(FloatRect rect, vector<Ennemy *>& EnnemyArray)
+bool CollisionManager::CollisionEnnemy(FloatRect rect, list<Ennemy *>& EnnemyArray)
 {
 
     collision = false;
 
-    for(vector<Ennemy *>::const_iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
+    for(list<Ennemy *>::const_iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
         {
             if(rect.intersects((*it)->getCollisionBox()))
                 {
@@ -136,11 +136,11 @@ bool CollisionManager::CheckIfOutOfWindow(float pos_x, float pos_y, float rayon)
         return false;
 }
 
-void CollisionManager::update_repulsion(vector<Ennemy *>& EnnemyArray)
+void CollisionManager::update_repulsion(list<Ennemy *>& EnnemyArray)
 {
-    for(vector<Ennemy *>::const_iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
+    for(list<Ennemy *>::const_iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
         {
-            for(vector<Ennemy *>::const_iterator it2 = EnnemyArray.begin(); it2 != EnnemyArray.end(); ++it2)
+            for(list<Ennemy *>::const_iterator it2 = EnnemyArray.begin(); it2 != EnnemyArray.end(); ++it2)
                 {
                     if(it != it2)
                         {

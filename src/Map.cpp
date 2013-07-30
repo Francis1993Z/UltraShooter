@@ -182,8 +182,8 @@ void Map::update(RenderWindow* game)
 {
     CollisionManager& collisionManager = *Engine::getInstance()->getCollisionManager();
 
-    vector<Bullet>::iterator it = AllBullets.begin();
-    vector<Ennemy *>::iterator itEnnemy = EnnemyArray.begin();
+    list<Bullet>::iterator it = AllBullets.begin();
+    list<Ennemy *>::iterator itEnnemy = EnnemyArray.begin();
 
     while(it != AllBullets.end())
         {
@@ -293,7 +293,7 @@ list <Obstacle> Map::getListeObstacles() const
 
 Map::~Map()
 {
-    for(vector<Ennemy *>::iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
+    for(list<Ennemy *>::iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
         delete *it;
 }
 

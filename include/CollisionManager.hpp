@@ -23,11 +23,11 @@ public:
     bool CollisionJoueur(float x, float y);
     bool CollisionObstacles(sf::FloatRect rect);
     bool CollisionObstacles(int x, int y);
-    bool CollisionEnnemy(sf::FloatRect rect, std::vector<Ennemy *>& EnnemyArray);
+    bool CollisionEnnemy(sf::FloatRect rect, std::list<Ennemy *>& EnnemyArray);
     bool CheckIfOutOfWindow(float pos_x, float pos_y, float rayon);
     bool CollisionContreJoueur(sf::FloatRect rect);
 
-    void update_repulsion(std::vector<Ennemy *>& EnnemyArray);
+    void update_repulsion(std::list<Ennemy *>& EnnemyArray);
     void CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, sf::FloatRect rect);
     void CalculDistanceAParcourirBordMap(float p_deplacement_x, float p_deplacement_y);
 
