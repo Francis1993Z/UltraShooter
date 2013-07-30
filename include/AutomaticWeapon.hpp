@@ -9,7 +9,6 @@ class AutomaticWeapon : public Weapon
 public:
     AutomaticWeapon(sf::Shape const& my_user);
     void fire();
-
 };
 
 #endif // AUTOMATICWEAPON_HPP_INCLUDED

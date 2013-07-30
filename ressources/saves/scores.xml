@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <ListeMeilleursJoueurs>
+    <user name="RedFruit" score="11790" />
     <user name="Francis" score="6310" />
+    <user name="BlueFruit" score="690" />
     <user name="RedFruit" score="400" />
     <user name="Francis" score="135" />
 </ListeMeilleursJoueurs>

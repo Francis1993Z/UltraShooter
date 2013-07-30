@@ -9,20 +9,20 @@
 
 class TextField : public Widget
 {
-    public:
-        TextField(int p_posX, int p_posY, int p_id);
-        void draw();
-        sf::FloatRect getCollisionBox() const;
-        void setSurvolSouris(bool p_survol);
-        void setClicSouris(bool p_clic);
-        void codeKeyPressed(int code);
-        std::string getText() const;
-        ~TextField();
-    protected:
-    private:
-        sf::RectangleShape champs;
-        sf::Text contenuChamps;
-        std::basic_string<sf::Uint32> str;
+public:
+    TextField(int p_posX, int p_posY, int p_id);
+    void draw();
+    sf::FloatRect getCollisionBox() const;
+    void setSurvolSouris(bool p_survol);
+    void setClicSouris(bool p_clic);
+    void codeKeyPressed(int code);
+    std::string getText() const;
+    ~TextField();
+protected:
+private:
+    sf::RectangleShape champs;
+    sf::Text contenuChamps;
+    std::basic_string<sf::Uint32> str;
 };
 
 #endif // TEXTFIELD_INCLUDED_HPP

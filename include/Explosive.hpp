@@ -12,7 +12,7 @@ class Explosive : public sf::RectangleShape, public Projectile
 
 public:
 
-   virtual void UpdatePosition();
+    virtual void UpdatePosition();
 
 };
 

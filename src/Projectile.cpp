@@ -10,6 +10,6 @@ unsigned int Projectile::getDamage() const
 
 
 void Projectile::UpdatePosition()
- {
+{
 
- }
+}

@@ -2,11 +2,6 @@
 
 using namespace std;
 using namespace sf;
-/*
-EntityWithWeapon::EntityWithWeapon(sf::Transformable const& my_Entity)
-{
-entity=&my_Entity;
-}*/
 
 void EntityWithWeapon::change_Weapon(int delta)
 {
@@ -22,9 +17,9 @@ void EntityWithWeapon::change_Weapon(int delta)
             else actual_weapon--;
         }
 }
-/*
-sf::Transformable EntityWithWeapon::getEntity() const
+
+EntityWithWeapon::~EntityWithWeapon()
 {
-return entity;
+    for(vector<Weapon *>::iterator it = my_weapon.begin(); it != my_weapon.end(); ++it)
+        delete *it;
 }
-*/

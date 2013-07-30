@@ -212,7 +212,6 @@ void Map::update(RenderWindow* game)
             if(!(*itEnnemy)->alive())
                 {
                     player->addPoints((*itEnnemy)->die());
-
                     delete *itEnnemy;
                     itEnnemy = EnnemyArray.erase(itEnnemy);
                 }
@@ -229,7 +228,6 @@ void Map::update(RenderWindow* game)
                         {
 
                             player->subirDegats((*itEnnemy)->getDamage());
-
                             delete *itEnnemy;
                             itEnnemy = EnnemyArray.erase(itEnnemy);
                         }

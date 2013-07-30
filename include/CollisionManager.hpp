@@ -1,16 +1,12 @@
 #ifndef COLLISIONMANAGER_HPP_INCLUDED
 #define COLLISIONMANAGER_HPP_INCLUDED
 
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
 
-#include <list>
 
-#include "Player.hpp"
+
+
 #include "Map.hpp"
-#include "Obstacle.hpp"
-#include "Zombie.hpp"
+
 
 class Map;
 

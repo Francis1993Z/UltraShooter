@@ -6,12 +6,12 @@
 
 #include "EnnemyFactory.hpp"
 
-typedef struct
+struct wEnnemy
 {
     std::string type;
     int number;
 
-} wEnnemy;
+};
 
 class Wave
 {

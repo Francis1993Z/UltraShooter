@@ -5,11 +5,18 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <list>
 #include <vector>
 #include <string>
+#include <map>
 
-#include "Player.hpp"
-#include "Bullet.hpp"
+
+#include "Ennemy.hpp"
+#include "Splitter.hpp"
+#include "Raider.hpp"
+#include "Obstacle.hpp"
+#include "Wave.hpp"
+#include "EnnemyFactory.hpp"
 #include "Map.hpp"
 #include "CollisionManager.hpp"
 #include "MusicManager.hpp"
@@ -18,8 +25,8 @@
 #include "WidgetManager.hpp"
 #include "GameEnded.hpp"
 
-class Map;
 
+class Map;
 
 class CollisionManager; /* Permet d'éviter l'interdépendance, en effet, Engine a besoin de connaître Map mais Map a besoin de Connaître Engine
               On prévient juste le compilateur que Map sera définit plus tard */
@@ -29,7 +36,6 @@ class CollisionManager; /* Permet d'éviter l'interdépendance, en effet, Engine a
 */
 class Engine
 {
-
 public:
 
     ~Engine();

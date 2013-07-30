@@ -14,9 +14,9 @@ MissileLauncher::MissileLauncher(sf::Shape const& my_user)
 
 void MissileLauncher::fire()
 {
-if(fire_intervale_clock.getElapsedTime().asMilliseconds() >= fire_intervale)
-{
+    if(fire_intervale_clock.getElapsedTime().asMilliseconds() >= fire_intervale)
+        {
 
 
-}
+        }
 }

@@ -7,8 +7,8 @@ void Weapon::fire()
 {
 
 }
-/*
-Vector2i Weapon::GetWindowPosition(sf::RenderWindow &theRenderWindow) const
+
+Weapon::~Weapon()
 {
-    return theRenderWindow.mapCoordsToPixel(user->getPosition(), theRenderWindow.getView());
-}*/
+
+}

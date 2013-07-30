@@ -7,7 +7,7 @@ using namespace sf;
 
 
 Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
-    :Ennemy(init_Position, init_Target)
+    :Ennemy(init_Position, init_Target, 1)
 {
 
     sf::Vector2f my_size;
@@ -17,7 +17,7 @@ Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
     setOrigin(Vector2f(25,25));
     setFillColor(Color::Red);
 
-    vie = 1;
+
     damage = 5;
     kill_point = 10;
 

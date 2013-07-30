@@ -7,32 +7,24 @@ using namespace sf;
 
 const float Player::vitesse = 15.0f;
 
-
-Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow):Life(100), Score(0), hud(Life, Score, font, sizeWindow)
+Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow): Entity(100), Score(0), hud(vie, Score, font, sizeWindow)
 {
-    rayon=50.f;
-
-    setRadius(rayon);
+    sf::Vector2f my_size;
+    my_size.x=50;
+    my_size.y=50;
+    setSize(my_size);
     setFillColor(sf::Color::Blue);
     setPosition(init_position);
-    setOrigin(50.f, 50.f);
+    setOrigin(my_size.x/2, my_size.x/2);
     actual_weapon=0;
     my_weapon.push_back(new AutomaticWeapon(*this));
     my_weapon.push_back(new ShrapnelWeapon(*this));
 }
 
-/*void Player::SetRenderWindow(sf::RenderWindow &mynewWindow)
-{
-mynewWindow.co;
-
-}*/
-
 void Player::Shoot()
 {
     my_weapon.at(actual_weapon)->fire();
 }
-
-
 
 
 Vector2i Player::GetWindowPosition(sf::RenderWindow &theRenderWindow) const
@@ -72,11 +64,6 @@ float Player::getVitesse() const
     return vitesse;
 }
 
-sf::FloatRect Player::getCollisionBox()
-{
-
-    return getGlobalBounds();
-}
 
 void Player::addPoints(int points)
 {
@@ -85,30 +72,15 @@ void Player::addPoints(int points)
     hud.updateScore(Score);
 }
 
-void Player::modifierVie(int pv)
+void Player::modifierVie(int pv)//fonction Entity::modifierVie() masquée
 {
-
-    Life+=pv;
-
-    hud.updateLife(Life);
+    vie+=pv;
+    hud.updateLife(vie);
+    cout<<"fonction"<<endl;
 }
 
-bool Player::alive() const
+unsigned long Player::getScore()
 {
-    if (Life > 0)
-        return true;
-
-    return false;
-}
-
-void Player::subirDegats(unsigned int p_damage)
-{
-
-    modifierVie(-p_damage);
-}
-
-unsigned long Player::getScore(){
-
     return Score;
 }
 

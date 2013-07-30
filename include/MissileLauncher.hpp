@@ -11,7 +11,7 @@ public:
     MissileLauncher(sf::Shape const& my_user);
     void fire();
 private:
-const Ennemy* my_target;
+    const Ennemy* my_target;
 };
 
 #endif // MISSILELAUNCHER_HPP_INCLUDED

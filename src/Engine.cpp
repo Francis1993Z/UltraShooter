@@ -133,41 +133,45 @@ int Engine::Run()
                 {
                     gestionEvenements(); //Gère tous les évènements.
 
-                    if(fenetreFinJeu && !gameEnded->isActif()){
+                    if(fenetreFinJeu && !gameEnded->isActif())
+                        {
 
-                        fenetreFinJeu = false;
-                        MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
-                        Game->setView(MainView);
-                        menu->afficher();
-                        widgetManager.setPause(false);
-                        widgetManager.setCurrentWidgetListener(menu);
-                    }
+                            fenetreFinJeu = false;
+                            MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
+                            Game->setView(MainView);
+                            menu->afficher();
+                            widgetManager.setPause(false);
+                            widgetManager.setCurrentWidgetListener(menu);
+                        }
 
-                    if(!menu->isActif() && !gameEnded->isActif()){
+                    if(!menu->isActif() && !gameEnded->isActif())
+                        {
 
-                        widgetManager.setPause(true);
+                            widgetManager.setPause(true);
 
-                        updateView(); //Mets à jour la position de la caméra.
-                        Game->clear(Color(0,0,0));
-                        drawGame(); //Dessine tous les composants du jeu lors d'une partie.
-                        Game->display();
-                        lookIfGameOver(); //Regarde si il y a "GAME OVER".
-                        nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
-                    }
-                    else if(gameEnded->isActif()){
+                            updateView(); //Mets à jour la position de la caméra.
+                            Game->clear(Color(0,0,0));
+                            drawGame(); //Dessine tous les composants du jeu lors d'une partie.
+                            Game->display();
+                            lookIfGameOver(); //Regarde si il y a "GAME OVER".
+                            nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
+                        }
+                    else if(gameEnded->isActif())
+                        {
 
-                        fenetreFinJeu = true;
+                            fenetreFinJeu = true;
 
-                        Game->clear(Color(0,0,0));
-                        gameEnded->draw();
-                        Game->display();
-                    }
-                    else if(menu->isActif()){
+                            Game->clear(Color(0,0,0));
+                            gameEnded->draw();
+                            Game->display();
+                        }
+                    else if(menu->isActif())
+                        {
 
-                        Game->clear(Color(0,0,0));
-                        drawMenu(); //Dessine le menu.
-                        Game->display();
-                    }
+                            Game->clear(Color(0,0,0));
+                            drawMenu(); //Dessine le menu.
+                            Game->display();
+                        }
                 }
         }
     return 0;
@@ -268,28 +272,28 @@ void Engine::gestionEvenements()
                             Game->close();
                             IsRunning=false;
                         }
-                        if(!menu->isActif())
-                                {
-                    if (WindowEvent.key.code == sf::Keyboard::Space)
+                    if(!menu->isActif())
                         {
+                            if (WindowEvent.key.code == sf::Keyboard::Space)
+                                {
 
                                     gameMap->addEnnemy(new Zombie(sf::Vector2f(500,500), *player));
-                        }
-                    if (WindowEvent.key.code == sf::Keyboard::Numpad0)
-                        {
+                                }
+                            if (WindowEvent.key.code == sf::Keyboard::Numpad0)
+                                {
 
                                     gameMap->addEnnemy(new Splitter(sf::Vector2f(300,500), *player, 1));
 
-                        }
+                                }
                             if (WindowEvent.key.code == sf::Keyboard::Numpad1)
-                        {
+                                {
                                     gameMap->addEnnemy(new Raider(sf::Vector2f(300,500), *player));
-                        }
+                                }
 
-                         }
+                        }
                 }
 
-                                    if (WindowEvent.type == sf::Event::MouseWheelMoved)
+            if (WindowEvent.type == sf::Event::MouseWheelMoved)
                 {
                     player->change_Weapon(WindowEvent.mouseWheel.delta);
                 }
@@ -298,9 +302,9 @@ void Engine::gestionEvenements()
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-           localMousePosition = sf::Mouse::getPosition(*Game);
+            localMousePosition = sf::Mouse::getPosition(*Game);
             if (!menu->isActif())
-{
+                {
                     player->Shoot();
                 }
 

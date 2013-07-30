@@ -68,7 +68,8 @@ void TextField::codeKeyPressed(int code)
         }
 }
 
-string TextField::getText() const{
+string TextField::getText() const
+{
 
 
 

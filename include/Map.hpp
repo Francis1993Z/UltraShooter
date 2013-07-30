@@ -1,25 +1,7 @@
 #ifndef MAP_HPP_INCLUDED
 #define MAP_HPP_INCLUDED
 
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-
-#include <vector>
-#include <list>
-#include <map>
-#include <string>
-
-#include "Bullet.hpp"
-
 #include "Engine.hpp"
-#include "Ennemy.hpp"
-#include "Player.hpp"
-#include "Splitter.hpp"
-#include "Raider.hpp"
-#include "Obstacle.hpp"
-#include "Wave.hpp"
-#include "EnnemyFactory.hpp"
 
 class Map
 {

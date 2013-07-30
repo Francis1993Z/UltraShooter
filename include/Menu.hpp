@@ -12,21 +12,21 @@
 
 class Menu : public WidgetListener
 {
-    public:
-        Menu(sf::Vector2u sizeWindow);
-        virtual ~Menu();
-        void draw();
-        void action(int id);
-        bool isActif() const;
-        void afficher();
-        void afficherScores();
-    protected:
-    private:
-        sf::Texture texture;
-        sf::Sprite sprite;
-        bool actif;
-        bool options;
-        std::list<sf::Text> listeScores;
+public:
+    Menu(sf::Vector2u sizeWindow);
+    virtual ~Menu();
+    void draw();
+    void action(int id);
+    bool isActif() const;
+    void afficher();
+    void afficherScores();
+protected:
+private:
+    sf::Texture texture;
+    sf::Sprite sprite;
+    bool actif;
+    bool options;
+    std::list<sf::Text> listeScores;
 
 };
 

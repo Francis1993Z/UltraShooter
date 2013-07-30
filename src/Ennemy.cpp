@@ -2,12 +2,20 @@
 
 using namespace std;
 
-Ennemy::Ennemy(sf::Vector2f init_Position, Player& init_Target)
+Ennemy::Ennemy(sf::Vector2f init_Position, Player& init_Target, long n_vie): Entity(n_vie)
 {
+my_behaviour=STANDBY;
     setPosition(init_Position);
     my_target = &init_Target;
 }
+/*
+Ennemy::Ennemy(Ennemy const& Ennemytocopy) : vie(Ennemytocopy.vie), damage(Ennemytocopy.damage),
+ kill_point(Ennemytocopy.kill_point), my_target(Ennemytocopy.my_target),
+ my_behaviour(Ennemytocopy.my_behaviour)
+{
 
+}
+*/
 void Ennemy::update()
 {
     cout<<"virtual update"<<endl;
@@ -57,13 +65,7 @@ Ennemy* Ennemy::getAdresse()
     return  this;
 }
 
-bool Ennemy::alive() const
-{
-    if (vie > 0)
-        return true;
 
-    return false;
-}
 
 int Ennemy::getKillPoint() const
 {
@@ -76,15 +78,3 @@ float Ennemy::getSpeed() const
     return e_m;
 }
 
-void Ennemy::subirDegats(unsigned int p_damage)
-{
-
-    vie-=p_damage;
-}
-
-
-sf::FloatRect Ennemy::getCollisionBox() const
-{
-
-    return getGlobalBounds();
-}

@@ -6,7 +6,7 @@ using namespace std;
 using namespace sf;
 
 
-Raider::Raider(sf::Vector2f init_Position, Player& init_Target) : Ennemy(init_Position, init_Target)
+Raider::Raider(sf::Vector2f init_Position, Player& init_Target) : Ennemy(init_Position, init_Target, 1)
 {
 
     sf::Vector2f my_size;
@@ -16,7 +16,6 @@ Raider::Raider(sf::Vector2f init_Position, Player& init_Target) : Ennemy(init_Po
     setOrigin(Vector2f(25,25));
     setFillColor(Color::Magenta);
 
-    vie = 1;
     damage = 5;
     kill_point = 15;
 

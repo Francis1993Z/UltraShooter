@@ -1,10 +1,6 @@
 #ifndef BULLET_HPP_INCLUDED
 #define BULLET_HPP_INCLUDED
 
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-
 #include "Projectile.hpp"
 #include <iostream>
 
