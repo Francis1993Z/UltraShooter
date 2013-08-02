@@ -5,7 +5,7 @@
 using namespace std;
 using namespace sf;
 
-ShrapnelWeapon::ShrapnelWeapon(sf::Shape const& my_user)
+ShrapnelWeapon::ShrapnelWeapon(Entity const& my_user)
 {
     user=&my_user;
     fire_intervale = 150.00f;
@@ -49,14 +49,14 @@ void ShrapnelWeapon::fire()
             float aimangle4 = angle-0.1;
             float aimangle5 = angle-0.05;
 
-            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), angle));
+            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), angle, user->getTeam()));
 
-            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), aimangle2));
+            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), aimangle2, user->getTeam()));
 
-            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), aimangle3));
+            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), aimangle3, user->getTeam()));
 
-            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), aimangle4));
+            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), aimangle4, user->getTeam()));
 
-            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), aimangle5));
+            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), aimangle5, user->getTeam()));
         }
 }

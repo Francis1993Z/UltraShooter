@@ -14,6 +14,9 @@ using namespace sf;
 
 int main()
 {
+    cout<<"Ultra Shooter"<<endl;
+    cout<<"Build date : "<<__DATE__<<" at "<<__TIME__<<endl;
+
     srand(time(0));
 
     Engine* engine;

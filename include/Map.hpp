@@ -6,7 +6,7 @@
 class Map
 {
     std::list<Bullet> AllBullets;
-    std::list<Ennemy *> EnnemyArray;
+    std::list<Entity *> EntityArray;
 
     std::list<Obstacle> lObstacles;
     std::list<Wave> lWaves;
@@ -17,15 +17,15 @@ class Map
 
     int width;
     int height;
-
+    unsigned long ennemies_left;
 
     sf::Texture backgroundTexture;
     sf::Sprite background;
 
     std::string theme;
 
-    Ennemy* EnnemyTouche;
-    Player* player;
+    Entity* EntityTouche;
+    Player* localplayer;
 
     bool gameOver;
 
@@ -37,9 +37,10 @@ public:
     int getWidth() const;
     int getHeight() const;
 
-    void setPlayer(Player& newPlayer);
+    void setlocalPlayer(Player& newPlayer);
     void addBullet(Bullet bullet);
     void addEnnemy(Ennemy* e);
+    void addPlayer(Player* a);
     void addObstacle(std::string obstacleTexturePath, int x, int y);
     void addWave(Wave w);
 

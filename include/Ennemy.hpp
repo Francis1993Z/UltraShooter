@@ -9,17 +9,14 @@ class Ennemy : public Entity
 {
 public:
 
-    Ennemy(sf::Vector2f init_Position, Player& init_Target, long n_vie);
+    Ennemy(sf::Vector2f init_Position, Player& init_Target, long n_vie, TEAM team);
     Ennemy(Ennemy const& Ennemytocopy);
-    virtual void update();
-    virtual unsigned int die() const;
-    void ApplyForce(float fx, float fy);
+    void update();
+    unsigned int die() const;
     void SetTarget(Player &NewTarget);
     void ChangeBehaviour(Behaviour NewBehaviour);
-
-    unsigned int getDamage() const;
     int getKillPoint() const;
-    int getVie() const;
+
 
     float get_dRadius() const;
     float getSpeed() const;
@@ -28,15 +25,10 @@ public:
 
 protected:
 
-    int damage;
     int kill_point;
 
     Player *my_target;
     Behaviour my_behaviour;
-
-    float d_radius, m_fx, m_fy;
-    float e_m,e_mx;
-    float e_my;
 
 };
 

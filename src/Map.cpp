@@ -29,7 +29,7 @@ inline float GetAngle(sf::Vector2f vec1, sf::Vector2f vec2)
 Map::Map(string mapPath)
 {
     gameOver = false;
-
+    ennemies_left=0;
     string backgroundPath;
 
     TiXmlDocument doc(mapPath.c_str());
@@ -117,7 +117,8 @@ Map::Map(string mapPath)
 
             node = node->NextSibling(); // iteration
         }
-    gameOver=false;
+    localplayer = NULL;
+
 }
 
 
@@ -139,7 +140,14 @@ void Map::addBullet(Bullet bullet)
 
 void Map::addEnnemy(Ennemy* e)
 {
-    EnnemyArray.push_back(e);
+    EntityArray.push_back(e);
+    ennemies_left++;
+}
+
+void Map::addPlayer(Player* a)
+{
+    //cout<<"player to add : "<<a<<endl;
+    EntityArray.push_back(a);
 }
 
 
@@ -183,7 +191,7 @@ void Map::update(RenderWindow* game)
     CollisionManager& collisionManager = *Engine::getInstance()->getCollisionManager();
 
     list<Bullet>::iterator it = AllBullets.begin();
-    list<Ennemy *>::iterator itEnnemy = EnnemyArray.begin();
+    list<Entity *>::iterator itEnnemy = EntityArray.begin();
 
     while(it != AllBullets.end())
         {
@@ -193,58 +201,72 @@ void Map::update(RenderWindow* game)
                 it = AllBullets.erase(it);
             else if(collisionManager.CollisionObstacles(it->getGlobalBounds()))
                 it = AllBullets.erase(it);
-            else if(collisionManager.CollisionEnnemy(it->getGlobalBounds(), EnnemyArray))
+            else if(collisionManager.CollisionEnnemy(it->getGlobalBounds(), it->getTeam(), EntityArray))
                 {
 
-                    EnnemyTouche = collisionManager.getAdresseEnnemyTouche();
-                    EnnemyTouche->subirDegats(it->getDamage());
+                    EntityTouche = collisionManager.getAdresseEntityTouche();
+                    EntityTouche->subirDegats(it->getDamage());
                     it = AllBullets.erase(it);
                 }
             else
                 ++it;
         }
 
-    Engine::getInstance()->getCollisionManager()->update_repulsion(EnnemyArray);
+    Engine::getInstance()->getCollisionManager()->update_repulsion(EntityArray);
 
 
-    while(itEnnemy != EnnemyArray.end())
+    while(itEnnemy != EntityArray.end())
         {
-            if(!(*itEnnemy)->alive())
+
+            if((*itEnnemy)!=localplayer)
                 {
-                    player->addPoints((*itEnnemy)->die());
-                    delete *itEnnemy;
-                    itEnnemy = EnnemyArray.erase(itEnnemy);
+                    if(!(*itEnnemy)->alive())
+                        {
+                            localplayer->addPoints((*itEnnemy)->die());
+                            delete *itEnnemy;
+                            itEnnemy = EntityArray.erase(itEnnemy);
+                            ennemies_left--;
+                        }
+                    else
+                        {
+                            (*itEnnemy)->update();
+
+                            if(collisionManager.CheckIfOutOfWindow((*itEnnemy)->getPosition().x, (*itEnnemy)->getPosition().y, 5.0f))
+                                {
+                                    delete *itEnnemy;
+                                    itEnnemy = EntityArray.erase(itEnnemy);
+                                    ennemies_left--;
+                                }
+                            else if(collisionManager.CollisionContreJoueur((*itEnnemy)->getCollisionBox()))
+                                {
+
+                                    localplayer->subirDegats((*itEnnemy)->getDamage());
+                                    delete *itEnnemy;
+                                    itEnnemy = EntityArray.erase(itEnnemy);
+                                    ennemies_left--;
+                                }
+                            else
+                                ++itEnnemy;
+                        }
+
                 }
             else
                 {
-                    (*itEnnemy)->update();
-
-                    if(collisionManager.CheckIfOutOfWindow((*itEnnemy)->getPosition().x, (*itEnnemy)->getPosition().y, 5.0f))
-                        {
-                            delete *itEnnemy;
-                            itEnnemy = EnnemyArray.erase(itEnnemy);
-                        }
-                    else if(collisionManager.CollisionContreJoueur((*itEnnemy)->getCollisionBox()))
-                        {
-
-                            player->subirDegats((*itEnnemy)->getDamage());
-                            delete *itEnnemy;
-                            itEnnemy = EnnemyArray.erase(itEnnemy);
-                        }
-                    else
-                        ++itEnnemy;
+                    ++itEnnemy;
                 }
+
+
         }
 
-    if(!player->alive())
-        gameOver = true;
+    if(!localplayer->alive()) gameOver = true;
 
     for(it = AllBullets.begin(); it != AllBullets.end(); ++it)
         game->draw(*it);
 
 
-    for(itEnnemy = EnnemyArray.begin(); itEnnemy != EnnemyArray.end(); ++itEnnemy)
+    for(itEnnemy = EntityArray.begin(); itEnnemy != EntityArray.end(); ++itEnnemy)
         game->draw(*(*itEnnemy));
+
 }
 
 Sprite Map::getBackground() const
@@ -252,9 +274,31 @@ Sprite Map::getBackground() const
     return background;
 }
 
-void Map::setPlayer(Player& newPlayer)
+void Map::setlocalPlayer(Player& newPlayer)
 {
-    player=&newPlayer;
+    if(localplayer == NULL)
+        {
+            localplayer=&newPlayer;
+            addPlayer(localplayer);
+        }
+    else
+        {
+            for(list<Entity *>::iterator it = EntityArray.begin(); it != EntityArray.end(); ++it)
+                {
+                    if ((*it)==localplayer)
+                        {
+                            delete *it;
+                            localplayer=&newPlayer;
+                            addPlayer(localplayer);
+                        }
+                    else
+                        {
+                            cerr<<"localplayer not found"<<endl;
+                        }
+                }
+
+        }
+
 }
 
 bool Map::loadNextWave()
@@ -263,19 +307,22 @@ bool Map::loadNextWave()
         {
             lWaves.front().loadEnnemies(factory);
             lWaves.pop_front();
-
             return true;
         }
+    else
+        {
+            return false;
+        }
 
-    return false;
 }
 
 
 bool Map::isCurrentWaveOver() const
 {
-    if(EnnemyArray.empty())
-        return true;
-
+    if(ennemies_left==0)
+        {
+            return true;
+        }
     return false;
 }
 
@@ -291,12 +338,12 @@ list <Obstacle> Map::getListeObstacles() const
 
 Map::~Map()
 {
-    for(list<Ennemy *>::iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
+    for(list<Entity *>::iterator it = EntityArray.begin(); it != EntityArray.end(); ++it)
         delete *it;
+    localplayer = NULL;
 }
 
 bool Map::getGameOver() const
 {
-
     return gameOver;
 }

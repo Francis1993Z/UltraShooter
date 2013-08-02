@@ -106,7 +106,8 @@ int Engine::Run()
     MainView.setCenter(screen_size.x/2, screen_size.y/2);
     //MainView.setSize(1024, 768);
     events = new Events();
-    player = new Player(sf::Vector2f(200.f, 200.f), *(loadFiles->getPoliceArial()), MainView.getSize());
+    player = new Player(sf::Vector2f(200.f, 200.f), *(loadFiles->getPoliceArial()), MainView.getSize(), TEAM1);
+    //cout<<"engine player : "<<player<<endl;
     collisionManager = new CollisionManager(*player, *gameMap);
     menu = new Menu(screen_size);
     menu->afficher();
@@ -115,7 +116,7 @@ int Engine::Run()
 
     gameEnded = new GameEnded();
 
-    gameMap->setPlayer(*player);
+    gameMap->setlocalPlayer(*player);
 
     Game->setView(MainView);
 
@@ -210,7 +211,8 @@ RenderWindow* Engine::getRenderWindow() const
     return Game;
 }
 
-Menu* Engine::getMenu() const{
+Menu* Engine::getMenu() const
+{
 
     return menu;
 }
@@ -259,17 +261,17 @@ void Engine::gestionEvenements()
                             if (WindowEvent.key.code == sf::Keyboard::Space)
                                 {
 
-                                    gameMap->addEnnemy(new Zombie(sf::Vector2f(500,500), *player));
+                                    gameMap->addEnnemy(new Zombie(sf::Vector2f(500,500), *player, TEAM2));
                                 }
                             if (WindowEvent.key.code == sf::Keyboard::Numpad0)
                                 {
 
-                                    gameMap->addEnnemy(new Splitter(sf::Vector2f(300,500), *player, 1));
+                                    gameMap->addEnnemy(new Splitter(sf::Vector2f(300,500), *player, 1, TEAM2));
 
                                 }
                             if (WindowEvent.key.code == sf::Keyboard::Numpad1)
                                 {
-                                    gameMap->addEnnemy(new Raider(sf::Vector2f(300,500), *player));
+                                    gameMap->addEnnemy(new Raider(sf::Vector2f(300,500), *player, TEAM2));
                                 }
 
                         }
@@ -326,10 +328,8 @@ bool Engine::loadNextMap()
         {
             delete gameMap;
             gameMap = new Map(path);
-
             return true;
         }
-
     return false;
 }
 
@@ -340,33 +340,32 @@ void Engine::updateView()
 
     if(object_pixel_position.x < 300)
         {
-            MainView.move(-player->getVitesse(), 0.f);
-            player->move_myhud(-player->getVitesse(), 0.f);//On met à jour la position de la HUD
+            MainView.move(-player->getSpeed(), 0.f);
+            player->move_myhud(-player->getSpeed(), 0.f);//On met à jour la position de la HUD
             Game->setView(MainView);
         }
     if((unsigned)object_pixel_position.x > Game->getSize().x-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
         {
-            MainView.move(player->getVitesse(), 0.f);
-            player->move_myhud(player->getVitesse(), 0.f);
+            MainView.move(player->getSpeed(), 0.f);
+            player->move_myhud(player->getSpeed(), 0.f);
             Game->setView(MainView);
         }
     if(object_pixel_position.y < 300)
         {
-            MainView.move(0.f, -player->getVitesse());
-            player->move_myhud(0.f, -player->getVitesse());
+            MainView.move(0.f, -player->getSpeed());
+            player->move_myhud(0.f, -player->getSpeed());
             Game->setView(MainView);
         }
     if((unsigned)object_pixel_position.y > Game->getSize().y-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
         {
-            MainView.move(0.f, player->getVitesse());
-            player->move_myhud(0.f, player->getVitesse());
+            MainView.move(0.f, player->getSpeed());
+            player->move_myhud(0.f, player->getSpeed());
             Game->setView(MainView);
         }
 }
 
 void Engine::drawMenu()
 {
-
     menu->draw();
 }
 
@@ -386,17 +385,21 @@ void Engine::nextWaveAndMap()
 
     if(gameMap->isCurrentWaveOver())
         {
-            if(!loadNextMap())
+            if(!gameMap->loadNextWave())
                 {
-                    //leaveGame("Jeu termine !");
-                    gameEnded->setActif(true, false);
-                    MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
-                    Game->setView(MainView);
+                    if(!loadNextMap())
+                        {
+                            //leaveGame("Jeu termine !");
+                            gameEnded->setActif(true, false);
+                            MainView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
+                            Game->setView(MainView);
 
-                    widgetManager.setCurrentWidgetListener(gameEnded);
-                    widgetManager.setPause(false);
+                            widgetManager.setCurrentWidgetListener(gameEnded);
+                            widgetManager.setPause(false);
+                        }
                 }
         }
+
 }
 
 void Engine::lookIfGameOver()
@@ -430,7 +433,7 @@ Engine::~Engine()
 
     delete Game;
     delete gameMap;
-    delete player;
+    //delete player; C'est maintenant Map qui détruit player
     delete collisionManager;
     delete menu;
     delete loadFiles;

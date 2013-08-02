@@ -11,7 +11,7 @@
 class Raider: public Ennemy, public EntityWithWeapon
 {
 public:
-    Raider(sf::Vector2f init_Position, Player& init_Target);
+    Raider(sf::Vector2f init_Position, Player& init_Target, TEAM team);
 
     virtual unsigned int die() const;
     virtual void  update();

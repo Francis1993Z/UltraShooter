@@ -6,8 +6,8 @@ using namespace std;
 using namespace sf;
 
 
-Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
-    :Ennemy(init_Position, init_Target, 1)
+Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target, TEAM team)
+    :Ennemy(init_Position, init_Target, 1, team)
 {
 
     sf::Vector2f my_size;
@@ -27,7 +27,7 @@ Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target)
     m_fx=0.00f;
     m_fy=0.00f;
     d_radius = 25;
-    my_behaviour = STANDBY;
+    my_behaviour = ATTACK;
     //cout << "New Zombie at : " << this << endl;
 }
 

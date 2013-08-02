@@ -29,7 +29,7 @@ inline float GetAngle(Vector2f vec1, Vector2f vec2)
 
 CollisionManager::CollisionManager(Player& p_player, Map& p_gameMap):player(p_player), gameMap(p_gameMap), lObstacles(p_gameMap.getListeObstacles())
 {
-
+//cout<<"collision manager player : "<<&player<<endl;
 }
 
 bool CollisionManager::CollisionJoueur(float x, float y)
@@ -93,18 +93,28 @@ bool CollisionManager::CollisionObstacles(int x, int y)
     return collision;
 }
 
-bool CollisionManager::CollisionEnnemy(FloatRect rect, list<Ennemy *>& EnnemyArray)
+bool CollisionManager::CollisionEnnemy(FloatRect rect, TEAM projectile_team, list<Entity *>& EntityArray)
 {
 
     collision = false;
 
-    for(list<Ennemy *>::const_iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
+
+    for(list<Entity *>::const_iterator it = EntityArray.begin(); it != EntityArray.end(); ++it)
         {
-            if(rect.intersects((*it)->getCollisionBox()))
+            //if((*it)==&player) cout<<"hello i'm the player"<<endl;
+
+            TEAM tmpEntityteam=(*it)->getTeam();
+            if((projectile_team & tmpEntityteam) == NO_TEAMS)
                 {
 
-                    collision = true;
-                    adresseEnnemyTouche = &*(*it);//attention
+
+                    if(rect.intersects((*it)->getCollisionBox()))
+                        {
+                            //cout<<"projectile_team = "<<projectile_team<<" tmpEntityteam = "<<tmpEntityteam<<" | "<<projectile_team<<" & "<<tmpEntityteam<<" == "<<(projectile_team & tmpEntityteam)<<endl;
+
+                            collision = true;
+                            adresseEntityTouche = &*(*it);//attention
+                        }
                 }
         }
 
@@ -136,14 +146,15 @@ bool CollisionManager::CheckIfOutOfWindow(float pos_x, float pos_y, float rayon)
         return false;
 }
 
-void CollisionManager::update_repulsion(list<Ennemy *>& EnnemyArray)
+void CollisionManager::update_repulsion(list<Entity *>& EntityArray)
 {
-    for(list<Ennemy *>::const_iterator it = EnnemyArray.begin(); it != EnnemyArray.end(); ++it)
+    for(list<Entity *>::const_iterator it = EntityArray.begin(); it != EntityArray.end(); ++it)
         {
-            for(list<Ennemy *>::const_iterator it2 = EnnemyArray.begin(); it2 != EnnemyArray.end(); ++it2)
+            for(list<Entity *>::const_iterator it2 = EntityArray.begin(); it2 != EntityArray.end(); ++it2)
                 {
                     if(it != it2)
                         {
+                            //cout<<"it : "<<(*it)<<" it2 : "<<(*it2)<<endl;
                             float distance = Distance((*it)->getPosition(), (*it2)->getPosition());
                             float drn =  (*it)->get_dRadius();
                             float drm =  (*it2)->get_dRadius();
@@ -175,7 +186,7 @@ void CollisionManager::update_repulsion(list<Ennemy *>& EnnemyArray)
 void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, FloatRect rect)
 {
 
-    if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() < player.getVitesse())
+    if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() < player.getSpeed())
         {
 
             if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() >= 0)
@@ -185,7 +196,7 @@ void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_d
                     update_x=true;
                 }
         }
-    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width < player.getVitesse())
+    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width < player.getSpeed())
         {
 
             if(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width >= 0)
@@ -195,7 +206,7 @@ void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_d
                     update_x=true;
                 }
         }
-    if(p_deplacement_y>0 && rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() < player.getVitesse())
+    if(p_deplacement_y>0 && rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() < player.getSpeed())
         {
 
             if(rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() >= 0)
@@ -205,7 +216,7 @@ void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_d
                     update_y=true;
                 }
         }
-    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height < player.getVitesse())
+    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height < player.getSpeed())
         {
 
             if(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height >= 0)
@@ -244,25 +255,25 @@ void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_d
 void CollisionManager::CalculDistanceAParcourirBordMap(float p_deplacement_x, float p_deplacement_y)
 {
 
-    if(p_deplacement_x>0 && gameMap.getWidth()-player.getPosition().x-p_deplacement_x-player.getRayon() < player.getVitesse())
+    if(p_deplacement_x>0 && gameMap.getWidth()-player.getPosition().x-p_deplacement_x-player.getRayon() < player.getSpeed())
         {
 
             deplacement_x=gameMap.getWidth()-(player.getPosition().x-p_deplacement_x)-player.getRayon();
             update_x=true;
         }
-    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon() < player.getVitesse())
+    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon() < player.getSpeed())
         {
 
             deplacement_x=-(player.getPosition().x-p_deplacement_x)+player.getRayon();
             update_x=true;
         }
-    if(p_deplacement_y>0 && gameMap.getHeight()-player.getPosition().y-p_deplacement_y-player.getRayon() < player.getVitesse())
+    if(p_deplacement_y>0 && gameMap.getHeight()-player.getPosition().y-p_deplacement_y-player.getRayon() < player.getSpeed())
         {
 
             deplacement_y=gameMap.getHeight()-(player.getPosition().y-p_deplacement_y)-player.getRayon();
             update_y=true;
         }
-    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon() < player.getVitesse())
+    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon() < player.getSpeed())
         {
 
             deplacement_y=-(player.getPosition().y-p_deplacement_y)+player.getRayon();
@@ -288,10 +299,10 @@ float CollisionManager::getDeplacementY()
     return deplacement_y;
 }
 
-Ennemy* CollisionManager::getAdresseEnnemyTouche()
+Entity* CollisionManager::getAdresseEntityTouche()
 {
 
-    return adresseEnnemyTouche;
+    return adresseEntityTouche;
 }
 
 CollisionManager::~CollisionManager()

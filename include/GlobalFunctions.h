@@ -20,6 +20,16 @@
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
+
+enum TEAM
+{
+    TEAM1 = 0xAA,
+    TEAM2 = 0x55,
+
+    NO_TEAMS = 0,
+    ALL_TEAMS = TEAM1 | TEAM2
+};
+
 extern "C"
 {
 

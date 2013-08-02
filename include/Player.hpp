@@ -13,7 +13,6 @@ class Player : public Entity, public EntityWithWeapon
     bool IamImmune;
 
     float rayon, ImmuneTime;
-    static const float vitesse;
 
     unsigned long Score;
 
@@ -26,9 +25,7 @@ class Player : public Entity, public EntityWithWeapon
 
 public:
 
-    Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f tailleFenetre);
-
-
+    Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f tailleFenetre, TEAM team);
 
     sf::Vector2i GetWindowPosition(sf::RenderWindow &theRenderWindow) const;
 
@@ -40,15 +37,10 @@ public:
     void move_myhud(float vx, float vy);
     void setSizeWindowHud(sf::Vector2f sizeWindow);
     void addPoints(int p);
-float getRayon();
+    float getRayon();
     void modifierVie(int pv);
 
-    float getVitesse() const;
     void Shoot();
-
-
-
-
     ~Player();
 
 };

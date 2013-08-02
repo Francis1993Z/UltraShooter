@@ -10,8 +10,8 @@ class Bullet : public sf::CircleShape, public Projectile
 
 public:
 
-    Bullet(sf::Vector2f myInitPosition, float myangle);
-    Bullet(sf::Vector2f myInitPosition, float myangle, sf::Color myColor, int myDamage, float myvitesse);
+    Bullet(sf::Vector2f myInitPosition, float myangle, TEAM team);
+    Bullet(sf::Vector2f myInitPosition, float myangle, sf::Color myColor, int myDamage, float myvitesse, TEAM team);
 
     ~Bullet();
 

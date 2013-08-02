@@ -1,12 +1,7 @@
 #ifndef COLLISIONMANAGER_HPP_INCLUDED
 #define COLLISIONMANAGER_HPP_INCLUDED
 
-
-
-
-
 #include "Map.hpp"
-
 
 class Map;
 
@@ -19,18 +14,18 @@ public:
     bool CollisionJoueur(float x, float y);
     bool CollisionObstacles(sf::FloatRect rect);
     bool CollisionObstacles(int x, int y);
-    bool CollisionEnnemy(sf::FloatRect rect, std::list<Ennemy *>& EnnemyArray);
+    bool CollisionEnnemy(sf::FloatRect rect, TEAM projectile_team, std::list<Entity *>& EntityArray);
     bool CheckIfOutOfWindow(float pos_x, float pos_y, float rayon);
     bool CollisionContreJoueur(sf::FloatRect rect);
 
-    void update_repulsion(std::list<Ennemy *>& EnnemyArray);
+    void update_repulsion(std::list<Entity *>& EntityArray);
     void CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, sf::FloatRect rect);
     void CalculDistanceAParcourirBordMap(float p_deplacement_x, float p_deplacement_y);
 
     float getDeplacementX();
     float getDeplacementY();
 
-    Ennemy* getAdresseEnnemyTouche();
+    Entity* getAdresseEntityTouche();
 
     virtual ~CollisionManager();
 
@@ -41,7 +36,7 @@ private:
 
     Map& gameMap;
 
-    Ennemy* adresseEnnemyTouche;
+    Entity* adresseEntityTouche;
 
     std::list<Obstacle> lObstacles;
 

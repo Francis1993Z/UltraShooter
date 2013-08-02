@@ -22,6 +22,9 @@ void Wave::addEnnemy(string type, int number)
 
 void Wave::loadEnnemies(EnnemyFactory & factory)
 {
+
     for(list<wEnnemy>::const_iterator it = lEnnemy.begin(); it != lEnnemy.end(); ++it)
-        factory.createEnnemies(it->type, it->number);
+        {
+            factory.createEnnemies(it->type, it->number);
+        }
 }

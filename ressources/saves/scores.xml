@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <ListeMeilleursJoueurs>
+    <user name="Francis" score="24120" />
+    <user name="000000" score="23295" />
     <user name="RedFruit" score="11790" />
     <user name="Francis" score="6310" />
+    <user name="BlueFruit" score="815" />
+    <user name="RedFruit" score="810" />
+    <user name="Francis" score="805" />
     <user name="BlueFruit" score="690" />
-    <user name="RedFruit" score="400" />
-    <user name="Francis" score="135" />
+    <user name="Fdsf" score="595" />
+    <user name="Francis" score="560" />
 </ListeMeilleursJoueurs>

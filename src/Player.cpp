@@ -5,13 +5,19 @@
 using namespace std;
 using namespace sf;
 
-const float Player::vitesse = 15.0f;
 
-Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow): Entity(100), Score(0), hud(vie, Score, font, sizeWindow)
+
+Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow, TEAM team): Entity(100, team), Score(0), hud(vie, Score, font, sizeWindow)
 {
+    e_m = 15.00f;
+    e_mx = e_m;
+    e_my = e_m;
+    m_fx=0.00f;
+    m_fy=0.00f;
+    d_radius = 25;
     sf::Vector2f my_size;
-    my_size.x=50;
-    my_size.y=50;
+    my_size.x=100;
+    my_size.y=100;
     setSize(my_size);
     setFillColor(sf::Color::Blue);
     setPosition(init_position);
@@ -19,6 +25,7 @@ Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindo
     actual_weapon=0;
     my_weapon.push_back(new AutomaticWeapon(*this));
     my_weapon.push_back(new ShrapnelWeapon(*this));
+
 }
 
 void Player::Shoot()
@@ -58,11 +65,6 @@ float Player::getRayon()
     return rayon;
 }
 
-float Player::getVitesse() const
-{
-
-    return vitesse;
-}
 
 
 void Player::addPoints(int points)
@@ -76,7 +78,6 @@ void Player::modifierVie(int pv)//fonction Entity::modifierVie() masquée
 {
     vie+=pv;
     hud.updateLife(vie);
-    cout<<"fonction"<<endl;
 }
 
 unsigned long Player::getScore()

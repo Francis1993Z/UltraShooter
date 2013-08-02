@@ -5,8 +5,8 @@
 using namespace std;
 using namespace sf;
 
-Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int level)
-    :Zombie(init_Position, init_Target)
+Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int level, TEAM team)
+    :Zombie(init_Position, init_Target, team)
 {
     float m_size = 100;
     float n_size = m_size;
@@ -53,7 +53,7 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
 
     d_radius=n_size;
 
-    my_behaviour=STANDBY;
+    my_behaviour=ATTACK;
 
     Vector2f t_pos=my_target->getPosition();
 
@@ -86,7 +86,7 @@ unsigned int Splitter::die() const
     if (getLevel() != 3)
         {
             float rp = getRotation();
-            float s_distance = get_dRadius();
+            float s_distance = Entity::get_dRadius();
 
             unsigned int next_level;
 
@@ -103,8 +103,8 @@ unsigned int Splitter::die() const
 
             Map *tmp_map = Engine::getInstance()->getMap();
             Player *tmp_player = Engine::getInstance()->getPlayer();
-            tmp_map->addEnnemy(new Splitter(NewSplittersPosition1, *tmp_player, next_level));
-            tmp_map->addEnnemy(new Splitter(NewSplittersPosition2, *tmp_player, next_level));
+            tmp_map->addEnnemy(new Splitter(NewSplittersPosition1, *tmp_player, next_level, getTeam()));
+            tmp_map->addEnnemy(new Splitter(NewSplittersPosition2, *tmp_player, next_level, getTeam()));
 
         }
     return getKillPoint();

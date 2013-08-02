@@ -13,7 +13,6 @@ EnnemyFactory::EnnemyFactory()
 
 void EnnemyFactory::createEnnemies(const string &type, int number) const
 {
-
     Map * gameMap = Engine::getInstance()->getMap();
     CollisionManager * colManager = Engine::getInstance()->getCollisionManager();
     Player *p = Engine::getInstance()->getPlayer();
@@ -28,8 +27,10 @@ void EnnemyFactory::createEnnemies(const string &type, int number) const
 
     if(type == "zombie" || type == "splitter")
         {
+
             while(number > 0)
                 {
+
                     while(badCoords)
                         {
                             ennemyX = rand_a_b(0, gameMap->getWidth());
@@ -41,11 +42,8 @@ void EnnemyFactory::createEnnemies(const string &type, int number) const
                                 badCoords = false;
                         }
 
-                    if(type == "zombie")
-                        gameMap->addEnnemy(new Zombie(Vector2f(ennemyX,ennemyY), *p));
-                    else
-                        gameMap->addEnnemy(new Splitter(Vector2f(ennemyX,ennemyY), *p, 1));
-
+                    if(type == "zombie") gameMap->addEnnemy(new Zombie(Vector2f(ennemyX,ennemyY), *p, TEAM2));
+                    else if (type == "splitter") gameMap->addEnnemy(new Splitter(Vector2f(ennemyX,ennemyY), *p, 1, TEAM2));
                     --number;
                     badCoords = true;
                 }

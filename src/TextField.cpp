@@ -47,9 +47,6 @@ void TextField::setClicSouris(bool p_clic)
 
 void TextField::codeKeyPressed(int code)
 {
-
-    cout<<code<<endl;
-
     if(code != 13 && code != 32)
         {
 
@@ -70,9 +67,6 @@ void TextField::codeKeyPressed(int code)
 
 string TextField::getText() const
 {
-
-
-
     return contenuChamps.getString();
 }
 

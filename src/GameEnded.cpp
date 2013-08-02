@@ -153,9 +153,9 @@ void GameEnded::enregistrerScoreJoueur()
                                 {
 
                                     f->RemoveChild(hdl.FirstChildElement().ChildElement(10).Element());
-                                    cerr<<"haha"<<endl;
+
                                 }
-                            cerr<<"hehe"<<endl;
+
                         }
                 }
 

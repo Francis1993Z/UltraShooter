@@ -24,3 +24,46 @@ sf::FloatRect Entity::getCollisionBox()
 {
     return getGlobalBounds();
 }
+
+TEAM Entity::getTeam() const
+{
+    return my_team;
+}
+
+void Entity::ApplyForce(float fx, float fy)
+{
+    m_fx=+fx;
+    m_fy=+fy;
+}
+
+float Entity::get_dRadius() const
+{
+    return d_radius;
+}
+
+
+float Entity::getSpeed() const
+{
+    return e_m;
+}
+
+long Entity::getVie() const
+{
+    return vie;
+}
+
+unsigned int Entity::getDamage() const
+{
+    return damage;
+}
+
+void Entity::update()
+{
+    cout<<"virtual update"<<endl;
+}
+
+unsigned int Entity::die() const
+{
+    cout<<"virtual die"<<endl;
+    return 1;
+}

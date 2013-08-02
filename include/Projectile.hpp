@@ -7,19 +7,22 @@
 
 #include <cmath>
 
+#include "GlobalFunctions.h"
+
 class Projectile
 {
 public :
 
     unsigned int getDamage() const;
     virtual void UpdatePosition();
+    TEAM getTeam() const;
 protected :
 
     sf::Vector2f myPosition;
     unsigned int damage;
 
     float vitesse, angle;
-
+    TEAM my_team;
 };
 
 #endif // PROJECTILE_HPP_INCLUDED

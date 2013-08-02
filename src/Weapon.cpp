@@ -8,6 +8,11 @@ void Weapon::fire()
 
 }
 
+void Weapon::fire(sf::Vector2f target_position)
+{
+
+}
+
 Weapon::~Weapon()
 {
 

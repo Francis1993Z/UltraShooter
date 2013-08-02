@@ -6,7 +6,7 @@ using namespace std;
 using namespace sf;
 
 
-Raider::Raider(sf::Vector2f init_Position, Player& init_Target) : Ennemy(init_Position, init_Target, 1)
+Raider::Raider(sf::Vector2f init_Position, Player& init_Target, TEAM team) : Ennemy(init_Position, init_Target, 1, team)
 {
 
     sf::Vector2f my_size;
@@ -28,7 +28,6 @@ Raider::Raider(sf::Vector2f init_Position, Player& init_Target) : Ennemy(init_Po
     my_behaviour = ATTACK;
     actual_weapon=0;
     my_weapon.push_back(new AutomaticWeapon(*this));
-
 }
 
 void Raider::update()
@@ -82,7 +81,7 @@ void Raider::update()
                 }
             else
                 {
-                    my_weapon.at(actual_weapon)->fire();
+                    my_weapon.at(actual_weapon)->fire(Targetposition);
                 }
 
         }

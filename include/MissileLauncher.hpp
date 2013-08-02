@@ -8,7 +8,7 @@ class Ennemy;
 class MissileLauncher : public Weapon
 {
 public:
-    MissileLauncher(sf::Shape const& my_user);
+    MissileLauncher(Entity const& my_user);
     void fire();
 private:
     const Ennemy* my_target;
