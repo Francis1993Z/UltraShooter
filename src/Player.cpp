@@ -7,7 +7,7 @@ using namespace sf;
 
 
 
-Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow, TEAM team): Entity(100, team), Score(0), hud(vie, Score, font, sizeWindow)
+Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow, TEAM team): Entity(10000, team), Score(0), hud(vie, Score, font, sizeWindow)
 {
     e_m = 15.00f;
     e_mx = e_m;

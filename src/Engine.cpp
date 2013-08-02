@@ -1,11 +1,18 @@
 #include <SFML/Window.hpp>
 
+#include <dirent.h>
+
+#ifndef WIN32
+#include <sys/types.h>
+#endif
+
 #include <iostream>
 #include <sstream>
 #include <cmath>
 #include <stdio.h>      /* printf, NULL */
 #include <stdlib.h>
 #include <time.h>       /* time */
+#include <fstream>
 
 #include <tinyxml.h>
 
@@ -66,6 +73,29 @@ Engine* Engine::getInstance()
             elem->QueryBoolAttribute("fullscreen", &is_fullscreen);
 
 
+
+
+       string file_d = getCWD()+"/config/videomode.txt";
+    ofstream videomode(file_d.c_str(), ios::out | ios::trunc);  //déclaration du flux et ouverture du fichier
+
+    if(videomode)  // si l'ouverture a réussi
+        {
+            // instructions
+            vector<sf::VideoMode>VideoModesCount = sf::VideoMode::getFullscreenModes();
+            for (vector<sf::VideoMode>::iterator i = VideoModesCount.begin(); i != VideoModesCount.end(); ++i)
+                {
+                    if ((*i).isValid())
+                        {
+                            videomode<< "Mode " << (*i).width << "x" << (*i).height << "-" << (*i).bitsPerPixel << " is valid" << std::endl;
+                        }
+                    // Mode is a valid video mode
+                }
+                videomode<<"Game VideoMode : "<<init_width<<"x"<<init_height<< "-" << init_bitmode<<endl;
+            videomode.close();  // on referme le fichier
+        }
+    else  // sinon
+        cerr << "Erreur à l'ouverture !" << endl;
+
             /***********************************************************************************************/
 
             Engine::instanceOfEngine = new Engine(VideoMode(init_width, init_height, init_bitmode), is_fullscreen); // Crée une nouvelle instance de l'Engine.
@@ -95,9 +125,25 @@ Engine::Engine(VideoMode mode, bool fullscreen)
     else
         Game->create(mode, "Ultra Shooter 0.2");
 }
+/*
+void Engine::screenshot()
+{
+    struct dirent* fichierLu = NULL;
+    DIR* rep = NULL;
+    string cwd = getCWD()+"/ressources/captures/";
+    rep = opendir(cwd.c_str());
 
+    if (rep == NULL)
+        exit(1);
+    while ((fichierLu = readdir(rep)) != NULL) cout<<"-> "<<fichierLu->d_name<<endl;
+    if (closedir(rep) == -1)
+        exit(-1);
+}
+*/
 int Engine::Run()
 {
+
+
     Clock fps_clock;
     //Game.setVerticalSyncEnabled(true);
     Game->setFramerateLimit(60);
@@ -273,6 +319,7 @@ void Engine::gestionEvenements()
                                 {
                                     gameMap->addEnnemy(new Raider(sf::Vector2f(300,500), *player, TEAM2));
                                 }
+                            //if (WindowEvent.key.code == sf::Keyboard::F12) screenshot();
 
                         }
                 }

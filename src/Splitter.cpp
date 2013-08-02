@@ -53,7 +53,7 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
 
     d_radius=n_size;
 
-    my_behaviour=ATTACK;
+    my_behaviour=STANDBY;
 
     Vector2f t_pos=my_target->getPosition();
 

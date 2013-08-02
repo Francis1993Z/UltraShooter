@@ -70,6 +70,7 @@ private:
     void lookIfGameOver();
     void nextWaveAndMap();
     void gestionEvenements();
+    void screenshot();
 
     int mapNumber;
 
