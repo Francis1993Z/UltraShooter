@@ -5,9 +5,7 @@
 
 class Map
 {
-
-    std::list<Laserbeam> AllLaserbeam;
-    std::list<Projectile *> AllProjectiles;
+    std::list<Projectile *> ProjectilesArray;
     std::list<Entity *> EntityArray;
 
     std::list<Obstacle> lObstacles;
@@ -40,7 +38,6 @@ public:
     int getHeight() const;
 
     void setlocalPlayer(Player& newPlayer);
-    void addBullet(Bullet bullet);
     void addEnnemy(Ennemy* e);
     void addPlayer(Player* a);
     void addProjectile(Projectile* p);

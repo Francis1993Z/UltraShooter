@@ -18,3 +18,8 @@ TEAM Projectile::getTeam() const
 {
     return my_team;
 }
+
+    Projectile::~Projectile()
+    {
+
+    }

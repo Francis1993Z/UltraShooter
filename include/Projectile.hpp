@@ -9,8 +9,6 @@
 
 #include "GlobalFunctions.h"
 
-
-
 class Projectile
 {
 public :
@@ -18,6 +16,7 @@ public :
     unsigned int getDamage() const;
     virtual void UpdatePosition();
     TEAM getTeam() const;
+    virtual ~Projectile();
 protected :
 
     sf::Vector2f myPosition;

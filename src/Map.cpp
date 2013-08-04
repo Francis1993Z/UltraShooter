@@ -132,12 +132,6 @@ int Map::getHeight() const
     return height;
 }
 
-void Map::addBullet(Bullet bullet)
-{
-    AllBullets.push_back(bullet);
-}
-
-
 void Map::addEnnemy(Ennemy* e)
 {
     EntityArray.push_back(e);
@@ -152,17 +146,17 @@ void Map::addPlayer(Player* a)
 
 void Map::addProjectile(Projectile* p)
 {
-    AllProjectiles.push_back(p);
+    ProjectilesArray.push_back(p);
 }
 
 void Map::rmProjectile(Projectile& p)
 {
-       for(list<Projectile *>::iterator it = AllProjectiles.begin(); it != AllProjectiles.end(); ++it)
+       for(list<Projectile *>::iterator it = ProjectilesArray.begin(); it != ProjectilesArray.end(); ++it)
        {
-           if ((*it)==p)
+           if ((*it)==&p)
            {
                  delete *it;
-            AllProjectiles.erase(it);
+            ProjectilesArray.erase(it);
            }
 
        }
@@ -207,23 +201,23 @@ void Map::update(RenderWindow* game)
 {
     CollisionManager& collisionManager = *Engine::getInstance()->getCollisionManager();
 
-    list<Bullet>::iterator it = AllBullets.begin();
+    list<Projectile *>::iterator it = ProjectilesArray.begin();
     list<Entity *>::iterator itEnnemy = EntityArray.begin();
 
-    while(it != AllBullets.end())
+    while(it != ProjectilesArray.end())
         {
-            it->UpdatePosition();
+            (*it)->UpdatePosition();
 
-            if(collisionManager.CheckIfOutOfWindow(it->getPosition().x, it->getPosition().y, 0.0f))
-                it = AllBullets.erase(it);
-            else if(collisionManager.CollisionObstacles(it->getGlobalBounds()))
-                it = AllBullets.erase(it);
-            else if(collisionManager.CollisionEnnemy(it->getGlobalBounds(), it->getTeam(), EntityArray))
+            if(collisionManager.CheckIfOutOfWindow((*it)->getPosition().x, (*it)->getPosition().y, 0.0f))
+                (*it) = ProjectilesArray.erase((*it));
+            else if(collisionManager.CollisionObstacles((*it)->getGlobalBounds()))
+                (*it) = ProjectilesArray.erase((*it));
+            else if(collisionManager.CollisionEnnemy((*it)->getGlobalBounds(), (*it)->getTeam(), EntityArray))
                 {
 
                     EntityTouche = collisionManager.getAdresseEntityTouche();
-                    EntityTouche->subirDegats(it->getDamage());
-                    it = AllBullets.erase(it);
+                    EntityTouche->subirDegats((*it)->getDamage());
+                    (*it) = ProjectilesArray.erase((*it));
                 }
             else
                 ++it;
@@ -277,7 +271,7 @@ void Map::update(RenderWindow* game)
 
     if(!localplayer->alive()) gameOver = true;
 
-    for(it = AllBullets.begin(); it != AllBullets.end(); ++it)
+    for(it = ProjectilesArray.begin(); it != ProjectilesArray.end(); ++it)
         game->draw(*it);
 
 

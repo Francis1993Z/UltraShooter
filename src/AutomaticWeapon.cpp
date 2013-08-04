@@ -45,7 +45,7 @@ void AutomaticWeapon::fire()
             fire_intervale_clock.restart();
 
 
-            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), angle, user->getTeam()));
+            Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), angle, user->getTeam()));
         }
 }
 
@@ -80,6 +80,6 @@ void AutomaticWeapon::fire(sf::Vector2f target_position)
             fire_intervale_clock.restart();
 
 
-            Engine::getInstance()->getMap()->addBullet(Bullet(user->getPosition(), angle, user->getTeam()));
+            Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), angle, user->getTeam()));
         }
 }
