@@ -57,6 +57,16 @@ unsigned int Entity::getDamage() const
     return damage;
 }
 
+targetdata Entity::getTarget() const
+{
+        cout<<"virtual getTarget"<<endl;
+            sf::Vector2f v2f(0.00f, 0.00f);
+                targetdata data;
+                data.angle=0.00f;
+                data.position=v2f;
+                return data;
+}
+
 void Entity::update()
 {
     cout<<"virtual update"<<endl;

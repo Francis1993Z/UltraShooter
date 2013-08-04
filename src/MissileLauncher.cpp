@@ -9,6 +9,7 @@ MissileLauncher::MissileLauncher(Entity const& my_user)
 {
     user=&my_user;
     fire_intervale = 500.00f;
+    needRefresh=false;//?
 }
 
 

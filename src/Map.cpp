@@ -150,6 +150,23 @@ void Map::addPlayer(Player* a)
     EntityArray.push_back(a);
 }
 
+void Map::addProjectile(Projectile* p)
+{
+    AllProjectiles.push_back(p);
+}
+
+void Map::rmProjectile(Projectile& p)
+{
+       for(list<Projectile *>::iterator it = AllProjectiles.begin(); it != AllProjectiles.end(); ++it)
+       {
+           if ((*it)==p)
+           {
+                 delete *it;
+            AllProjectiles.erase(it);
+           }
+
+       }
+}
 
 void Map::addObstacle(std::string obstacleTexturePath, int x, int y)
 {

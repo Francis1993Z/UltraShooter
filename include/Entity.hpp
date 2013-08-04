@@ -34,6 +34,7 @@ public:
     unsigned int getDamage() const;
     virtual unsigned int die() const;
     virtual void update();
+    virtual targetdata getTarget() const;
     TEAM my_team;
 
 

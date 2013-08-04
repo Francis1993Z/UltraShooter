@@ -345,6 +345,10 @@ void Engine::gestionEvenements()
                     widgetManager.positionClicSouris(localMousePosition.x, localMousePosition.y);
                 }
         }
+        else if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            player->stopMLAction();
+        }
 
 
     if(WindowEvent.type == sf::Event::MouseButtonReleased)

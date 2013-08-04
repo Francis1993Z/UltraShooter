@@ -9,6 +9,7 @@ ShrapnelWeapon::ShrapnelWeapon(Entity const& my_user)
 {
     user=&my_user;
     fire_intervale = 150.00f;
+    needRefresh=false;
 }
 
 void ShrapnelWeapon::fire()

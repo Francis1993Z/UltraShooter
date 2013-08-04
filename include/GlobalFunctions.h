@@ -30,6 +30,12 @@ enum TEAM
     ALL_TEAMS = TEAM1 | TEAM2
 };
 
+struct targetdata
+{
+    sf::Vector2f position;
+    float angle;
+};
+
 extern "C"
 {
 

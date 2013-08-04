@@ -5,7 +5,9 @@
 
 class Map
 {
-    std::list<Bullet> AllBullets;
+
+    std::list<Laserbeam> AllLaserbeam;
+    std::list<Projectile *> AllProjectiles;
     std::list<Entity *> EntityArray;
 
     std::list<Obstacle> lObstacles;
@@ -41,6 +43,13 @@ public:
     void addBullet(Bullet bullet);
     void addEnnemy(Ennemy* e);
     void addPlayer(Player* a);
+    void addProjectile(Projectile* p);
+
+    //! rmProjectile
+    /// cherche un projectile avec l'aide de son adresse
+    /// dans la list de projectile et l'enleve.
+    void rmProjectile(Projectile& p);
+
     void addObstacle(std::string obstacleTexturePath, int x, int y);
     void addWave(Wave w);
 

@@ -17,7 +17,7 @@ class Player : public Entity, public EntityWithWeapon
     unsigned long Score;
 
     Hud hud;
-
+    bool firing;
     sf::FloatRect rect;
     sf::Clock weapon_clock;
 
@@ -32,8 +32,10 @@ public:
     sf::Text getLifeHud();
     sf::Text getScoreHud();
 
-    unsigned long getScore();
+    void stopMLAction();
 
+    unsigned long getScore();
+    targetdata getTarget() const;
     void move_myhud(float vx, float vy);
     void setSizeWindowHud(sf::Vector2f sizeWindow);
     void addPoints(int p);
