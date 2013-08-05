@@ -26,7 +26,7 @@ Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindo
 
     my_weapon.push_back(new AutomaticWeapon(*this));
     my_weapon.push_back(new ShrapnelWeapon(*this));
-    //my_weapon.push_back(new LaserWeapon(*this));
+    my_weapon.push_back(new LaserWeapon(*this));
 }
 
 void Player::Shoot()

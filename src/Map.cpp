@@ -151,20 +151,9 @@ void Map::addProjectile(Projectile* p)
 
 void Map::rmProjectile(Projectile* p)
 {
-    cout<<"projectile to remove : "<<p<<endl;
-    // std::list<Projectile *>::iterator findIter = std::find(ProjectilesArray.begin(), ProjectilesArray.end(), p);
-
-    //delete *findIter;
-    //ProjectilesArray.erase(findIter);
-    for(list<Projectile *>::iterator it = ProjectilesArray.begin(); it != ProjectilesArray.end(); ++it)
-        {
-            if ((*it)==p)
-                {
-                    delete *it;
-                    ProjectilesArray.erase(it);
-                }
-
-        }
+    std::list<Projectile *>::iterator findIter = std::find(ProjectilesArray.begin(), ProjectilesArray.end(), p);
+    delete *findIter;
+    ProjectilesArray.erase(findIter);
 }
 
 void Map::addObstacle(std::string obstacleTexturePath, int x, int y)

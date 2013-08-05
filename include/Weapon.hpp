@@ -3,7 +3,7 @@
 
 #include "Entity.hpp"
 #include "Bullet.hpp"
-#include "LaserBeam.hpp"
+
 
 class Weapon
 {

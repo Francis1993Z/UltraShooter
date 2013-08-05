@@ -15,22 +15,32 @@ LaserWeapon::LaserWeapon(Entity const& my_user)
 
 void LaserWeapon::fire()
 {
-    my_laserbeam = new Laserbeam(user->getPosition(), *user, user->getTeam());
+    if(my_laserbeam==NULL)
+    {
+           my_laserbeam = new Laserbeam(user->getPosition(), *user, user->getTeam());
+    my_laserbeam->setm(my_laserbeam);
     Engine::getInstance()->getMap()->addProjectile(my_laserbeam);
+    }
+
+
 }
 
 void LaserWeapon::refresh()
 {
+
     if(my_laserbeam!=NULL)
-        stopLaserBeam();
+    {
+                   stopLaserBeam();
+    }
+
 }
 
 void LaserWeapon::stopLaserBeam()
 {
-    cout<<"laserbeam to remove : "<<my_laserbeam<<endl;
     Engine::getInstance()->getMap()->rmProjectile(my_laserbeam);
     my_laserbeam=NULL;
 }
+
 
 LaserWeapon::~LaserWeapon()
 {

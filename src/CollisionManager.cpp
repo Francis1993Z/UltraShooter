@@ -103,7 +103,7 @@ bool CollisionManager::Collision(Projectile& proj, list<Entity *>& EntityArray)
             col = CollisionPoint(proj.getGlobalBounds(), proj.getTeam(), EntityArray);
             break;
         case SEGMENT:
-            cout<<"SEGMENT"<<endl;
+            //cout<<"SEGMENT"<<endl;
             col=false;
             break;
         default:
@@ -129,7 +129,7 @@ bool CollisionManager::CollisionPoint(FloatRect rect, TEAM projectile_team, list
                             //cout<<"projectile_team = "<<projectile_team<<" tmpEntityteam = "<<tmpEntityteam<<" | "<<projectile_team<<" & "<<tmpEntityteam<<" == "<<(projectile_team & tmpEntityteam)<<endl;
 
                             collision = true;
-                            adresseEntityTouche = &*(*it);//attention
+                            adresseEntityTouche = &*(*it);
                         }
                 }
         }
