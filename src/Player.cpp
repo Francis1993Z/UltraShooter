@@ -73,7 +73,7 @@ float Player::getRayon()
     return rayon;
 }
 
-targetdata Player::getTarget() const;
+targetdata Player::getTarget() const
 {
 
     sf::Vector2i localMousePosition = sf::Mouse::getPosition(*Engine::getInstance()->getRenderWindow());
@@ -85,7 +85,7 @@ targetdata Player::getTarget() const;
 
             //Engine::getInstance()->getMusicManager()->playEvent("ressources/sounds/events/sf_laser_18.ogg");
 
-            Vector2i player_pixel_position = Engine::getInstance()->getRenderWindow()->mapCoordsToPixel(user->getPosition(), Engine::getInstance()->getRenderWindow()->getView());
+            Vector2i player_pixel_position = Engine::getInstance()->getRenderWindow()->mapCoordsToPixel(getPosition(), Engine::getInstance()->getRenderWindow()->getView());
 
             Vector2f converted_player_coord;
             converted_player_coord.x=(float)player_pixel_position.x;

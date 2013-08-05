@@ -7,7 +7,7 @@ Bullet::Bullet(sf::Vector2f myInitPosition, float myangle, TEAM team)
 {
     setFillColor(sf::Color::White);
     setPosition(myInitPosition);
-    setRadius(5);
+    setSize(sf::Vector2f(5, 5));
     setOrigin(2.5f, 2.5f);
     damage=15;
     vitesse=25;

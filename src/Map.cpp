@@ -209,15 +209,23 @@ void Map::update(RenderWindow* game)
             (*it)->UpdatePosition();
 
             if(collisionManager.CheckIfOutOfWindow((*it)->getPosition().x, (*it)->getPosition().y, 0.0f))
-                (*it) = ProjectilesArray.erase((*it));
+            {
+                delete *it;
+                it = ProjectilesArray.erase(it);
+            }
+
             else if(collisionManager.CollisionObstacles((*it)->getGlobalBounds()))
-                (*it) = ProjectilesArray.erase((*it));
+            {
+                delete *it;
+                 it = ProjectilesArray.erase(it);
+            }
+
             else if(collisionManager.CollisionEnnemy((*it)->getGlobalBounds(), (*it)->getTeam(), EntityArray))
                 {
 
                     EntityTouche = collisionManager.getAdresseEntityTouche();
                     EntityTouche->subirDegats((*it)->getDamage());
-                    (*it) = ProjectilesArray.erase((*it));
+                    it = ProjectilesArray.erase(it);
                 }
             else
                 ++it;
@@ -272,7 +280,7 @@ void Map::update(RenderWindow* game)
     if(!localplayer->alive()) gameOver = true;
 
     for(it = ProjectilesArray.begin(); it != ProjectilesArray.end(); ++it)
-        game->draw(*it);
+        game->draw(*(*it));
 
 
     for(itEnnemy = EntityArray.begin(); itEnnemy != EntityArray.end(); ++itEnnemy)

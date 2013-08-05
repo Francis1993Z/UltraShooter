@@ -6,7 +6,7 @@
 
 #include <list>
 
-class Laserbeam : public Projectile, public sf::RectangleShape
+class Laserbeam : public Projectile
 {
 private :
 const Entity& m_user;

@@ -9,7 +9,7 @@
 
 #include "GlobalFunctions.h"
 
-class Projectile
+class Projectile : public sf::RectangleShape
 {
 public :
 
