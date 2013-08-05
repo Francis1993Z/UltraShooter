@@ -83,7 +83,7 @@ inline bool CollisionSeg(Vector2f A, Vector2f B, cercle C)
    return false;
 }
 
-inline Vector2f ProjectionI(Vector2f A,Vector2f B,Vector2f C)
+inline Vector2f ProjectionI(Vector2f A, Vector2f B, Vector2f C)
 {
   Vector2f u,AC;
   u.x = B.x - A.x;
@@ -255,6 +255,9 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
                 {
                             collision = true;
                             adresseEntityTouche = &*(*it);
+                            seg.setI(ProjectionI(A_droite, B_droite, ennemy_position));
+                        float new_seg_d = Distance(seg.getPosition(), seg.getI());
+                        seg.setSize(sf::Vector2f(seg.getSize().x, new_seg_d));
                 }
             }
 

@@ -216,11 +216,14 @@ void Map::update(RenderWindow* game)
 
             else if(collisionManager.Collision(*(*it), EntityArray))
                 {
-
                     EntityTouche = collisionManager.getAdresseEntityTouche();
                     EntityTouche->subirDegats((*it)->getDamage());
-                    delete *it;
+if ((*it)->getCollisionType()==POINT)
+{
+                        delete *it;
                     it = ProjectilesArray.erase(it);
+}
+
                 }
             else
                 ++it;

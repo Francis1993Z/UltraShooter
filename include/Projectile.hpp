@@ -15,13 +15,15 @@ public :
     collisiontype getCollisionType() const;
     unsigned int getDamage() const;
     virtual void UpdatePosition();
+    virtual void setI(sf::Vector2f new_I);
+    virtual sf::Vector2f getI() const;
     TEAM getTeam() const;
     virtual ~Projectile();
 protected :
 
     sf::Vector2f myPosition;
     unsigned int damage;
-
+    sf::Vector2f I;//point d'impact
     float vitesse, angle;
     TEAM my_team;
     collisiontype my_collisiontype;

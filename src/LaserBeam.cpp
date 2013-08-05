@@ -46,6 +46,16 @@ void Laserbeam::setm(Laserbeam*& my_m)
     m=&my_m;
 }
 
+void Laserbeam::setI(Vector2f new_I)
+{
+    I=new_I;
+}
+
+Vector2f Laserbeam::getI() const
+{
+    return I;
+}
+
 Laserbeam::~Laserbeam()
 {
     *m=NULL;///Tres IMPORTANT!
