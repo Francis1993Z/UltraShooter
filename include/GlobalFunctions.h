@@ -36,6 +36,12 @@ struct targetdata
     float angle;
 };
 
+enum collisiontype
+{
+    POINT,
+    SEGMENT
+};
+
 extern "C"
 {
 

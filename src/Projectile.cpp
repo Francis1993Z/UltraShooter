@@ -3,6 +3,11 @@
 using namespace std;
 using namespace sf;
 
+collisiontype Projectile::getCollisionType() const
+{
+    return my_collisiontype;
+}
+
 unsigned int Projectile::getDamage() const
 {
     return damage;

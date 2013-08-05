@@ -93,12 +93,25 @@ bool CollisionManager::CollisionObstacles(int x, int y)
     return collision;
 }
 
-bool CollisionManager::CollisionEnnemy(FloatRect rect, TEAM projectile_team, list<Entity *>& EntityArray)
+bool CollisionManager::Collision(Projectile& proj, list<Entity *>& EntityArray)
 {
+    collisiontype tmp_ctype=proj.getCollisionType();
+    bool col;
+    switch (tmp_ctype)
+    {
+    case POINT:
+        col = CollisionPoint(proj.getGlobalBounds(), proj.getTeam(), EntityArray);
+        break;
 
+    default:
+        break;
+    }
+return col;
+}
+
+bool CollisionManager::CollisionPoint(FloatRect rect, TEAM projectile_team, list<Entity *>& EntityArray)
+{
     collision = false;
-
-
     for(list<Entity *>::const_iterator it = EntityArray.begin(); it != EntityArray.end(); ++it)
         {
             //if((*it)==&player) cout<<"hello i'm the player"<<endl;

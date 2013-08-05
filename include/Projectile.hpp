@@ -12,7 +12,7 @@
 class Projectile : public sf::RectangleShape
 {
 public :
-
+    collisiontype getCollisionType() const;
     unsigned int getDamage() const;
     virtual void UpdatePosition();
     TEAM getTeam() const;
@@ -24,6 +24,7 @@ protected :
 
     float vitesse, angle;
     TEAM my_team;
+    collisiontype my_collisiontype;
 };
 
 #endif // PROJECTILE_HPP_INCLUDED

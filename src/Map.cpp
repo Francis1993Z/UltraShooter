@@ -220,7 +220,7 @@ void Map::update(RenderWindow* game)
                  it = ProjectilesArray.erase(it);
             }
 
-            else if(collisionManager.CollisionEnnemy((*it)->getGlobalBounds(), (*it)->getTeam(), EntityArray))
+            else if(collisionManager.Collision(*(*it), EntityArray))
                 {
 
                     EntityTouche = collisionManager.getAdresseEntityTouche();

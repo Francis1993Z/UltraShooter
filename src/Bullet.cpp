@@ -13,7 +13,7 @@ Bullet::Bullet(sf::Vector2f myInitPosition, float myangle, TEAM team)
     vitesse=25;
     angle=myangle;
     my_team=team;
-    //cout<<"team = "<<my_team<<endl;
+    my_collisiontype=POINT;
 }
 
 Bullet::Bullet(sf::Vector2f myInitPosition, float myangle, sf::Color myColor, int myDamage, float myvitesse, TEAM team)
@@ -24,6 +24,8 @@ Bullet::Bullet(sf::Vector2f myInitPosition, float myangle, sf::Color myColor, in
     vitesse=myvitesse;
     angle=myangle;
     my_team=team;
+    my_team=team;
+    my_collisiontype=POINT;
 }
 
 void Bullet::UpdatePosition()
