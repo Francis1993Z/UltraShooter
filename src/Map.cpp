@@ -219,6 +219,7 @@ void Map::update(RenderWindow* game)
 
                     EntityTouche = collisionManager.getAdresseEntityTouche();
                     EntityTouche->subirDegats((*it)->getDamage());
+                    delete *it;
                     it = ProjectilesArray.erase(it);
                 }
             else

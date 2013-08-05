@@ -4,6 +4,8 @@
 using namespace std;
 using namespace sf;
 
+//!
+/// Recupere la distance entre deux points.
 inline float Distance(Vector2f o1, Vector2f o2)
 {
     float TCoteopposer=o2.y-o1.y;
@@ -14,7 +16,8 @@ inline float Distance(Vector2f o1, Vector2f o2)
     return Thypothenuse;
 }
 
-
+//!
+/// Recupere l'angle entre deux points.
 inline float GetAngle(Vector2f vec1, Vector2f vec2)
 {
     float a=vec2.x-vec1.x;
@@ -26,6 +29,73 @@ inline float GetAngle(Vector2f vec1, Vector2f vec2)
     return angle;
 }
 
+inline bool CollisionDroite(Vector2f A, Vector2f B, cercle C)
+{
+   Vector2f u;
+   u.x = B.x - A.x;
+   u.y = B.y - A.y;
+   Vector2f AC;
+   AC.x = C.x - A.x;
+   AC.y = C.y - A.y;
+   float numerateur = u.x*AC.y - u.y*AC.x;   // norme du vecteur v
+   if (numerateur <0)
+      numerateur = -numerateur ;   // valeur absolue ; si c'est négatif, on prend l'opposé.
+   float denominateur = sqrt(u.x*u.x + u.y*u.y);  // norme de u
+   float CI = numerateur / denominateur;
+   if (CI<C.radius)
+      return true;
+   else
+      return false;
+}
+
+inline bool CollisionPointCercle(Vector2f A, cercle C)
+{
+    Vector2f c_p;
+    c_p.x = C.x;
+    c_p.y = C.y;
+
+    float d = Distance(A, c_p);
+    float D = d - C.radius;
+    if (D>0) return false;
+    else return true;
+}
+
+inline bool CollisionSeg(Vector2f A, Vector2f B, cercle C)
+{
+   if (CollisionDroite(A,B,C) == false)
+     return false;  // si on ne touche pas la droite, on ne touchera jamais le segment
+   Vector2f AB,AC,BC;
+   AB.x = B.x - A.x;
+   AB.y = B.y - A.y;
+   AC.x = C.x - A.x;
+   AC.y = C.y - A.y;
+   BC.x = C.x - B.x;
+   BC.y = C.y - B.y;
+   float pscal1 = AB.x*AC.x + AB.y*AC.y;  // produit scalaire
+   float pscal2 = (-AB.x)*BC.x + (-AB.y)*BC.y;  // produit scalaire
+   if (pscal1>=0 && pscal2>=0)
+      return true;   // I entre A et B, ok.
+   // dernière possibilité, A ou B dans le cercle
+   if (CollisionPointCercle(A,C))
+     return true;
+   if (CollisionPointCercle(B,C))
+     return true;
+   return false;
+}
+
+inline Vector2f ProjectionI(Vector2f A,Vector2f B,Vector2f C)
+{
+  Vector2f u,AC;
+  u.x = B.x - A.x;
+  u.y = B.y - A.y;
+  AC.x = C.x - A.x;
+  AC.y = C.y - A.y;
+  float ti = (u.x*AC.x + u.y*AC.y)/(u.x*u.x + u.y*u.y);
+  Vector2f I;
+  I.x = A.x + ti*u.x;
+  I.y = A.y + ti*u.y;
+  return I;
+}
 
 CollisionManager::CollisionManager(Player& p_player, Map& p_gameMap):player(p_player), gameMap(p_gameMap), lObstacles(p_gameMap.getListeObstacles())
 {
@@ -104,7 +174,7 @@ bool CollisionManager::Collision(Projectile& proj, list<Entity *>& EntityArray)
             break;
         case SEGMENT:
             //cout<<"SEGMENT"<<endl;
-            col=false;
+            col=CollisionSegment(proj, EntityArray);
             break;
         default:
             break;
@@ -115,7 +185,7 @@ bool CollisionManager::Collision(Projectile& proj, list<Entity *>& EntityArray)
 bool CollisionManager::CollisionObstacles(Projectile& proj)
 {
 
-collisiontype tmp_ctype=proj.getCollisionType();
+    collisiontype tmp_ctype=proj.getCollisionType();
     bool col;
     switch (tmp_ctype)
         {
@@ -154,6 +224,42 @@ bool CollisionManager::CollisionPoint(FloatRect rect, TEAM projectile_team, list
                 }
         }
 
+
+    return collision;
+}
+
+bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityArray)
+{
+          collision = false;
+    for(list<Entity *>::const_iterator it = EntityArray.begin(); it != EntityArray.end(); ++it)
+        {
+
+            TEAM tmpProjectileteam=seg.getTeam();
+            TEAM tmpEntityteam=(*it)->getTeam();
+            if((tmpProjectileteam & tmpEntityteam) == NO_TEAMS)
+                {
+
+
+            Vector2f A_droite = seg.getPosition(), B_droite;
+            B_droite.x = cos(seg.getRotation()) * 6000.00f;
+            B_droite.y = sin(seg.getRotation()) * 6000.00f;
+            Vector2f ennemy_position = (*it)->getPosition();
+            float ennemy_dradius = (*it)->get_dRadius();
+            cercle e_cer;
+            e_cer.x = ennemy_position.x;
+            e_cer.y = ennemy_position.y;
+            e_cer.radius = ennemy_dradius;
+            if (CollisionDroite(A_droite, B_droite, e_cer))
+            {
+                if (CollisionSeg(A_droite, B_droite, e_cer))
+                {
+                            collision = true;
+                            adresseEntityTouche = &*(*it);
+                }
+            }
+
+        }
+        }
 
     return collision;
 }

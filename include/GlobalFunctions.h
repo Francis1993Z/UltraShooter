@@ -42,6 +42,12 @@ enum collisiontype
     SEGMENT
 };
 
+
+struct cercle
+{
+    float x, y, radius;
+};
+
 extern "C"
 {
 

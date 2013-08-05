@@ -18,12 +18,12 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
     e_my = e_m;
 
     kill_point = 5;
-vie=75;
+    vie=75;
     if (level == 2)
         {
             n_size = m_size / 2;
             kill_point = kill_point * 2;
-vie=25;
+            vie=25;
             e_mx = e_m * 2;
             e_my = e_m * 2;
         }
@@ -31,7 +31,7 @@ vie=25;
         {
             n_size = m_size / 4;
             kill_point = kill_point * 4;
-vie=10;
+            vie=10;
             e_mx=e_m*4;
             e_my=e_m*4;
         }
@@ -39,7 +39,7 @@ vie=10;
         {
             n_size = m_size / 8;
             kill_point = kill_point * 8;
-vie=1;
+            vie=1;
             e_mx=e_m*8;
             e_my=e_m*8;
         }
@@ -53,7 +53,7 @@ vie=1;
 
     d_radius=n_size/2;
 
-    my_behaviour=ATTACK;
+    my_behaviour=STANDBY;
 
     Vector2f t_pos=my_target->getPosition();
 

@@ -19,7 +19,7 @@ public:
     bool CollisionPoint(sf::FloatRect rect, TEAM projectile_team, std::list<Entity *>& EntityArray);
     bool CheckIfOutOfWindow(float pos_x, float pos_y, float rayon);
     bool CollisionContreJoueur(sf::FloatRect rect);
-
+    bool CollisionSegment(Projectile& seg, std::list<Entity *>& EntityArray);
     void update_repulsion(std::list<Entity *>& EntityArray);
     void CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, sf::FloatRect rect);
     void CalculDistanceAParcourirBordMap(float p_deplacement_x, float p_deplacement_y);
