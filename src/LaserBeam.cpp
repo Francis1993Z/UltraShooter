@@ -8,7 +8,7 @@ using namespace sf;
 Laserbeam::Laserbeam(sf::Vector2f init_position, Entity const& user, TEAM team) : m_user(user)
 {
     setPosition(init_position);
-    setSize(sf::Vector2f(3.00f, 6000.00f));
+    setSize(sf::Vector2f(3.00f, 3000.00f));
     setOrigin(5.00f, 0.00f);
     setFillColor(sf::Color::Blue);
     my_collisiontype=SEGMENT;

@@ -29,26 +29,30 @@ inline float GetAngle(Vector2f vec1, Vector2f vec2)
     return angle;
 }
 
-inline bool CollisionDroite(Vector2f A, Vector2f B, cercle C)
+ bool CollisionDroite(Vector2f A, Vector2f B, cercle C)
 {
    Vector2f u;
    u.x = B.x - A.x;
    u.y = B.y - A.y;
+    //cout<<"u.x : "<<u.x<<" u.y : "<<u.y<<endl;
    Vector2f AC;
    AC.x = C.x - A.x;
    AC.y = C.y - A.y;
+    //cout<<"AC.x : "<<AC.x<<" AC.y : "<<AC.y<<endl;
    float numerateur = u.x*AC.y - u.y*AC.x;   // norme du vecteur v
+       //cout<<"numerateur : "<<numerateur<<endl;
    if (numerateur <0)
       numerateur = -numerateur ;   // valeur absolue ; si c'est négatif, on prend l'opposé.
    float denominateur = sqrt(u.x*u.x + u.y*u.y);  // norme de u
    float CI = numerateur / denominateur;
+         //cout<<"CI : "<<CI<<endl;
    if (CI<C.radius)
       return true;
    else
       return false;
 }
 
-inline bool CollisionPointCercle(Vector2f A, cercle C)
+ bool CollisionPointCercle(Vector2f A, cercle C)
 {
     Vector2f c_p;
     c_p.x = C.x;
@@ -241,8 +245,9 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
 
 
             Vector2f A_droite = seg.getPosition(), B_droite;
-            B_droite.x = cos(seg.getRotation()) * 6000.00f;
-            B_droite.y = sin(seg.getRotation()) * 6000.00f;
+            B_droite.y = (cos((seg.getRotation()*M_PI/180)) * seg.getSize().y)+seg.getPosition().x;
+            B_droite.x = -(sin((seg.getRotation()*M_PI/180)) * seg.getSize().y)+seg.getPosition().y;
+            //cout<<"B_droite.x : "<<B_droite.x<<" B_droite.y : "<<B_droite.y<<endl;
             Vector2f ennemy_position = (*it)->getPosition();
             float ennemy_dradius = (*it)->get_dRadius();
             cercle e_cer;
@@ -251,6 +256,7 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
             e_cer.radius = ennemy_dradius;
             if (CollisionDroite(A_droite, B_droite, e_cer))
             {
+                //cout<<"droite true"<<endl;
                 if (CollisionSeg(A_droite, B_droite, e_cer))
                 {
                             collision = true;
@@ -259,7 +265,12 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
                         float new_seg_d = Distance(seg.getPosition(), seg.getI());
                         seg.setSize(sf::Vector2f(seg.getSize().x, new_seg_d));
                 }
+                            else
+            {
+                seg.setSize(sf::Vector2f(seg.getSize().x, 6000.00f));
             }
+            }
+
 
         }
         }
