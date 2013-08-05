@@ -59,7 +59,7 @@ void Raider::update()
             float o = vec2.y - vec1.y;
             float TargetDirection;
             TargetDirection = atan2(-o, a);
-        setRotation(-(TargetDirection*180/M_PI));
+            setRotation(-(TargetDirection*180/M_PI));
 
 
             if(distance_target > 350)

@@ -36,7 +36,7 @@ void EnnemyFactory::createEnnemies(const string &type, int number) const
                             ennemyX = rand_a_b(0, gameMap->getWidth());
                             ennemyY = rand_a_b(0, gameMap->getHeight());
 
-                            if(((ennemyX < (x + RAYON) && ennemyX > (x - RAYON)) && (ennemyY < (y + RAYON) && ennemyY > (y - RAYON))) || !colManager->CollisionObstacles(ennemyX, ennemyY))
+                            if(((ennemyX < (x + RAYON) && ennemyX > (x - RAYON)) && (ennemyY < (y + RAYON) && ennemyY > (y - RAYON))) || !colManager->CollisionObstaclesPoint(ennemyX, ennemyY))
                                 badCoords = true;
                             else
                                 badCoords = false;

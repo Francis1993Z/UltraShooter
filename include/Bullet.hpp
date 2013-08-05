@@ -5,6 +5,9 @@
 #include <iostream>
 
 
+//! Les Bullet sont des projectiles de type POINT
+/// Une fois cree, ils avancent dans une direction donnee
+
 class Bullet : public Projectile
 {
 

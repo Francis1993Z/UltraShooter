@@ -153,7 +153,7 @@ int Engine::Run()
     //MainView.setSize(1024, 768);
     events = new Events();
     player = new Player(sf::Vector2f(200.f, 200.f), *(loadFiles->getPoliceArial()), MainView.getSize(), TEAM1);
-    cout<<"engine player : "<<player<<endl;
+    //cout<<"engine player : "<<player<<endl;
     collisionManager = new CollisionManager(*player, *gameMap);
     menu = new Menu(screen_size);
     menu->afficher();

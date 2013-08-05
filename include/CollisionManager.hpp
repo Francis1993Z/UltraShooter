@@ -12,8 +12,9 @@ public:
     CollisionManager(Player& p_player, Map& p_gameMap);
 
     bool CollisionJoueur(float x, float y);
-    bool CollisionObstacles(sf::FloatRect rect);
-    bool CollisionObstacles(int x, int y);
+    bool CollisionObstacles(Projectile& proj);
+    bool CollisionObstaclesPoint(sf::FloatRect rect);
+    bool CollisionObstaclesPoint(int x, int y);
     bool Collision(Projectile& proj, std::list<Entity *>& EntityArray);
     bool CollisionPoint(sf::FloatRect rect, TEAM projectile_team, std::list<Entity *>& EntityArray);
     bool CheckIfOutOfWindow(float pos_x, float pos_y, float rayon);

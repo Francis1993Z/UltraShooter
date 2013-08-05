@@ -8,16 +8,16 @@
 class Weapon
 {
 public:
-    virtual void fire();
-    virtual void fire(sf::Vector2f target_position);
-    virtual void refresh();
-    bool isUpdatable() const;
+    virtual void fire();//feu
+    virtual void fire(sf::Vector2f target_position);//feu avec position de la cible
+    virtual void refresh();//mise a jour
+    bool isUpdatable() const;//permert de savoir si l'arme soit etre mise a jour
     virtual ~Weapon();
 protected:
-    int damage;
-    sf::Clock fire_intervale_clock;
-    float fire_intervale;
-    const Entity* user;
-    bool needRefresh;
+    int damage;//dommage inflige
+    sf::Clock fire_intervale_clock;//temps ecoule a cahque tire
+    float fire_intervale;//Itervale de temps spcecifique entre chaque projectile tirer
+    const Entity* user;//Pointeur sur l'utilisateur de l'arme
+    bool needRefresh;//Si l'arme a besoin d'être mise à jour dans la boucle principale
 };
 #endif // WEAPON_HPP_INCLUDED

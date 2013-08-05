@@ -9,15 +9,15 @@ using namespace sf;
 
 Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow, TEAM team): Entity(10000, team), Score(0), hud(vie, Score, font, sizeWindow)
 {
-    e_m = 15.00f;
+    e_m = 15.00f;//vitesse
     e_mx = e_m;
     e_my = e_m;
     m_fx=0.00f;
     m_fy=0.00f;
     d_radius = 25;
     sf::Vector2f my_size;
-    my_size.x=100;
-    my_size.y=100;
+    my_size.x=50;
+    my_size.y=50;
     setSize(my_size);
     setFillColor(sf::Color::Blue);
     setPosition(init_position);

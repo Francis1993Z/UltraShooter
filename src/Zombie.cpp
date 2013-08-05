@@ -11,10 +11,10 @@ Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target, TEAM team)
 {
 
     sf::Vector2f my_size;
-    my_size.x=50;
-    my_size.y=50;
+    my_size.x=25;
+    my_size.y=25;
     setSize(my_size);
-    setOrigin(Vector2f(25,25));
+    setOrigin(Vector2f(25/2,25/2));
     setFillColor(Color::Red);
 
 
@@ -26,7 +26,7 @@ Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target, TEAM team)
     e_my = e_m;
     m_fx=0.00f;
     m_fy=0.00f;
-    d_radius = 25;
+    d_radius = 25/2;
     my_behaviour = STANDBY;
     //cout << "New Zombie at : " << this << endl;
 }

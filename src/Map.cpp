@@ -208,7 +208,7 @@ void Map::update(RenderWindow* game)
                     it = ProjectilesArray.erase(it);
                 }
 
-            else if(collisionManager.CollisionObstacles((*it)->getGlobalBounds()))
+            else if(collisionManager.CollisionObstacles(*(*it)))
                 {
                     delete *it;
                     it = ProjectilesArray.erase(it);

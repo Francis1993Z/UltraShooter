@@ -48,6 +48,5 @@ void Laserbeam::setm(Laserbeam*& my_m)
 
 Laserbeam::~Laserbeam()
 {
-*m=NULL;
-
+    *m=NULL;///Tres IMPORTANT!
 }

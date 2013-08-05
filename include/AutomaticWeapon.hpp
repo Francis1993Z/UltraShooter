@@ -8,7 +8,23 @@ class AutomaticWeapon : public Weapon
 {
 public:
     AutomaticWeapon(Entity const& my_user);
+
+    /// \brief Tire des projectiles
+    ///
+    /// Cette fonction tire des projectile en fonction de la position de la souris
+    /// Elle est tres utilise par les Player
+    ///
+    /// \return void
+
     void fire();
+
+    /// \brief Tire des projectiles
+    ///
+    /// Cette fonction tire des projectile en fonction d'une position donne
+    /// Elle est tres utilise par les entity controle par ordinateur
+    ///
+    /// \return void
+
     void fire(sf::Vector2f target_position);
 };
 

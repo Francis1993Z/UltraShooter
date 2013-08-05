@@ -63,7 +63,7 @@ bool CollisionManager::CollisionJoueur(float x, float y)
     return collision;
 }
 
-bool CollisionManager::CollisionObstacles(sf::FloatRect rect)
+bool CollisionManager::CollisionObstaclesPoint(sf::FloatRect rect)
 {
 
     collision = false;
@@ -81,7 +81,7 @@ bool CollisionManager::CollisionObstacles(sf::FloatRect rect)
     return collision;
 }
 
-bool CollisionManager::CollisionObstacles(int x, int y)
+bool CollisionManager::CollisionObstaclesPoint(int x, int y)
 {
 
     collision = false;
@@ -101,6 +101,26 @@ bool CollisionManager::Collision(Projectile& proj, list<Entity *>& EntityArray)
         {
         case POINT:
             col = CollisionPoint(proj.getGlobalBounds(), proj.getTeam(), EntityArray);
+            break;
+        case SEGMENT:
+            //cout<<"SEGMENT"<<endl;
+            col=false;
+            break;
+        default:
+            break;
+        }
+    return col;
+}
+
+bool CollisionManager::CollisionObstacles(Projectile& proj)
+{
+
+collisiontype tmp_ctype=proj.getCollisionType();
+    bool col;
+    switch (tmp_ctype)
+        {
+        case POINT:
+            col = CollisionObstaclesPoint(proj.getGlobalBounds());
             break;
         case SEGMENT:
             //cout<<"SEGMENT"<<endl;

@@ -18,12 +18,12 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
     e_my = e_m;
 
     kill_point = 5;
-
+vie=75;
     if (level == 2)
         {
             n_size = m_size / 2;
             kill_point = kill_point * 2;
-
+vie=25;
             e_mx = e_m * 2;
             e_my = e_m * 2;
         }
@@ -31,7 +31,7 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
         {
             n_size = m_size / 4;
             kill_point = kill_point * 4;
-
+vie=10;
             e_mx=e_m*4;
             e_my=e_m*4;
         }
@@ -39,7 +39,7 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
         {
             n_size = m_size / 8;
             kill_point = kill_point * 8;
-
+vie=1;
             e_mx=e_m*8;
             e_my=e_m*8;
         }
@@ -51,9 +51,9 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
     setOrigin(Vector2f(my_size.x / 2, my_size.y / 2));
     setFillColor(Color::Green);
 
-    d_radius=n_size;
+    d_radius=n_size/2;
 
-    my_behaviour=STANDBY;
+    my_behaviour=ATTACK;
 
     Vector2f t_pos=my_target->getPosition();
 
@@ -83,7 +83,7 @@ unsigned int Splitter::getLevel() const
 
 unsigned int Splitter::die() const
 {
-    if (getLevel() != 3)
+    if (getLevel() != 3)//le niveau 4 est extremement rapide et petit. C'est trop difficile.
         {
             float rp = getRotation();
             float s_distance = Entity::get_dRadius();
