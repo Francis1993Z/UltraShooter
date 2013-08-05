@@ -26,7 +26,7 @@ Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindo
 
     my_weapon.push_back(new AutomaticWeapon(*this));
     my_weapon.push_back(new ShrapnelWeapon(*this));
-
+    //my_weapon.push_back(new LaserWeapon(*this));
 }
 
 void Player::Shoot()
@@ -36,16 +36,12 @@ void Player::Shoot()
 
 void Player::stopMLAction()
 {
-if(my_weapon.at(actual_weapon)->isUpdatable())
-{
-    my_weapon.at(actual_weapon)->refresh();
-}
+    if(my_weapon.at(actual_weapon)->isUpdatable())
+        {
+            my_weapon.at(actual_weapon)->refresh();
+        }
 }
 
-Vector2i Player::GetWindowPosition(sf::RenderWindow &theRenderWindow) const
-{
-    return theRenderWindow.mapCoordsToPixel(Player::getPosition(), theRenderWindow.getView());
-}
 
 Text Player::getLifeHud()
 {
@@ -73,37 +69,37 @@ float Player::getRayon()
     return rayon;
 }
 
-targetdata Player::getTarget() const;
+targetdata Player::getTarget() const
 {
 
     sf::Vector2i localMousePosition = sf::Mouse::getPosition(*Engine::getInstance()->getRenderWindow());
 
-            sf::Vector2f converted_target_coord;//la position de la souris est en int
-            converted_target_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
-            converted_target_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
+    sf::Vector2f converted_target_coord;//la position de la souris est en int
+    converted_target_coord.x=(float)localMousePosition.x;//donc on la convertie en float car Player::Shoot(sf::Vector2f, sf::RenderWindow &myRenderWindow)
+    converted_target_coord.y=(float)localMousePosition.y;//sf::Vector2f est en float
 
 
-            //Engine::getInstance()->getMusicManager()->playEvent("ressources/sounds/events/sf_laser_18.ogg");
+    //Engine::getInstance()->getMusicManager()->playEvent("ressources/sounds/events/sf_laser_18.ogg");
 
-            Vector2i player_pixel_position = Engine::getInstance()->getRenderWindow()->mapCoordsToPixel(user->getPosition(), Engine::getInstance()->getRenderWindow()->getView());
+    Vector2i player_pixel_position = Engine::getInstance()->getRenderWindow()->mapCoordsToPixel(getPosition(), Engine::getInstance()->getRenderWindow()->getView());
 
-            Vector2f converted_player_coord;
-            converted_player_coord.x=(float)player_pixel_position.x;
-            converted_player_coord.y=(float)player_pixel_position.y;
+    Vector2f converted_player_coord;
+    converted_player_coord.x=(float)player_pixel_position.x;
+    converted_player_coord.y=(float)player_pixel_position.y;
 
-            float x1 = converted_player_coord.x;
-            float y1 = converted_player_coord.y;
+    float x1 = converted_player_coord.x;
+    float y1 = converted_player_coord.y;
 
-            float x2 = converted_target_coord.x;
-            float y2 = converted_target_coord.y;
+    float x2 = converted_target_coord.x;
+    float y2 = converted_target_coord.y;
 
-            float a = x2 - x1;
-            float o = y2 - y1;
-            float angle = atan2(-o, a);
-                targetdata data;
-                data.angle=angle;
-                data.position=converted_target_coord;
-                return data;
+    float a = x2 - x1;
+    float o = y2 - y1;
+    float angle = atan2(-o, a);
+    targetdata data;
+    data.angle=angle;
+    data.position=converted_target_coord;
+    return data;
 }
 
 void Player::addPoints(int points)

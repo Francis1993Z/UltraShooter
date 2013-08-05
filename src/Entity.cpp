@@ -1,5 +1,6 @@
 #include "Entity.hpp"
 #include <iostream>
+#include "Engine.hpp"
 
 using namespace std;
 using namespace sf;
@@ -59,12 +60,17 @@ unsigned int Entity::getDamage() const
 
 targetdata Entity::getTarget() const
 {
-        cout<<"virtual getTarget"<<endl;
-            sf::Vector2f v2f(0.00f, 0.00f);
-                targetdata data;
-                data.angle=0.00f;
-                data.position=v2f;
-                return data;
+    cout<<"virtual getTarget"<<endl;
+    sf::Vector2f v2f(0.00f, 0.00f);
+    targetdata data;
+    data.angle=0.00f;
+    data.position=v2f;
+    return data;
+}
+
+Vector2i Entity::GetWindowPosition() const
+{
+    return Engine::getInstance()->getRenderWindow()->mapCoordsToPixel(Entity::getPosition(), Engine::getInstance()->getRenderWindow()->getView());
 }
 
 void Entity::update()

@@ -5,7 +5,7 @@
 #include <iostream>
 
 
-class Bullet : public sf::CircleShape, public Projectile
+class Bullet : public Projectile
 {
 
 public:

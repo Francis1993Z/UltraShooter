@@ -45,7 +45,7 @@ public:
     //! rmProjectile
     /// cherche un projectile avec l'aide de son adresse
     /// dans la list de projectile et l'enleve.
-    void rmProjectile(Projectile& p);
+    void rmProjectile(Projectile* p);
 
     void addObstacle(std::string obstacleTexturePath, int x, int y);
     void addWave(Wave w);
