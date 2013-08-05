@@ -21,8 +21,8 @@ void Laserbeam::UpdatePosition()
     targetdata t_data = m_user.getTarget();
     sf::Vector2i user_window_position = m_user.GetWindowPosition();
     sf::Vector2f target_position = t_data.position, user_position = m_user.getPosition();
-    cout<<"user position x : "<<user_position.x<<" y : "<<user_position.y<<endl;
-    cout<<"target position x : "<<target_position.x<<" y : "<<target_position.y<<endl;
+    //cout<<"user position x : "<<user_position.x<<" y : "<<user_position.y<<endl;
+    //cout<<"target position x : "<<target_position.x<<" y : "<<target_position.y<<endl;
 
     sf::Vector2f converted_user_position;
     converted_user_position.x = (float)user_window_position.x;
@@ -36,13 +36,18 @@ void Laserbeam::UpdatePosition()
     float a = x2 - x1;
     float o = y2 - y1;
     float angle = atan2(-o, a);
-    cout<<"angle : "<<-(angle*180/M_PI)<<endl;
+    //cout<<"angle : "<<-(angle*180/M_PI)<<endl;
     setPosition(user_position);
     setRotation(-(angle*180/M_PI)-90);
 }
 
+void Laserbeam::setm(Laserbeam*& my_m)
+{
+    m=&my_m;
+}
 
 Laserbeam::~Laserbeam()
 {
+*m=NULL;
 
 }
