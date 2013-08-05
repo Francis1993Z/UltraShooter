@@ -98,15 +98,18 @@ bool CollisionManager::Collision(Projectile& proj, list<Entity *>& EntityArray)
     collisiontype tmp_ctype=proj.getCollisionType();
     bool col;
     switch (tmp_ctype)
-    {
-    case POINT:
-        col = CollisionPoint(proj.getGlobalBounds(), proj.getTeam(), EntityArray);
-        break;
-
-    default:
-        break;
-    }
-return col;
+        {
+        case POINT:
+            col = CollisionPoint(proj.getGlobalBounds(), proj.getTeam(), EntityArray);
+            break;
+        case SEGMENT:
+            cout<<"SEGMENT"<<endl;
+            col=false;
+            break;
+        default:
+            break;
+        }
+    return col;
 }
 
 bool CollisionManager::CollisionPoint(FloatRect rect, TEAM projectile_team, list<Entity *>& EntityArray)

@@ -1,5 +1,5 @@
 #include "Map.hpp"
-
+#include <algorithm>
 #include <tinyxml.h>
 
 using namespace std;
@@ -149,17 +149,22 @@ void Map::addProjectile(Projectile* p)
     ProjectilesArray.push_back(p);
 }
 
-void Map::rmProjectile(Projectile& p)
+void Map::rmProjectile(Projectile* p)
 {
-       for(list<Projectile *>::iterator it = ProjectilesArray.begin(); it != ProjectilesArray.end(); ++it)
-       {
-           if ((*it)==&p)
-           {
-                 delete *it;
-            ProjectilesArray.erase(it);
-           }
+    cout<<"projectile to remove : "<<p<<endl;
+    // std::list<Projectile *>::iterator findIter = std::find(ProjectilesArray.begin(), ProjectilesArray.end(), p);
 
-       }
+    //delete *findIter;
+    //ProjectilesArray.erase(findIter);
+    for(list<Projectile *>::iterator it = ProjectilesArray.begin(); it != ProjectilesArray.end(); ++it)
+        {
+            if ((*it)==p)
+                {
+                    delete *it;
+                    ProjectilesArray.erase(it);
+                }
+
+        }
 }
 
 void Map::addObstacle(std::string obstacleTexturePath, int x, int y)
@@ -208,17 +213,17 @@ void Map::update(RenderWindow* game)
         {
             (*it)->UpdatePosition();
 
-            if(collisionManager.CheckIfOutOfWindow((*it)->getPosition().x, (*it)->getPosition().y, 0.0f))
-            {
-                delete *it;
-                it = ProjectilesArray.erase(it);
-            }
+            if(collisionManager.CheckIfOutOfWindow((*it)->getPosition().x, (*it)->getPosition().y, 0))
+                {
+                    delete *it;
+                    it = ProjectilesArray.erase(it);
+                }
 
             else if(collisionManager.CollisionObstacles((*it)->getGlobalBounds()))
-            {
-                delete *it;
-                 it = ProjectilesArray.erase(it);
-            }
+                {
+                    delete *it;
+                    it = ProjectilesArray.erase(it);
+                }
 
             else if(collisionManager.Collision(*(*it), EntityArray))
                 {

@@ -27,8 +27,6 @@ public:
 
     Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f tailleFenetre, TEAM team);
 
-    sf::Vector2i GetWindowPosition(sf::RenderWindow &theRenderWindow) const;
-
     sf::Text getLifeHud();
     sf::Text getScoreHud();
 

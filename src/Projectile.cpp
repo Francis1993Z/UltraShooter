@@ -24,7 +24,7 @@ TEAM Projectile::getTeam() const
     return my_team;
 }
 
-    Projectile::~Projectile()
-    {
+Projectile::~Projectile()
+{
 
-    }
+}

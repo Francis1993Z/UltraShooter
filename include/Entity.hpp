@@ -8,6 +8,7 @@
 
 #include "GlobalFunctions.h"
 
+
 class Entity : public sf::RectangleShape
 {
 
@@ -34,6 +35,7 @@ public:
     unsigned int getDamage() const;
     virtual unsigned int die() const;
     virtual void update();
+    sf::Vector2i GetWindowPosition() const;
     virtual targetdata getTarget() const;
     TEAM my_team;
 

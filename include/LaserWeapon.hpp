@@ -6,7 +6,7 @@
 
 class LaserWeapon : public Weapon
 {
-Laserbeam* my_laserbeam;
+    Laserbeam* my_laserbeam;
 public:
     LaserWeapon(Entity const& my_user);
     void fire();
