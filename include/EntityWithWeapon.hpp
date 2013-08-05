@@ -6,6 +6,7 @@
 #include "Weapon.hpp"
 #include "AutomaticWeapon.hpp"
 #include "ShrapnelWeapon.hpp"
+#include "LaserWeapon.hpp"
 
 class EntityWithWeapon
 {

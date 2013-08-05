@@ -14,7 +14,8 @@ public:
     bool CollisionJoueur(float x, float y);
     bool CollisionObstacles(sf::FloatRect rect);
     bool CollisionObstacles(int x, int y);
-    bool CollisionEnnemy(sf::FloatRect rect, TEAM projectile_team, std::list<Entity *>& EntityArray);
+    bool Collision(Projectile& proj, std::list<Entity *>& EntityArray);
+    bool CollisionPoint(sf::FloatRect rect, TEAM projectile_team, std::list<Entity *>& EntityArray);
     bool CheckIfOutOfWindow(float pos_x, float pos_y, float rayon);
     bool CollisionContreJoueur(sf::FloatRect rect);
 

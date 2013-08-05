@@ -75,26 +75,26 @@ Engine* Engine::getInstance()
 
 
 
-       string file_d = getCWD()+"/config/videomode.txt";
-    ofstream videomode(file_d.c_str(), ios::out | ios::trunc);  //déclaration du flux et ouverture du fichier
+            string file_d = getCWD()+"/config/videomode.txt";
+            ofstream videomode(file_d.c_str(), ios::out | ios::trunc);  //déclaration du flux et ouverture du fichier
 
-    if(videomode)  // si l'ouverture a réussi
-        {
-            // instructions
-            vector<sf::VideoMode>VideoModesCount = sf::VideoMode::getFullscreenModes();
-            for (vector<sf::VideoMode>::iterator i = VideoModesCount.begin(); i != VideoModesCount.end(); ++i)
+            if(videomode)  // si l'ouverture a réussi
                 {
-                    if ((*i).isValid())
+                    // instructions
+                    vector<sf::VideoMode>VideoModesCount = sf::VideoMode::getFullscreenModes();
+                    for (vector<sf::VideoMode>::iterator i = VideoModesCount.begin(); i != VideoModesCount.end(); ++i)
                         {
-                            videomode<< "Mode " << (*i).width << "x" << (*i).height << "-" << (*i).bitsPerPixel << " is valid" << std::endl;
+                            if ((*i).isValid())
+                                {
+                                    videomode<< "Mode " << (*i).width << "x" << (*i).height << "-" << (*i).bitsPerPixel << " is valid" << std::endl;
+                                }
+                            // Mode is a valid video mode
                         }
-                    // Mode is a valid video mode
+                    videomode<<"Game VideoMode : "<<init_width<<"x"<<init_height<< "-" << init_bitmode<<endl;
+                    videomode.close();  // on referme le fichier
                 }
-                videomode<<"Game VideoMode : "<<init_width<<"x"<<init_height<< "-" << init_bitmode<<endl;
-            videomode.close();  // on referme le fichier
-        }
-    else  // sinon
-        cerr << "Erreur à l'ouverture !" << endl;
+            else  // sinon
+                cerr << "Erreur à l'ouverture !" << endl;
 
             /***********************************************************************************************/
 
@@ -153,7 +153,7 @@ int Engine::Run()
     //MainView.setSize(1024, 768);
     events = new Events();
     player = new Player(sf::Vector2f(200.f, 200.f), *(loadFiles->getPoliceArial()), MainView.getSize(), TEAM1);
-    //cout<<"engine player : "<<player<<endl;
+    cout<<"engine player : "<<player<<endl;
     collisionManager = new CollisionManager(*player, *gameMap);
     menu = new Menu(screen_size);
     menu->afficher();
@@ -345,7 +345,7 @@ void Engine::gestionEvenements()
                     widgetManager.positionClicSouris(localMousePosition.x, localMousePosition.y);
                 }
         }
-        else if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    else if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
             player->stopMLAction();
         }
@@ -389,25 +389,25 @@ void Engine::updateView()
 
     Vector2i object_pixel_position=Game->mapCoordsToPixel(player->getPosition(), MainView);
 
-    if(object_pixel_position.x < 300)
+    if(object_pixel_position.x < 630)
         {
             MainView.move(-player->getSpeed(), 0.f);
             player->move_myhud(-player->getSpeed(), 0.f);//On met à jour la position de la HUD
             Game->setView(MainView);
         }
-    if((unsigned)object_pixel_position.x > Game->getSize().x-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
+    if((unsigned)object_pixel_position.x > Game->getSize().x-630)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
         {
             MainView.move(player->getSpeed(), 0.f);
             player->move_myhud(player->getSpeed(), 0.f);
             Game->setView(MainView);
         }
-    if(object_pixel_position.y < 300)
+    if(object_pixel_position.y < 350)
         {
             MainView.move(0.f, -player->getSpeed());
             player->move_myhud(0.f, -player->getSpeed());
             Game->setView(MainView);
         }
-    if((unsigned)object_pixel_position.y > Game->getSize().y-300)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
+    if((unsigned)object_pixel_position.y > Game->getSize().y-350)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
         {
             MainView.move(0.f, player->getSpeed());
             player->move_myhud(0.f, player->getSpeed());
