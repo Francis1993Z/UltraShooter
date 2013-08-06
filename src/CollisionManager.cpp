@@ -64,10 +64,10 @@ inline float GetAngle(Vector2f vec1, Vector2f vec2)
     else return true;
 }
 
-inline bool CollisionSeg(Vector2f A, Vector2f B, cercle C)
+ bool CollisionSeg(Vector2f A, Vector2f B, cercle C)
 {
    if (CollisionDroite(A,B,C) == false)
-     return false;  // si on ne touche pas la droite, on ne touchera jamais le segment
+return false;  // si on ne touche pas la droite, on ne touchera jamais le segment
    Vector2f AB,AC,BC;
    AB.x = B.x - A.x;
    AB.y = B.y - A.y;
@@ -79,12 +79,12 @@ inline bool CollisionSeg(Vector2f A, Vector2f B, cercle C)
    float pscal2 = (-AB.x)*BC.x + (-AB.y)*BC.y;  // produit scalaire
    if (pscal1>=0 && pscal2>=0)
       return true;   // I entre A et B, ok.
-   // dernière possibilité, A ou B dans le cercle
+    //dernière possibilité, A ou B dans le cercle
    if (CollisionPointCercle(A,C))
      return true;
-   if (CollisionPointCercle(B,C))
-     return true;
-   return false;
+  if (CollisionPointCercle(B,C))
+    return true;
+    return false;
 }
 
 inline Vector2f ProjectionI(Vector2f A, Vector2f B, Vector2f C)
@@ -170,7 +170,7 @@ bool CollisionManager::CollisionObstaclesPoint(int x, int y)
 bool CollisionManager::Collision(Projectile& proj, list<Entity *>& EntityArray)
 {
     collisiontype tmp_ctype=proj.getCollisionType();
-    bool col;
+    bool col=false;
     switch (tmp_ctype)
         {
         case POINT:
@@ -190,7 +190,7 @@ bool CollisionManager::CollisionObstacles(Projectile& proj)
 {
 
     collisiontype tmp_ctype=proj.getCollisionType();
-    bool col;
+    bool col=false;
     switch (tmp_ctype)
         {
         case POINT:
@@ -244,7 +244,7 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
                 {
 
 
-            Vector2f A_droite = seg.getPosition(), B_droite;
+            Vector2f B_droite;
             B_droite.y = (cos((seg.getRotation()*M_PI/180)) * seg.getSize().y)+seg.getPosition().x;
             B_droite.x = -(sin((seg.getRotation()*M_PI/180)) * seg.getSize().y)+seg.getPosition().y;
             //cout<<"B_droite.x : "<<B_droite.x<<" B_droite.y : "<<B_droite.y<<endl;
@@ -254,14 +254,14 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
             e_cer.x = ennemy_position.x;
             e_cer.y = ennemy_position.y;
             e_cer.radius = ennemy_dradius;
-            if (CollisionDroite(A_droite, B_droite, e_cer))
-            {
+            //if (CollisionDroite(seg.getPosition(), B_droite, e_cer))
+
                 //cout<<"droite true"<<endl;
-                if (CollisionSeg(A_droite, B_droite, e_cer))
+                if (CollisionSeg(seg.getPosition(), B_droite, e_cer))
                 {
                             collision = true;
                             adresseEntityTouche = &*(*it);
-                            seg.setI(ProjectionI(A_droite, B_droite, ennemy_position));
+                            seg.setI(ProjectionI(seg.getPosition(), B_droite, ennemy_position));
                         float new_seg_d = Distance(seg.getPosition(), seg.getI());
                         seg.setSize(sf::Vector2f(seg.getSize().x, new_seg_d));
                 }
@@ -269,7 +269,7 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
             {
                 seg.setSize(sf::Vector2f(seg.getSize().x, 6000.00f));
             }
-            }
+
 
 
         }
