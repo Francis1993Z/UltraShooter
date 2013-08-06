@@ -78,7 +78,11 @@ return false;  // si on ne touche pas la droite, on ne touchera jamais le segmen
    float pscal1 = AB.x*AC.x + AB.y*AC.y;  // produit scalaire
    float pscal2 = (-AB.x)*BC.x + (-AB.y)*BC.y;  // produit scalaire
    if (pscal1>=0 && pscal2>=0)
-      return true;   // I entre A et B, ok.
+   {
+       cout<<"true"<<endl;
+       return true;   // I entre A et B, ok.
+   }
+
     //dernière possibilité, A ou B dans le cercle
    if (CollisionPointCercle(A,C))
      return true;
@@ -235,9 +239,9 @@ bool CollisionManager::CollisionPoint(FloatRect rect, TEAM projectile_team, list
 bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityArray)
 {
           collision = false;
+
     for(list<Entity *>::const_iterator it = EntityArray.begin(); it != EntityArray.end(); ++it)
         {
-
             TEAM tmpProjectileteam=seg.getTeam();
             TEAM tmpEntityteam=(*it)->getTeam();
             if((tmpProjectileteam & tmpEntityteam) == NO_TEAMS)
@@ -264,6 +268,8 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
                             seg.setI(ProjectionI(seg.getPosition(), B_droite, ennemy_position));
                         float new_seg_d = Distance(seg.getPosition(), seg.getI());
                         seg.setSize(sf::Vector2f(seg.getSize().x, new_seg_d));
+                           //return collision;
+
                 }
                             else
             {
@@ -273,6 +279,7 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
 
 
         }
+
         }
 
     return collision;

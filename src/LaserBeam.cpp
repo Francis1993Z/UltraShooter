@@ -13,6 +13,7 @@ Laserbeam::Laserbeam(sf::Vector2f init_position, Entity const& user, TEAM team) 
     setFillColor(sf::Color::Blue);
     my_collisiontype=SEGMENT;
     my_team=team;
+    damage=1;
 }
 
 

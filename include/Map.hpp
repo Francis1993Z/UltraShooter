@@ -26,7 +26,7 @@ class Map
 
     Entity* EntityTouche;
     Player* localplayer;
-
+int tick;
     bool gameOver;
 
 public:
