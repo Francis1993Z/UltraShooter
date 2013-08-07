@@ -28,7 +28,6 @@ inline float GetAngle(sf::Vector2f vec1, sf::Vector2f vec2)
 
 Map::Map(string mapPath)
 {
-    tick=0;
     gameOver = false;
     ennemies_left=0;
     string backgroundPath;
@@ -194,7 +193,6 @@ void Map::drawObstacles(RenderWindow* window) const
 
 void Map::update(RenderWindow* game)
 {
-    //cout<<"map tick : "<<tick<<endl;
     CollisionManager& collisionManager = *Engine::getInstance()->getCollisionManager();
 
     list<Projectile *>::iterator it = ProjectilesArray.begin();
@@ -220,12 +218,13 @@ void Map::update(RenderWindow* game)
                 {
                     EntityTouche = collisionManager.getAdresseEntityTouche();
                     EntityTouche->subirDegats((*it)->getDamage());
-if ((*it)->getCollisionType()==POINT)
-{
-                        delete *it;
-                    it = ProjectilesArray.erase(it);
-}
-it++;
+                    if ((*it)->getCollisionType()==POINT)
+                        {
+                            delete *it;
+                            it = ProjectilesArray.erase(it);
+
+                        }
+                    it++;
                 }
             else
                 ++it;
@@ -278,14 +277,15 @@ it++;
         }
 
     if(!localplayer->alive()) gameOver = true;
-
+    game->draw(background);
     for(it = ProjectilesArray.begin(); it != ProjectilesArray.end(); ++it)
         game->draw(*(*it));
 
 
     for(itEnnemy = EntityArray.begin(); itEnnemy != EntityArray.end(); ++itEnnemy)
         game->draw(*(*itEnnemy));
-tick++;
+
+
 }
 
 Sprite Map::getBackground() const

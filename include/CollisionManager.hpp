@@ -3,6 +3,8 @@
 
 #include "Map.hpp"
 
+typedef std::list< std::pair<Entity*, float> > lp;
+
 class Map;
 
 class CollisionManager

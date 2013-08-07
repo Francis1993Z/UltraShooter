@@ -195,7 +195,6 @@ int Engine::Run()
                         {
 
                             widgetManager.setPause(true);
-
                             updateView(); //Mets à jour la position de la caméra.
                             Game->clear(Color(0,0,0));
                             drawGame(); //Dessine tous les composants du jeu lors d'une partie.
