@@ -167,7 +167,7 @@ int Engine::Run()
     Game->setView(MainView);
 
     mManager.playTheme(gameMap->getTheme());
-    mManager.setVolume(100);
+    mManager.setVolume(0);
     sf::Clock ennemy_clock;
 
     gameMap->loadNextWave();

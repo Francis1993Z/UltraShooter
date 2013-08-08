@@ -5,6 +5,11 @@
 
 class Map
 {
+    /// Toujours faire un delete!
+    /// Sinon dans le cas des laserbeam ça fait
+    /// une erreur de segmentation.
+    /// Le delete appele le destructeur et certain destructeur
+    /// sont très spécifique.
     std::list<Projectile *> ProjectilesArray;
     std::list<Entity *> EntityArray;
 

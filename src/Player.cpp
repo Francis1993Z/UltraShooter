@@ -34,7 +34,7 @@ void Player::Shoot()
     my_weapon.at(actual_weapon)->fire();
 }
 
-void Player::stopMLAction()
+void Player::stopMLAction()//On stop l'action lié à MouseLeft.
 {
     if(my_weapon.at(actual_weapon)->isUpdatable())
         {

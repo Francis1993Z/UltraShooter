@@ -53,7 +53,7 @@ bool CollisionDroite(Vector2f A, Vector2f B, cercle C)
         return false;
 }
 
-bool CollisionPointCercle(Vector2f A, cercle C)
+inline bool CollisionPointCercle(Vector2f A, cercle C)
 {
     Vector2f c_p;
     c_p.x = C.x;
@@ -201,7 +201,6 @@ bool CollisionManager::CollisionObstacles(Projectile& proj)
             col = CollisionObstaclesPoint(proj.getGlobalBounds());
             break;
         case SEGMENT:
-            //cout<<"SEGMENT"<<endl;
             col=false;
             break;
         default:
@@ -245,15 +244,12 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
         {
             TEAM tmpProjectileteam=seg.getTeam();
             TEAM tmpEntityteam=(*it)->getTeam();
-            if((tmpProjectileteam & tmpEntityteam) == NO_TEAMS)
+            if((tmpProjectileteam & tmpEntityteam) == NO_TEAMS)//On vérifie si c'est un ennemi.
                 {
-
-
                     Vector2f B_droite;
-                    B_droite.y = (cos((seg.getRotation()*M_PI/180)) * 6000.00f)+seg.getPosition().x;
-                    B_droite.x = -(sin((seg.getRotation()*M_PI/180)) * 6000.00f)+seg.getPosition().y;
+                    B_droite.y = (cos((seg.getRotation()*M_PI/180)) * 6000.00f)+seg.getPosition().y;
+                    B_droite.x = -(sin((seg.getRotation()*M_PI/180)) * 6000.00f)+seg.getPosition().x;
                     BB_droite=B_droite;
-                    //cout<<"B_droite.x : "<<B_droite.x<<" B_droite.y : "<<B_droite.y<<endl;
                     Vector2f ennemy_position = (*it)->getPosition();
                     float ennemy_dradius = (*it)->get_dRadius();
                     cercle e_cer;
@@ -267,12 +263,9 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
                             l.push_back(make_pair(*it, Distance(seg.getPosition(), (*it)->getPosition())));
 
                         }
-
-
                 }
-
         }
-
+///On choisi la cible la plus près
     float min_distance=FLT_MAX;
     for(lp::iterator it = l.begin(); it != l.end(); ++it)
         {
@@ -283,16 +276,16 @@ bool CollisionManager::CollisionSegment(Projectile& seg, list<Entity *>& EntityA
                 }
         }
 
-    if(collision)
+    if(collision)//On change la taille du laser
         {
-            seg.setI(ProjectionI(seg.getPosition(), BB_droite, adresseEntityTouche->getPosition()));
+            seg.setI(ProjectionI(seg.getPosition(), BB_droite, adresseEntityTouche->getPosition()));//on détermine le point d'impact
             float new_seg_d = Distance(seg.getPosition(), seg.getI());
             seg.setSize(sf::Vector2f(seg.getSize().x, new_seg_d));
 
         }
     else
         {
-            seg.setSize(sf::Vector2f(seg.getSize().x, 6000.00f));
+            seg.setSize(sf::Vector2f(seg.getSize().x, 6000.00f));//s'il n'y a pas de collision, on s'assure que la laser ait sa taille normale
         }
 
 

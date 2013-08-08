@@ -30,6 +30,9 @@ public:
     sf::Text getLifeHud();
     sf::Text getScoreHud();
 
+//!
+/// stopMLAction(0 permet de réagire à des évènement.
+/// Il peut être utile pour toute sorte d'actions.
     void stopMLAction();
 
     unsigned long getScore();
