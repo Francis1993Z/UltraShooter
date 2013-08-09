@@ -27,7 +27,8 @@ Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target, TEAM team)
     m_fx=0.00f;
     m_fy=0.00f;
     d_radius = 25/2;
-    my_behaviour = ATTACK;
+    //my_behaviour = ATTACK;
+    my_behaviour = STANDBY;
     //cout << "New Zombie at : " << this << endl;
 }
 

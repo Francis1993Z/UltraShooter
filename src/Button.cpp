@@ -3,31 +3,32 @@
 
 #include <iostream>
 
-Button::Button(int p_posX, int p_posY, std::string p_text, int p_id)
+using namespace std;
+
+Button::Button(sf::Vector2i p_pos, std::string p_text, int p_id)
 {
     survol = false;
     id = p_id;
 
     sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgButton()));
-    sprite.setPosition(p_posX, p_posY);
+sf::Vector2f converted_boutton_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(p_pos, Engine::getInstance()->getRenderWindow()->getView());
+    sprite.setPosition(converted_boutton_coord);
     sprite.scale(sf::Vector2f(0.1f, 0.1f));
     text.setString(p_text);
     text.setFont(*(Engine::getInstance()->getLoadFiles()->getPoliceArial()));
     text.setCharacterSize(20);
     text.setColor(sf::Color::Red);
-    text.setPosition(p_posX+(sprite.getGlobalBounds().width/2)-(text.getGlobalBounds().width/2), p_posY+(sprite.getGlobalBounds().height/2)-(text.getGlobalBounds().height/2));
+    text.setPosition(converted_boutton_coord.x+(sprite.getGlobalBounds().width/2)-(text.getGlobalBounds().width/2), converted_boutton_coord.y+(sprite.getGlobalBounds().height/2)-(text.getGlobalBounds().height/2));
 }
 
 void Button::draw()
 {
-
     Engine::getInstance()->getRenderWindow()->draw(sprite);
     Engine::getInstance()->getRenderWindow()->draw(text);
 }
 
 sf::FloatRect Button::getCollisionBox() const
 {
-
     return sprite.getGlobalBounds();
 }
 

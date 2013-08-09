@@ -62,7 +62,8 @@ void GameEnded::setActif(bool p_actif, bool gameOver)
 
             champsPseudo = new TextField(fond.getPosition().x+messageInformatif.getGlobalBounds().width+20, fond.getPosition().y+150, 1);
             addWidget(champsPseudo);
-            addWidget(new Button(fond.getPosition().x+(fond.getSize().x/2), fond.getPosition().y+200, "Ok", 0));
+            sf::Vector2i pos = Engine::getInstance()->getScreenSize2i();
+            addWidget(new Button(pos, "Ok", 0));
 
             if(gameOver)
                 {

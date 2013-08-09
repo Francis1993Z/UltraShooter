@@ -2,10 +2,9 @@
 #define PLAYER_HPP_INCLUDED
 
 #include "GlobalFunctions.h"
-#include "Hud.hpp"
-
 #include "Entity.hpp"
 #include "EntityWithWeapon.hpp"
+#include "Hud.hpp"
 
 class Player : public Entity, public EntityWithWeapon
 {
@@ -16,7 +15,7 @@ class Player : public Entity, public EntityWithWeapon
 
     unsigned long Score;
 
-    Hud hud;
+
     bool firing;
     sf::FloatRect rect;
     sf::Clock weapon_clock;
@@ -25,20 +24,19 @@ class Player : public Entity, public EntityWithWeapon
 
 public:
 
-    Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f tailleFenetre, TEAM team);
-
-    sf::Text getLifeHud();
-    sf::Text getScoreHud();
+    Player(sf::Vector2f init_position, TEAM team);
+    Hud *my_hud;
+    void setHud(Hud& new_hud);
 
 //!
 /// stopMLAction(0 permet de réagire à des évènement.
 /// Il peut être utile pour toute sorte d'actions.
     void stopMLAction();
-
+    void update();
     unsigned long getScore();
     targetdata getTarget() const;
     void move_myhud(float vx, float vy);
-    void setSizeWindowHud(sf::Vector2f sizeWindow);
+    //void setSizeWindowHud(sf::Vector2f sizeWindow);
     void addPoints(int p);
     float getRayon();
     void modifierVie(int pv);

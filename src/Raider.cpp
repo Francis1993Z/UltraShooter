@@ -25,7 +25,8 @@ Raider::Raider(sf::Vector2f init_Position, Player& init_Target, TEAM team) : Enn
     m_fx=0.00f;
     m_fy=0.00f;
     d_radius = 25;
-    my_behaviour = ATTACK;
+    //my_behaviour = ATTACK;
+    my_behaviour = STANDBY;
     actual_weapon=0;
     my_weapon.push_back(new AutomaticWeapon(*this));
 }
@@ -35,17 +36,11 @@ void Raider::update()
     if(my_behaviour == ATTACK)
         {
 
-
-
-
-
             float mvx;
             float mvy;
 
-
             Vector2f Myposition = getPosition(), Targetposition = my_target->getPosition();
             //float TargetDirection = GetAngle(Myposition.x, Myposition.y, Targetposition.x, Targetposition.y); référence indéfinie vers GetAngle() je ne comprends pas pourquoi
-
 
             float TCoteopposer=Targetposition.y-Myposition.y;
             float TCoteadjacent=Targetposition.x-Myposition.x;

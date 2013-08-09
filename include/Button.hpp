@@ -12,7 +12,7 @@
 class Button : public Widget
 {
 public:
-    Button(int p_posX, int p_posY, std::string p_text, int p_id);
+    Button(sf::Vector2i p_pos, std::string p_text, int p_id);
     void draw();
     sf::FloatRect getCollisionBox() const;
     void setSurvolSouris(bool p_survol);

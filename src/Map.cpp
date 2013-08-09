@@ -229,7 +229,7 @@ void Map::update(RenderWindow* game)
             else
                 ++it;
         }
-
+localplayer->update();
     Engine::getInstance()->getCollisionManager()->update_repulsion(EntityArray);
 
 

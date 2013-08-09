@@ -11,11 +11,14 @@ using namespace sf;
 Menu::Menu(sf::Vector2u sizeWindow)
 {
     options = false;
+    sf::Vector2f converted_sprite_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i(0, 0));
+    sprite.setPosition(converted_sprite_coord);
     sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgBackgroundMenu()));
     sprite.scale(sf::Vector2f(sizeWindow.x/((float)sprite.getTexture()->getSize().x), sizeWindow.y/((float)sprite.getTexture()->getSize().y)));
-    addWidget(new Button(0, 0, "Jouer", 0));
-    addWidget(new Button(0, 50, "Scores", 1));
-    addWidget(new Button(0, 100, "Quitter", 2));
+
+    addWidget(new Button(sf::Vector2i(0, 0), "Jouer", 0));
+    addWidget(new Button(sf::Vector2i(0, 50), "Scores", 1));
+    addWidget(new Button(sf::Vector2i(0, 100), "Quitter", 2));
 }
 
 void Menu::draw()

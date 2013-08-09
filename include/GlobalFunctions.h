@@ -30,6 +30,23 @@ enum TEAM
     ALL_TEAMS = TEAM1 | TEAM2
 };
 
+enum DIRECTION
+{
+    LEFT = 0x0001,
+    RIGHT = 0x0002,
+    UP = 0x0004,
+    DOWN = 0x0008,
+
+    OFF = 0,
+    NO_DIRECTION = 0,
+
+    UP_AND_LEFT = UP | LEFT,
+    UP_AND_RIGHT = UP | RIGHT,
+    DOWN_AND_LEFT = DOWN | LEFT,
+    DOWN_AND_RIGHT = DOWN | RIGHT
+
+};
+
 struct targetdata
 {
     sf::Vector2f position;

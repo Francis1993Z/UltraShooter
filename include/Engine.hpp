@@ -11,9 +11,10 @@
 #include <map>
 
 
-#include "Ennemy.hpp"
-#include "Splitter.hpp"
+#include "Ennemy.hpp"//include Player
+#include "Splitter.hpp"//inclue zombi
 #include "Raider.hpp"
+
 #include "Obstacle.hpp"
 #include "Wave.hpp"
 #include "EnnemyFactory.hpp"
@@ -58,13 +59,14 @@ public:
     Menu* getMenu() const;
 
     bool loadNextMap();
-
+    void updateView(float x, float y);
+    sf::Vector2i getScreenSize2i() const;
 private:
 
     MusicManager mManager;
 
     Engine(sf::VideoMode mode, bool fullscreen); // Le constructeur est privé car on ne doit pas pouvoir construire la classe sans passer par la méthode getInstance().
-    void updateView();
+
     void drawGame();
     void drawMenu();
     void lookIfGameOver();
@@ -73,6 +75,8 @@ private:
     void screenshot();
 
     int mapNumber;
+
+    Hud *localplayer_hud;
 
     bool fenetreFinJeu;
     bool IsRunning;
@@ -87,7 +91,7 @@ private:
     LoadFiles* loadFiles;
     WidgetManager widgetManager;
     Events* events;
-
+   sf::Vector2i screen_size2i;
     sf::Vector2i localMousePosition;
     sf::Event WindowEvent;
     sf::RenderWindow* Game;
