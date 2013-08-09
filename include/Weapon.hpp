@@ -11,6 +11,7 @@ public:
     virtual void fire();//feu
     virtual void fire(sf::Vector2f target_position);//feu avec position de la cible
     virtual void refresh();//mise a jour
+    virtual void update();
     bool isUpdatable() const;//permert de savoir si l'arme soit etre mise a jour
     virtual ~Weapon();
 protected:

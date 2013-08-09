@@ -1,17 +1,25 @@
 #include "Hud.hpp"
-#include "iostream"
+#include "Engine.hpp"
 
 using namespace std;
 using namespace sf;
 
-Hud::Hud(unsigned short life, unsigned int score, sf::Font p_font, Vector2f p_sizeWindow):font(p_font), sizeWindow(p_sizeWindow)
+Hud::Hud(long life, unsigned long score, Player& m_player)
 {
-    updateLife(life);
+
+my_player=&m_player;
+    font = *Engine::getInstance()->getLoadFiles()->getPoliceArial();
+    sf::Vector2u screensize = Engine::getInstance()->getRenderWindow()->getSize();
+    sizeWindow.x = (float)screensize.x;
+
+    sizeWindow.y = (float)screensize.y;
+
+            updateLife(life);
     updateScore(score);
-    setPositionHud();
+           setPositionHud();
 }
 
-void Hud::updateLife(unsigned short n_Life)
+void Hud::updateLife(long n_Life)
 {
     ss.str("");
     ss << n_Life;
@@ -21,7 +29,7 @@ void Hud::updateLife(unsigned short n_Life)
     t_life.setColor(sf::Color::Red);
 }
 
-void Hud::updateScore(unsigned int n_Score)
+void Hud::updateScore(unsigned long n_Score)
 {
     ss.str("");
     ss << n_Score;
@@ -33,15 +41,24 @@ void Hud::updateScore(unsigned int n_Score)
 
 void Hud::setSizeWindow(sf::Vector2f n_sizeWindow)
 {
-
-    sizeWindow = n_sizeWindow;
+    sf::Vector2u screensize = Engine::getInstance()->getRenderWindow()->getSize();
+    sizeWindow.x = (float)screensize.x;
+    sizeWindow.y = (float)screensize.y;
     setPositionHud();
 }
 
 void Hud::setPositionHud()
 {
-    t_score.setPosition(0,0);
-    t_life.setPosition(sizeWindow.x-t_life.getGlobalBounds().width, 0);
+    sf::Vector2f converted_Hud_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i(0, 0), Engine::getInstance()->getRenderWindow()->getView());
+    t_score.setPosition(converted_Hud_coord);
+    sf::Vector2f converted_Hud_coord2 = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i((sizeWindow.x-t_life.getGlobalBounds().width), 0), Engine::getInstance()->getRenderWindow()->getView());
+    t_life.setPosition(converted_Hud_coord2.x, converted_Hud_coord2.y);
+}
+
+void Hud::Update()
+{
+    updateLife(my_player->getVie());
+    updateScore(my_player->getScore());
 }
 
 void Hud::Move(float vx, float vy)

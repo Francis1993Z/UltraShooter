@@ -8,14 +8,27 @@
 using namespace std;
 using namespace sf;
 
-Menu::Menu(sf::Vector2u sizeWindow)
+Menu::Menu(sf::Vector2u sizeWindow, View menu_view)
 {
     options = false;
+    sf::Vector2f converted_sprite_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i(0, 0), menu_view);
+    sprite.setPosition(converted_sprite_coord);
     sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgBackgroundMenu()));
     sprite.scale(sf::Vector2f(sizeWindow.x/((float)sprite.getTexture()->getSize().x), sizeWindow.y/((float)sprite.getTexture()->getSize().y)));
-    addWidget(new Button(0, 0, "Jouer", 0));
-    addWidget(new Button(0, 50, "Scores", 1));
-    addWidget(new Button(0, 100, "Quitter", 2));
+
+    play = new Button(sf::Vector2i(0, 0), "Play", 0);
+    scores = new Button(sf::Vector2i(0, 50), "High Scores", 1);
+    quit = new Button(sf::Vector2i(0, 100), "Quit", 2);
+
+    play->addLanguage(Fr, "Jouer");
+    scores->addLanguage(Fr, "Meilleurs Scores");
+    quit->addLanguage(Fr, "Quitter");
+
+    addWidget(play);
+    addWidget(scores);
+    addWidget(quit);
+    addWidget(new Button(sf::Vector2i(0, 200), "English", 3));
+    addWidget(new Button(sf::Vector2i(0, 250), "Français", 4));
 }
 
 void Menu::draw()
@@ -48,6 +61,7 @@ void Menu::action(int idWidgetClique)
 
         case 0:
             actif = false;
+            Engine::getInstance()->SwitchView();
             break;
         case 1:
             options = true;
@@ -55,6 +69,16 @@ void Menu::action(int idWidgetClique)
             break;
         case 2:
             Engine::getInstance()->leaveGame("Quitter Menu");
+            break;
+        case 3:
+            play->setCurrentLanguage(En);
+            scores->setCurrentLanguage(En);
+            quit->setCurrentLanguage(En);
+            break;
+        case 4:
+            play->setCurrentLanguage(Fr);
+            scores->setCurrentLanguage(Fr);
+            quit->setCurrentLanguage(Fr);
             break;
         default:
             errorId(idWidgetClique);

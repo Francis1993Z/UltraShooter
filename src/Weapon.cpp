@@ -18,6 +18,11 @@ void Weapon::refresh()
 
 }
 
+void Weapon::update()
+{
+
+}
+
 bool Weapon::isUpdatable() const
 {
     return needRefresh;

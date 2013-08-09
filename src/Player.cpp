@@ -7,7 +7,7 @@ using namespace sf;
 
 
 
-Player::Player(sf::Vector2f init_position, sf::Font font, sf::Vector2f sizeWindow, TEAM team): Entity(10000, team), Score(0), hud(vie, Score, font, sizeWindow)
+Player::Player(sf::Vector2f init_position, TEAM team): Entity(1000, team), Score(0)
 {
     e_m = 15.00f;//vitesse
     e_mx = e_m;
@@ -34,6 +34,14 @@ void Player::Shoot()
     my_weapon.at(actual_weapon)->fire();
 }
 
+void Player::update()
+{
+    if(my_weapon.at(actual_weapon)->isUpdatable())
+        {
+            my_weapon.at(actual_weapon)->update();
+        }
+}
+
 void Player::stopMLAction()//On stop l'action lié à MouseLeft.
 {
     if(my_weapon.at(actual_weapon)->isUpdatable())
@@ -42,7 +50,7 @@ void Player::stopMLAction()//On stop l'action lié à MouseLeft.
         }
 }
 
-
+/*
 Text Player::getLifeHud()
 {
     return hud.getLife();
@@ -52,16 +60,18 @@ Text Player::getScoreHud()
 {
     return hud.getScore();
 }
+*/
+
 
 void Player::move_myhud(float vx, float vy)
 {
-    hud.Move(vx, vy);
+    my_hud->Move(vx, vy);
 }
-
+/*
 void Player::setSizeWindowHud(Vector2f sizeWindow)
 {
     hud.setSizeWindow(sizeWindow);
-}
+}*/
 
 float Player::getRayon()
 {
@@ -102,17 +112,22 @@ targetdata Player::getTarget() const
     return data;
 }
 
+    void Player::setHud(Hud& new_hud)
+    {
+        my_hud=&new_hud;
+    }
+
 void Player::addPoints(int points)
 {
     Score+=points;
 
-    hud.updateScore(Score);
+    //hud.updateScore(Score);
 }
 
 void Player::modifierVie(int pv)//fonction Entity::modifierVie() masquée
 {
     vie+=pv;
-    hud.updateLife(vie);
+    //hud.updateLife(vie);
 }
 
 unsigned long Player::getScore()

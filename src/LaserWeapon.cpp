@@ -35,6 +35,15 @@ void LaserWeapon::refresh()
 
 }
 
+void LaserWeapon::update()
+{
+
+                 if(my_laserbeam!=NULL)
+        {
+            Engine::getInstance()->getMusicManager()->playEvent("ressources/sounds/events/laserbeam1.flac");
+        }
+}
+
 void LaserWeapon::stopLaserBeam()
 {
     Engine::getInstance()->getMap()->rmProjectile(my_laserbeam);

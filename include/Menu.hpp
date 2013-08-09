@@ -13,7 +13,7 @@
 class Menu : public WidgetListener
 {
 public:
-    Menu(sf::Vector2u sizeWindow);
+    Menu(sf::Vector2u sizeWindow, sf::View menu_view);
     virtual ~Menu();
     void draw();
     void action(int id);
@@ -27,7 +27,9 @@ private:
     bool actif;
     bool options;
     std::list<sf::Text> listeScores;
-
+    Button* play;
+    Button* scores;
+    Button* quit;
 };
 
 #endif // MENU_INCLUDED_HPP

@@ -14,12 +14,14 @@ enum Language{En, Fr};
 class Button : public Widget
 {
 public:
-    Button(int p_posX, int p_posY, std::string p_text, int p_id);
+    Button(sf::Vector2i p_pos, std::string p_text, int p_id);
     void draw();
     sf::FloatRect getCollisionBox() const;
     void setSurvolSouris(bool p_survol);
     void setClicSouris(bool p_clic);
     void codeKeyPressed(int code);
+    void addLanguage(Language language, std::string p_text);
+    void setCurrentLanguage(Language language);
     virtual ~Button();
 protected:
 private:
@@ -30,7 +32,7 @@ private:
     sf::Texture textureClic;
     sf::Sprite sprite;
     bool survol;
-    Language listeLanguages[2];
+    std::string listeLanguages[2];
 };
 
 #endif // BUTTON_HPP_INCLUDED

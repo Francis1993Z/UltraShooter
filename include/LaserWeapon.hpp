@@ -11,6 +11,7 @@ public:
     LaserWeapon(Entity const& my_user);
     void fire();
     void refresh();
+    void update();
     void stopLaserBeam();
     ~LaserWeapon();
 };
