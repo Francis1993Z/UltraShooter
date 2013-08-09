@@ -9,6 +9,8 @@
 
 #include <string>
 
+enum Language{En, Fr};
+
 class Button : public Widget
 {
 public:
@@ -28,6 +30,7 @@ private:
     sf::Texture textureClic;
     sf::Sprite sprite;
     bool survol;
+    Language listeLanguages[2];
 };
 
 #endif // BUTTON_HPP_INCLUDED
