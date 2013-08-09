@@ -8,10 +8,10 @@
 using namespace std;
 using namespace sf;
 
-Menu::Menu(sf::Vector2u sizeWindow)
+Menu::Menu(sf::Vector2u sizeWindow, View menu_view)
 {
     options = false;
-    sf::Vector2f converted_sprite_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i(0, 0));
+    sf::Vector2f converted_sprite_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i(0, 0), menu_view);
     sprite.setPosition(converted_sprite_coord);
     sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgBackgroundMenu()));
     sprite.scale(sf::Vector2f(sizeWindow.x/((float)sprite.getTexture()->getSize().x), sizeWindow.y/((float)sprite.getTexture()->getSize().y)));
@@ -51,6 +51,7 @@ void Menu::action(int idWidgetClique)
 
         case 0:
             actif = false;
+            Engine::getInstance()->SwitchView();
             break;
         case 1:
             options = true;

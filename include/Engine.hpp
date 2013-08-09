@@ -60,7 +60,11 @@ public:
 
     bool loadNextMap();
     void updateView(float x, float y);
+    void SwitchView();
     sf::Vector2i getScreenSize2i() const;
+    sf::Vector2f getScreenSize2f() const;
+    sf::View getMenuView() const;
+    sf::View getPlayerView() const;
 private:
 
     MusicManager mManager;
@@ -78,7 +82,7 @@ private:
 
     Hud *localplayer_hud;
 
-    bool fenetreFinJeu;
+    bool fenetreFinJeu, MenuView_ON;
     bool IsRunning;
     static bool isAlreadyInstancied; // Permet de savoir si une instance d'Engine existe déjà ou non.
     static Engine* instanceOfEngine; // Permet de retenir l'adresse de l'instance d'Engine qui a été crée.
@@ -92,10 +96,11 @@ private:
     WidgetManager widgetManager;
     Events* events;
    sf::Vector2i screen_size2i;
+   sf::Vector2f screen_size2f;
     sf::Vector2i localMousePosition;
     sf::Event WindowEvent;
     sf::RenderWindow* Game;
-    sf::View MainView;
+    sf::View PlayerView, MenuView;
 };
 
 #endif // ENGINE_HPP_INCLUDED

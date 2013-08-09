@@ -7,7 +7,7 @@ using namespace sf;
 
 
 
-Player::Player(sf::Vector2f init_position, TEAM team): Entity(10000, team), Score(0)
+Player::Player(sf::Vector2f init_position, TEAM team): Entity(1000, team), Score(0)
 {
     e_m = 15.00f;//vitesse
     e_mx = e_m;

@@ -11,10 +11,12 @@ my_player=&m_player;
     font = *Engine::getInstance()->getLoadFiles()->getPoliceArial();
     sf::Vector2u screensize = Engine::getInstance()->getRenderWindow()->getSize();
     sizeWindow.x = (float)screensize.x;
+
     sizeWindow.y = (float)screensize.y;
-        setPositionHud();
+
             updateLife(life);
     updateScore(score);
+           setPositionHud();
 }
 
 void Hud::updateLife(long n_Life)
@@ -48,14 +50,14 @@ void Hud::setSizeWindow(sf::Vector2f n_sizeWindow)
 void Hud::setPositionHud()
 {
     sf::Vector2f converted_Hud_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i(0, 0), Engine::getInstance()->getRenderWindow()->getView());
-    cout<<"converted_Hud_coord.x : "<<converted_Hud_coord.x<<" converted_Hud_coord.y : "<<converted_Hud_coord.y<<endl;
     t_score.setPosition(converted_Hud_coord);
-    t_life.setPosition(converted_Hud_coord.x-t_life.getGlobalBounds().width, converted_Hud_coord.y);
+    sf::Vector2f converted_Hud_coord2 = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i((sizeWindow.x-t_life.getGlobalBounds().width), 0), Engine::getInstance()->getRenderWindow()->getView());
+    t_life.setPosition(converted_Hud_coord2.x, converted_Hud_coord2.y);
 }
 
 void Hud::Update()
 {
-    updateScore(my_player->getVie());
+    updateLife(my_player->getVie());
     updateScore(my_player->getScore());
 }
 

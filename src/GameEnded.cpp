@@ -7,7 +7,7 @@
 #include "tinyxml.h"
 
 using namespace std;
-
+using namespace sf;
 
 GameEnded::GameEnded()
 {
@@ -15,7 +15,15 @@ GameEnded::GameEnded()
 
     fond.setSize(sf::Vector2f(500.f, 300.f));
     fond.setFillColor(sf::Color(255, 255, 255));
-    fond.setPosition((Engine::getInstance()->getRenderWindow()->getSize().x/2)-(fond.getSize().x/2), (Engine::getInstance()->getRenderWindow()->getSize().y/2)-(fond.getSize().y/2));
+    Vector2f ssize = Engine::getInstance()->getScreenSize2f(), fontsize = fond.getSize();
+    //(Engine::getInstance()->getRenderWindow()->getSize().x/2)-(fond.getSize().x/2), (Engine::getInstance()->getRenderWindow()->getSize().y/2)-(fond.getSize().y/2);
+    Vector2f fontpos((ssize.x/2-fontsize.x/2), (ssize.y/2-fontsize.y/2));
+    sf::Vector2i pos;
+    pos.x = (int)fontpos.x;
+    pos.y = (int)fontpos.y;
+    sf::Vector2f position_fond = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(pos, Engine::getInstance()->getMenuView());
+
+    fond.setPosition(position_fond);
 
     titre.setFont(*(Engine::getInstance()->getLoadFiles()->getPoliceArial()));
     titre.setColor(sf::Color::Black);
@@ -25,6 +33,7 @@ GameEnded::GameEnded()
     messageInformatif.setColor(sf::Color::Black);
     messageInformatif.setCharacterSize(20);
     messageInformatif.setString("Entrez votre pseudo :");
+
 }
 
 void GameEnded::draw()
@@ -57,13 +66,17 @@ void GameEnded::setActif(bool p_actif, bool gameOver)
 
     actif = p_actif;
 
+                sf::Vector2i pos = Engine::getInstance()->getScreenSize2i();
+                pos.x= pos.x/2.00f;
+                pos.y= (pos.y/2.00f)+50;
+            addWidget(new Button(pos, "Ok", 0));
+
     if(actif)
         {
 
             champsPseudo = new TextField(fond.getPosition().x+messageInformatif.getGlobalBounds().width+20, fond.getPosition().y+150, 1);
             addWidget(champsPseudo);
-            sf::Vector2i pos = Engine::getInstance()->getScreenSize2i();
-            addWidget(new Button(pos, "Ok", 0));
+
 
             if(gameOver)
                 {

@@ -11,7 +11,7 @@ Button::Button(sf::Vector2i p_pos, std::string p_text, int p_id)
     id = p_id;
 
     sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgButton()));
-sf::Vector2f converted_boutton_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(p_pos, Engine::getInstance()->getRenderWindow()->getView());
+sf::Vector2f converted_boutton_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(p_pos, Engine::getInstance()->getMenuView());
     sprite.setPosition(converted_boutton_coord);
     sprite.scale(sf::Vector2f(0.1f, 0.1f));
     text.setString(p_text);
