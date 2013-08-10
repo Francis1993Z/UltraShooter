@@ -118,7 +118,7 @@ bool CollisionManager::CollisionJoueur(float x, float y)
     deplacement_x = 0.0f;
     deplacement_y = 0.0f;
 
-    if(CheckIfOutOfWindow(player.getPosition().x, player.getPosition().y, player.getRayon()))
+    if(CheckIfOutOfWindow(player.getPosition().x, player.getPosition().y, player.getCollisionBox().width/2))
         {
             collision = true;
             CalculDistanceAParcourirBordMap(x, y);
@@ -356,43 +356,43 @@ void CollisionManager::update_repulsion(list<Entity *>& EntityArray)
 void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, FloatRect rect)
 {
 
-    if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() < player.getSpeed())
+    if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getCollisionBox().width/2 < player.getSpeed())
         {
 
-            if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon() >= 0)
+            if(p_deplacement_x>0 && rect.left-(player.getPosition().x-p_deplacement_x)-player.getCollisionBox().width/2 >= 0)
                 {
 
-                    deplacement_x=rect.left-(player.getPosition().x-p_deplacement_x)-player.getRayon();
+                    deplacement_x=rect.left-(player.getPosition().x-p_deplacement_x)-player.getCollisionBox().width/2;
                     update_x=true;
                 }
         }
-    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width < player.getSpeed())
+    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getCollisionBox().width/2-rect.left-rect.width < player.getSpeed())
         {
 
-            if(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width >= 0)
+            if(player.getPosition().x-p_deplacement_x-player.getCollisionBox().width/2-rect.left-rect.width >= 0)
                 {
 
-                    deplacement_x= -(player.getPosition().x-p_deplacement_x-player.getRayon()-rect.left-rect.width);
+                    deplacement_x= -(player.getPosition().x-p_deplacement_x-player.getCollisionBox().width/2-rect.left-rect.width);
                     update_x=true;
                 }
         }
-    if(p_deplacement_y>0 && rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() < player.getSpeed())
+    if(p_deplacement_y>0 && rect.top-(player.getPosition().y-p_deplacement_y)-player.getCollisionBox().width/2 < player.getSpeed())
         {
 
-            if(rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon() >= 0)
+            if(rect.top-(player.getPosition().y-p_deplacement_y)-player.getCollisionBox().width/2 >= 0)
                 {
 
-                    deplacement_y=rect.top-(player.getPosition().y-p_deplacement_y)-player.getRayon();
+                    deplacement_y=rect.top-(player.getPosition().y-p_deplacement_y)-player.getCollisionBox().width/2;
                     update_y=true;
                 }
         }
-    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height < player.getSpeed())
+    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getCollisionBox().width/2-rect.top-rect.height < player.getSpeed())
         {
 
-            if(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height >= 0)
+            if(player.getPosition().y-p_deplacement_y-player.getCollisionBox().width/2-rect.top-rect.height >= 0)
                 {
 
-                    deplacement_y= -(player.getPosition().y-p_deplacement_y-player.getRayon()-rect.top-rect.height);
+                    deplacement_y= -(player.getPosition().y-p_deplacement_y-player.getCollisionBox().width/2-rect.top-rect.height);
                     update_y=true;
                 }
         }
@@ -424,29 +424,28 @@ void CollisionManager::CalculDistanceAParcourir(float p_deplacement_x, float p_d
 
 void CollisionManager::CalculDistanceAParcourirBordMap(float p_deplacement_x, float p_deplacement_y)
 {
-
-    if(p_deplacement_x>0 && gameMap.getWidth()-player.getPosition().x-p_deplacement_x-player.getRayon() < player.getSpeed())
+    if(p_deplacement_x>0 && gameMap.getWidth()-player.getPosition().x-p_deplacement_x-player.getCollisionBox().width/2 < player.getSpeed())
         {
 
-            deplacement_x=gameMap.getWidth()-(player.getPosition().x-p_deplacement_x)-player.getRayon();
+            deplacement_x=gameMap.getWidth()-(player.getPosition().x-p_deplacement_x)-player.getCollisionBox().width/2;
             update_x=true;
         }
-    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getRayon() < player.getSpeed())
+    if(p_deplacement_x<0 && player.getPosition().x-p_deplacement_x-player.getCollisionBox().width/2 < player.getSpeed())
         {
 
-            deplacement_x=-(player.getPosition().x-p_deplacement_x)+player.getRayon();
+            deplacement_x=-(player.getPosition().x-p_deplacement_x)+player.getCollisionBox().width/2;
             update_x=true;
         }
-    if(p_deplacement_y>0 && gameMap.getHeight()-player.getPosition().y-p_deplacement_y-player.getRayon() < player.getSpeed())
+    if(p_deplacement_y>0 && gameMap.getHeight()-player.getPosition().y-p_deplacement_y-player.getCollisionBox().width/2 < player.getSpeed())
         {
 
-            deplacement_y=gameMap.getHeight()-(player.getPosition().y-p_deplacement_y)-player.getRayon();
+            deplacement_y=gameMap.getHeight()-(player.getPosition().y-p_deplacement_y)-player.getCollisionBox().width/2;
             update_y=true;
         }
-    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getRayon() < player.getSpeed())
+    if(p_deplacement_y<0 && player.getPosition().y-p_deplacement_y-player.getCollisionBox().width/2 < player.getSpeed())
         {
 
-            deplacement_y=-(player.getPosition().y-p_deplacement_y)+player.getRayon();
+            deplacement_y=-(player.getPosition().y-p_deplacement_y)+player.getCollisionBox().width/2;
             update_y=true;
         }
 
