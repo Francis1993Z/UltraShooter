@@ -25,6 +25,7 @@ public:
     void update_repulsion(std::list<Entity *>& EntityArray);
     void CalculDistanceAParcourir(float p_deplacement_x, float p_deplacement_y, sf::FloatRect rect);
     void CalculDistanceAParcourirBordMap(float p_deplacement_x, float p_deplacement_y);
+    void CollisionBonus(std::list<Bonus *>& lBonus);
 
     float getDeplacementX();
     float getDeplacementY();

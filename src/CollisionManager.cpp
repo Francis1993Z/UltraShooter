@@ -456,6 +456,22 @@ void CollisionManager::CalculDistanceAParcourirBordMap(float p_deplacement_x, fl
         deplacement_y = p_deplacement_y;
 }
 
+void CollisionManager::CollisionBonus(std::list<Bonus *>& lBonus){
+
+    collision = false;
+
+    for(std::list<Bonus *>::const_iterator it = lBonus.begin(); it != lBonus.end() && !collision; ++it)
+        {
+
+            if(Engine::getInstance()->getPlayer()->getCollisionBox().intersects((*it)->getGlobalBounds()))
+                {
+
+                    collision = true;
+                    (*it)->ramasser();
+                }
+        }
+}
+
 float CollisionManager::getDeplacementX()
 {
 

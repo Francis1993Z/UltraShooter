@@ -2,6 +2,7 @@
 #define MAP_HPP_INCLUDED
 
 #include "Engine.hpp"
+#include "Bonus.hpp"
 
 class Map
 {
@@ -14,6 +15,7 @@ class Map
     std::list<Entity *> EntityArray;
 
     std::list<Obstacle> lObstacles;
+    std::list<Bonus *> lBonus;
     std::list<Wave> lWaves;
 
     std::map<std::string, sf::Texture> mObstacleTextures;
@@ -60,6 +62,7 @@ public:
     std::string getTheme() const;
 
     void drawObstacles(sf::RenderWindow* window) const;
+    void drawBonus() const;
     void update(sf::RenderWindow* game);
 
     sf::Sprite getBackground() const;

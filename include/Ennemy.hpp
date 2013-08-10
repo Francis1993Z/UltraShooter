@@ -2,6 +2,7 @@
 #define ENNEMY_HPP_INCLUDED
 
 #include "Player.hpp"
+#include "Bonus.hpp"
 
 enum Behaviour {STANDBY, ATTACK, ESCAPE, FOLLOW};
 
@@ -16,7 +17,7 @@ public:
     void SetTarget(Player &NewTarget);
     void ChangeBehaviour(Behaviour NewBehaviour);
     int getKillPoint() const;
-
+    Bonus* getBonus();
 
     float get_dRadius() const;
     float getSpeed() const;

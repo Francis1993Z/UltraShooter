@@ -51,4 +51,7 @@ int Ennemy::getKillPoint() const
     return kill_point;
 }
 
+Bonus* Ennemy::getBonus(){
 
+    return new Bonus(getPosition());
+}

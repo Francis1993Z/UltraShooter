@@ -462,6 +462,7 @@ void Engine::drawGame()
     Game->draw(gameMap->getBackground());
     gameMap->update(Game);
     gameMap->drawObstacles(Game);
+    gameMap->drawBonus();
     Game->draw(*player);
     Game->draw(localplayer_hud->getLife());
     Game->draw(localplayer_hud->getScore());

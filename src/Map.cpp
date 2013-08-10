@@ -241,6 +241,7 @@ void Map::update(RenderWindow* game)
                     if(!(*itEnnemy)->alive())
                         {
                             localplayer->addPoints((*itEnnemy)->die());
+                            lBonus.push_back(((Ennemy*)(*itEnnemy))->getBonus());
                             delete *itEnnemy;
                             itEnnemy = EntityArray.erase(itEnnemy);
                             ennemies_left--;
@@ -270,14 +271,39 @@ void Map::update(RenderWindow* game)
                 }
             else
                 {
+
                     ++itEnnemy;
                 }
 
 
         }
 
-    if(!localplayer->alive()) gameOver = true;
+    if(!localplayer->alive()){
+
+        gameOver = true;
+    }
+    else{
+
+        list<Bonus *>::iterator it = lBonus.begin();
+
+        while(it != lBonus.end())
+        {
+            collisionManager.CollisionBonus(lBonus);
+
+            if((*it)->isRamasse()){
+
+                delete *it;
+                it = lBonus.erase(it);
+            }
+            else{
+
+                ++it;
+            }
+        }
+    }
+
     game->draw(background);
+
     for(it = ProjectilesArray.begin(); it != ProjectilesArray.end(); ++it)
         game->draw(*(*it));
 
@@ -285,7 +311,8 @@ void Map::update(RenderWindow* game)
     for(itEnnemy = EntityArray.begin(); itEnnemy != EntityArray.end(); ++itEnnemy)
         game->draw(*(*itEnnemy));
 
-
+    for(itEnnemy = EntityArray.begin(); itEnnemy != EntityArray.end(); ++itEnnemy)
+        game->draw(*(*itEnnemy));
 }
 
 Sprite Map::getBackground() const
@@ -318,6 +345,12 @@ void Map::setlocalPlayer(Player& newPlayer)
 
         }
 
+}
+
+void Map::drawBonus() const{
+
+    for(list<Bonus *>::const_iterator it = lBonus.begin(); it != lBonus.end(); ++it)
+        Engine::getInstance()->getRenderWindow()->draw(*(*it));
 }
 
 bool Map::loadNextWave()
