@@ -174,8 +174,6 @@ int Engine::Run()
 
     gameMap->setlocalPlayer(*player);
 
-
-
     mManager.playTheme(gameMap->getTheme());
     mManager.setVolume(100);
     sf::Clock ennemy_clock;
@@ -223,14 +221,14 @@ int Engine::Run()
                         {
 
                             fenetreFinJeu = true;
-            Game->setView(MenuView);
+                            Game->setView(MenuView);
                             Game->clear(Color(0,0,0));
                             gameEnded->draw();
                             Game->display();
                         }
                     else if(menu->isActif())
                         {
-            Game->setView(MenuView);
+                            Game->setView(MenuView);
                             Game->clear(Color(0,0,0));
                             drawMenu(); //Dessine le menu.
                             Game->display();
@@ -419,6 +417,8 @@ void Engine::updateView(float x, float y)
 {
 
     Vector2i object_pixel_position=Game->mapCoordsToPixel(player->getPosition(), PlayerView);
+
+    cout<<PlayerView.getCenter().x<<endl;
 
     if(object_pixel_position.x < 630)
         {

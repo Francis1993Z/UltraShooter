@@ -1,4 +1,7 @@
 #include "Events.hpp"
+#include <iostream>
+
+using namespace std;
 
 Events::Events()
 {
@@ -30,7 +33,8 @@ void Events::updateEvents()
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 down = DOWN;
 
-        float speed = Engine::getInstance()->getPlayer()->getSpeed();
+        const float speed = Engine::getInstance()->getPlayer()->getSpeed();
+        const float diagonale = sqrt(speed*speed/2);
         unsigned int final_direction = (left | right | up | down);
         switch (final_direction)
         {
@@ -51,23 +55,23 @@ void Events::updateEvents()
             break;
 
         case UP_AND_LEFT:
-            y-=(speed/2.00f);
-            x-=(speed/2.00f);
+            y-=diagonale;
+            x-=diagonale;
             break;
 
         case UP_AND_RIGHT:
-            y-=(speed/2.00f);
-            x+=(speed/2.00f);
+            y-=diagonale;
+            x+=diagonale;
             break;
 
         case DOWN_AND_LEFT:
-            y+=(speed/2.00f);
-            x-=(speed/2.00f);
+            y+=diagonale;
+            x-=diagonale;
             break;
 
         case DOWN_AND_RIGHT:
-            y+=(speed/2.00f);
-            x+=(speed/2.00f);
+            y+=diagonale;
+            x+=diagonale;
             break;
 
         default:
@@ -75,20 +79,6 @@ void Events::updateEvents()
             x=0;
             break;
         }
-
-
-
-            /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-                x+=-Engine::getInstance()->getPlayer()->getSpeed();
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-                x+=Engine::getInstance()->getPlayer()->getSpeed();
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-                y+=-Engine::getInstance()->getPlayer()->getSpeed();
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-                y+=Engine::getInstance()->getPlayer()->getSpeed();*/
 
             Engine::getInstance()->getPlayer()->move(x, y);
             Engine::getInstance()->updateView(x,y);
