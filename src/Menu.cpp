@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "tinyxml.h"
-#include "Engine.hpp"
 
 using namespace std;
 using namespace sf;
@@ -29,6 +28,27 @@ Menu::Menu(sf::Vector2u sizeWindow, View menu_view)
     addWidget(quit);
     addWidget(new Button(sf::Vector2i(0, 200), "English", 3));
     addWidget(new Button(sf::Vector2i(0, 250), "Français", 4));
+
+    listeParticipants[0] = "Francis Marcoux";
+    listeParticipants[1] = "Yann Castel";
+    listeParticipants[2] = "William Bedu";
+
+    participant.setFont(*(Engine::getInstance()->getLoadFiles()->getPoliceArial()));
+    indiceListeParticipants = 0;
+    participant.setString(listeParticipants[indiceListeParticipants]);
+    charactereSize = 0;
+    compteurCharactereSize = 0;
+    participant.setCharacterSize(charactereSize);
+    participant.setColor(sf::Color::White);
+    //pos_x = sizeWindow.x/2;
+    //pos_y = sizeWindow.y/2;
+    pos_x = 200.0f;
+    pos_y = 500.0f;
+    rotation = 0.0f;
+    participant.setPosition(pos_x, pos_y);
+    participant.setOrigin(participant.getGlobalBounds().width/2, participant.getGlobalBounds().height/2);
+    pause = 0;
+    termine = false;
 }
 
 void Menu::draw()
@@ -39,6 +59,68 @@ void Menu::draw()
         {
 
             drawWidgets();
+
+            if(!termine){
+
+            if(participant.getPosition().x < 500 && participant.getPosition().y  > 200){
+
+                pos_x += 3.0f;
+                pos_y -= 3.0f;
+                rotation += 360.0f/100.0f;
+
+                ++compteurCharactereSize;
+
+                if(compteurCharactereSize == 2){
+
+                    compteurCharactereSize = 0;
+                    ++charactereSize;
+                }
+            }
+            else{
+
+                if(pause != 20){
+
+                   pause++;
+                }
+                else{
+
+                    ++compteurCharactereSize;
+
+                    if(compteurCharactereSize == 2){
+
+                        compteurCharactereSize = 0;
+                        --charactereSize;
+                    }
+
+                    if(charactereSize == 0){
+
+                       ++indiceListeParticipants;
+
+                       if(indiceListeParticipants < 3){
+
+                            participant.setString(listeParticipants[indiceListeParticipants]);
+                            pos_x = 200.0f;
+                            pos_y = 500.0f;
+                            rotation = 0.0f;
+                            pause = 0;
+                            compteurCharactereSize = 0;
+                            charactereSize = 0;
+                       }
+                       else{
+
+                            termine = true;
+                        }
+                    }
+                }
+            }
+
+            participant.setPosition(pos_x, pos_y);
+            participant.setCharacterSize(charactereSize);
+            participant.setRotation(rotation);
+
+            Engine::getInstance()->getRenderWindow()->draw(participant);
+            }
+
         }
     else
         {
