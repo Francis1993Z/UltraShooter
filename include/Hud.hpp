@@ -15,7 +15,7 @@ class Hud
 {
 
 public:
-    Hud(long p_life, unsigned long p_score, Player& m_player);
+    Hud(long p_life, unsigned long p_score);
 
     void updateLife(long n_life);
     void updateScore(unsigned long n_score);
@@ -23,6 +23,7 @@ public:
     void Move(float vx, float vy);
     void setPositionHud();
     void Update();
+    void draw();
     sf::Text getLife();
     sf::Text getScore();
 
@@ -30,10 +31,11 @@ public:
 
 protected:
 private:
-Player* my_player;
     sf::Text t_life;
     sf::Text t_score;
     sf::Font font;
+    sf::RectangleShape fondBarreDeVie;
+    sf::RectangleShape barreDeVie;
 
     sf::Vector2f sizeWindow;
 

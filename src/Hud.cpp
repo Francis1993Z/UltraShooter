@@ -4,35 +4,33 @@
 using namespace std;
 using namespace sf;
 
-Hud::Hud(long life, unsigned long score, Player& m_player)
+Hud::Hud(long life, unsigned long score)
 {
-
-my_player=&m_player;
     font = *Engine::getInstance()->getLoadFiles()->getPoliceArial();
+
     sf::Vector2u screensize = Engine::getInstance()->getRenderWindow()->getSize();
     sizeWindow.x = (float)screensize.x;
-
     sizeWindow.y = (float)screensize.y;
 
-            updateLife(life);
+    fondBarreDeVie.setSize(sf::Vector2f(200.f, 15.f));
+    fondBarreDeVie.setFillColor(sf::Color::Red);
+    barreDeVie.setSize(sf::Vector2f(200.f, 15.f));
+    barreDeVie.setFillColor(sf::Color::Green);
+
+    updateLife(life);
     updateScore(score);
-           setPositionHud();
+    setPositionHud();
 }
 
-void Hud::updateLife(long n_Life)
+void Hud::updateLife(long n_life)
 {
-    ss.str("");
-    ss << n_Life;
-    t_life.setString(ss.str());
-    t_life.setFont(font);
-    t_life.setCharacterSize(30);
-    t_life.setColor(sf::Color::Red);
+    barreDeVie.setSize(Vector2f(200.f/1000*n_life, barreDeVie.getSize().y));
 }
 
-void Hud::updateScore(unsigned long n_Score)
+void Hud::updateScore(unsigned long n_score)
 {
     ss.str("");
-    ss << n_Score;
+    ss << n_score;
     t_score.setString(ss.str());
     t_score.setFont(font);
     t_score.setCharacterSize(30);
@@ -51,32 +49,29 @@ void Hud::setPositionHud()
 {
     sf::Vector2f converted_Hud_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i(0, 0), Engine::getInstance()->getRenderWindow()->getView());
     t_score.setPosition(converted_Hud_coord);
-    sf::Vector2f converted_Hud_coord2 = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i((sizeWindow.x-t_life.getGlobalBounds().width), 0), Engine::getInstance()->getRenderWindow()->getView());
-    t_life.setPosition(converted_Hud_coord2.x, converted_Hud_coord2.y);
+    sf::Vector2f converted_Hud_coord2 = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i((sizeWindow.x-fondBarreDeVie.getGlobalBounds().width), 0), Engine::getInstance()->getRenderWindow()->getView());
+    fondBarreDeVie.setPosition(converted_Hud_coord2.x-10, converted_Hud_coord2.y+5);
+    barreDeVie.setPosition(converted_Hud_coord2.x-10, converted_Hud_coord2.y+5);
 }
 
 void Hud::Update()
 {
-    updateLife(my_player->getVie());
-    updateScore(my_player->getScore());
+    updateLife(Engine::getInstance()->getPlayer()->getVie());
+    updateScore(Engine::getInstance()->getPlayer()->getScore());
 }
 
 void Hud::Move(float vx, float vy)
 {
     t_score.move(vx, vy);
-    t_life.move(vx, vy);
+    fondBarreDeVie.move(vx, vy);
+    barreDeVie.move(vx, vy);
 }
 
-sf::Text Hud::getLife()
-{
+void Hud::draw(){
 
-    return t_life;
-}
-
-sf::Text Hud::getScore()
-{
-
-    return t_score;
+    Engine::getInstance()->getRenderWindow()->draw(t_score);
+    Engine::getInstance()->getRenderWindow()->draw(fondBarreDeVie);
+    Engine::getInstance()->getRenderWindow()->draw(barreDeVie);
 }
 
 Hud::~Hud()

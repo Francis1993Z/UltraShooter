@@ -180,8 +180,9 @@ int Engine::Run()
 
     gameMap->loadNextWave();
 
-    localplayer_hud = new Hud(player->getVie(), player->getScore(), *player);
-    player->setHud(*localplayer_hud);
+    Game->setView(PlayerView);//<-- pour que la HUD se centre sur le joueur
+    localplayer_hud = new Hud(player->getVie(), player->getScore());
+    Game->setView(MenuView);//<-- on revient avec le menu
 
     fenetreFinJeu = false;
     IsRunning=true;
@@ -418,30 +419,28 @@ void Engine::updateView(float x, float y)
 
     Vector2i object_pixel_position=Game->mapCoordsToPixel(player->getPosition(), PlayerView);
 
-    cout<<PlayerView.getCenter().x<<endl;
-
     if(object_pixel_position.x < 630)
         {
             PlayerView.move(x, 0.f);
-            player->move_myhud(x, 0.f);//On met à jour la position de la HUD
+            localplayer_hud->Move(x, 0.f);//On met à jour la position de la HUD
             Game->setView(PlayerView);
         }
     if((unsigned)object_pixel_position.x > Game->getSize().x-630)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
         {
             PlayerView.move(x, 0.f);
-            player->move_myhud(x, 0.f);
+            localplayer_hud->Move(x, 0.f);
             Game->setView(PlayerView);
         }
     if(object_pixel_position.y < 350)
         {
             PlayerView.move(0.f, y);
-            player->move_myhud(0.f, y);
+            localplayer_hud->Move(0.f, y);
             Game->setView(PlayerView);
         }
     if((unsigned)object_pixel_position.y > Game->getSize().y-350)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
         {
             PlayerView.move(0.f, y);
-            player->move_myhud(0.f, y);
+            localplayer_hud->Move(0.f, y);
             Game->setView(PlayerView);
         }
 }
@@ -464,8 +463,7 @@ void Engine::drawGame()
     gameMap->drawObstacles(Game);
     gameMap->drawBonus();
     Game->draw(*player);
-    Game->draw(localplayer_hud->getLife());
-    Game->draw(localplayer_hud->getScore());
+    localplayer_hud->draw();
 }
 
 void Engine::nextWaveAndMap()

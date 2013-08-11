@@ -50,29 +50,6 @@ void Player::stopMLAction()//On stop l'action lié à MouseLeft.
         }
 }
 
-/*
-Text Player::getLifeHud()
-{
-    return hud.getLife();
-}
-
-Text Player::getScoreHud()
-{
-    return hud.getScore();
-}
-*/
-
-
-void Player::move_myhud(float vx, float vy)
-{
-    my_hud->Move(vx, vy);
-}
-/*
-void Player::setSizeWindowHud(Vector2f sizeWindow)
-{
-    hud.setSizeWindow(sizeWindow);
-}*/
-
 float Player::getRayon()
 {
 
@@ -111,11 +88,6 @@ targetdata Player::getTarget() const
     data.position=converted_target_coord;
     return data;
 }
-
-    void Player::setHud(Hud& new_hud)
-    {
-        my_hud=&new_hud;
-    }
 
 void Player::addPoints(int points)
 {

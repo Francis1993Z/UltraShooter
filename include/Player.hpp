@@ -15,7 +15,6 @@ class Player : public Entity, public EntityWithWeapon
 
     unsigned long Score;
 
-
     bool firing;
     sf::FloatRect rect;
     sf::Clock weapon_clock;
@@ -25,8 +24,6 @@ class Player : public Entity, public EntityWithWeapon
 public:
 
     Player(sf::Vector2f init_position, TEAM team);
-    Hud *my_hud;
-    void setHud(Hud& new_hud);
 
 //!
 /// stopMLAction(0 permet de réagire à des évènement.
