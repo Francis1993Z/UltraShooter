@@ -8,7 +8,7 @@
 class Weapon
 {
 public:
-    Weapon(bool p_tirIllimity, unsigned int p_ammunitions;
+    Weapon(bool p_tirIllimity, unsigned int p_ammunitions);
     virtual void fire();//feu
     virtual void fire(sf::Vector2f target_position);//feu avec position de la cible
     virtual void refresh();//mise a jour

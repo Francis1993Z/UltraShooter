@@ -8,7 +8,7 @@ class Ennemy;
 class MissileLauncher : public Weapon
 {
 public:
-    MissileLauncher(Entity const& my_user);
+    MissileLauncher(Entity const& my_user, bool p_tirIllimity, unsigned int p_ammunitions);
     void fire();
 private:
     const Ennemy* my_target;
