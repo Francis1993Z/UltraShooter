@@ -16,6 +16,9 @@ public:
     sf::Texture* getImgButton() const;
     sf::Texture* getImgButtonSurvol() const;
     sf::Texture* getImgButtonClic() const;
+    sf::Texture* getSymboleAutomaticWeapon() const;
+    sf::Texture* getSymboleShrapnelWeapon() const;
+    sf::Texture* getSymboleLaserWeapon() const;
     virtual ~LoadFiles();
 protected:
 private:
@@ -24,6 +27,9 @@ private:
     sf::Texture* imgButton;
     sf::Texture* imgButtonSurvol;
     sf::Texture* imgButtonClic;
+    sf::Texture* symboleAutomaticWeapon;
+    sf::Texture* symboleShrapnelWeapon;
+    sf::Texture* symboleLaserWeapon;
 
     std::string fichierIntrouvable;
 };

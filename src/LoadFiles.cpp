@@ -13,6 +13,9 @@ LoadFiles::LoadFiles()
     imgButton = new Texture();
     imgButtonSurvol = new Texture();
     imgButtonClic = new Texture();
+    symboleAutomaticWeapon = new Texture();
+    symboleShrapnelWeapon = new Texture();
+    symboleLaserWeapon = new Texture();
 
     if (!policeArial->loadFromFile("ressources/fonts/arial.ttf"))
         {
@@ -38,6 +41,21 @@ LoadFiles::LoadFiles()
         {
 
             fichierIntrouvable = "buttonClic.png";
+        }
+    else if(!symboleAutomaticWeapon->loadFromFile("ressources/symboles/AutomaticWeapon.png"))
+        {
+
+            fichierIntrouvable = "AutomaticWeapon.png";
+        }
+    else if(!symboleShrapnelWeapon->loadFromFile("ressources/symboles/ShrapnelWeapon.png"))
+        {
+
+            fichierIntrouvable = "ShrapnelWeapon.png";
+        }
+    else if(!symboleLaserWeapon->loadFromFile("ressources/symboles/LaserWeapon.png"))
+        {
+
+            fichierIntrouvable = "LaserWeapon.png";
         }
 
     if(fichierIntrouvable != "")
@@ -78,10 +96,29 @@ Texture* LoadFiles::getImgButtonClic() const
     return imgButtonClic;
 }
 
+Texture* LoadFiles::getSymboleAutomaticWeapon() const{
+
+    return symboleAutomaticWeapon;
+}
+
+Texture* LoadFiles::getSymboleShrapnelWeapon() const{
+
+    return symboleShrapnelWeapon;
+}
+
+Texture* LoadFiles::getSymboleLaserWeapon() const{
+
+    return symboleLaserWeapon;
+}
+
 LoadFiles::~LoadFiles()
 {
+    delete policeArial;
     delete imgBackgroundMenu;
     delete imgButton;
     delete imgButtonSurvol;
     delete imgButtonClic;
+    delete symboleAutomaticWeapon;
+    delete symboleShrapnelWeapon;
+    delete symboleLaserWeapon;
 }

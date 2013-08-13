@@ -15,6 +15,7 @@ protected:
     int actual_weapon;
 public:
     void change_Weapon(int delta);
+    sf::Texture* getSymboleActualWeapon();
     virtual ~EntityWithWeapon();
 };
 

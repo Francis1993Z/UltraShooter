@@ -143,8 +143,6 @@ void Engine::screenshot()
 */
 int Engine::Run()
 {
-
-
     Clock fps_clock;
     //Game.setVerticalSyncEnabled(true);
     Game->setFramerateLimit(60);
@@ -156,11 +154,8 @@ int Engine::Run()
     PlayerView.setSize(screen_size.x, screen_size.y);
     player = new Player(sf::Vector2f(100.f, 100.f), TEAM1);
     PlayerView.setCenter(player->getPosition());
-    //PlayerView.setSize(1024, 768);
-    //PlayerView.setCenter(screen_size.x/2, screen_size.y/2);
     events = new Events();
     Game->setView(PlayerView);
-    //cout<<"engine player : "<<player<<endl;
     collisionManager = new CollisionManager(*player, *gameMap);
     MenuView.setSize(screen_size.x, screen_size.y);
     MenuView.setCenter(screen_size.x/2, screen_size.y/2);
@@ -181,7 +176,8 @@ int Engine::Run()
     gameMap->loadNextWave();
 
     Game->setView(PlayerView);//<-- pour que la HUD se centre sur le joueur
-    localplayer_hud = new Hud(player->getVie(), player->getScore());
+    localplayer_hud = new Hud();
+    player->initHud();
     Game->setView(MenuView);//<-- on revient avec le menu
 
     fenetreFinJeu = false;
@@ -209,9 +205,7 @@ int Engine::Run()
 
                     if(!menu->isActif() && !gameEnded->isActif())
                         {
-
                             widgetManager.setPause(true);
-                            localplayer_hud->Update();
                             Game->clear(Color(0,0,0));
                             drawGame(); //Dessine tous les composants du jeu lors d'une partie.
                             Game->display();
@@ -288,6 +282,11 @@ Menu* Engine::getMenu() const
     return menu;
 }
 
+Hud* Engine::getHud() const{
+
+    return localplayer_hud;
+}
+
 void Engine::gestionEvenements()
 {
     if (widgetManager.getPause())
@@ -356,6 +355,7 @@ void Engine::gestionEvenements()
             if (WindowEvent.type == sf::Event::MouseWheelMoved)
                 {
                     player->change_Weapon(WindowEvent.mouseWheel.delta);
+                    localplayer_hud->updateSymboleWeapon(player->getSymboleActualWeapon());
                 }
 
         }//pollEvent

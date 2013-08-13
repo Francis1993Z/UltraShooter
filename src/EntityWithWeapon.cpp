@@ -18,6 +18,11 @@ void EntityWithWeapon::change_Weapon(int delta)
         }
 }
 
+Texture* EntityWithWeapon::getSymboleActualWeapon(){
+
+    return my_weapon.at(actual_weapon)->getSymbole();
+}
+
 EntityWithWeapon::~EntityWithWeapon()
 {
     for(vector<Weapon *>::iterator it = my_weapon.begin(); it != my_weapon.end(); ++it)

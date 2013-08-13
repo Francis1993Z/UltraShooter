@@ -50,12 +50,6 @@ void Player::stopMLAction()//On stop l'action lié à MouseLeft.
         }
 }
 
-float Player::getRayon()
-{
-
-    return rayon;
-}
-
 targetdata Player::getTarget() const
 {
 
@@ -93,18 +87,23 @@ void Player::addPoints(int points)
 {
     Score+=points;
 
-    //hud.updateScore(Score);
+    Engine::getInstance()->getHud()->updateScore(Score);
 }
 
 void Player::modifierVie(int pv)//fonction Entity::modifierVie() masquée
 {
     vie+=pv;
-    //hud.updateLife(vie);
+    Engine::getInstance()->getHud()->updateLife(vie);
 }
 
 unsigned long Player::getScore()
 {
     return Score;
+}
+
+void Player::initHud(){
+
+    Engine::getInstance()->getHud()->init(vie, Score, getSymboleActualWeapon());
 }
 
 Player::~Player()

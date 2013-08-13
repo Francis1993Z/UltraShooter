@@ -10,6 +10,7 @@ LaserWeapon::LaserWeapon(Entity const& my_user)
     needRefresh=true;
     my_laserbeam=NULL;
     user=&my_user;
+    symbole = (*(Engine::getInstance()->getLoadFiles()->getSymboleLaserWeapon()));
 }
 
 void LaserWeapon::fire()
@@ -49,7 +50,6 @@ void LaserWeapon::stopLaserBeam()
     Engine::getInstance()->getMap()->rmProjectile(my_laserbeam);
     my_laserbeam=NULL;
 }
-
 
 LaserWeapon::~LaserWeapon()
 {

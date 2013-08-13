@@ -28,6 +28,11 @@ bool Weapon::isUpdatable() const
     return needRefresh;
 }
 
+Texture* Weapon::getSymbole(){
+
+    return &symbole;
+}
+
 Weapon::~Weapon()
 {
 

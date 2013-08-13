@@ -8,6 +8,7 @@
 
 
 #include <sstream>
+#include "Weapon.hpp"
 
 class Player;
 
@@ -15,17 +16,18 @@ class Hud
 {
 
 public:
-    Hud(long p_life, unsigned long p_score);
+    Hud();
 
     void updateLife(long n_life);
     void updateScore(unsigned long n_score);
+    void updateSymboleWeapon(sf::Texture* p_symboleWeapon);
     void setSizeWindow(sf::Vector2f n_sizeWindow);
     void Move(float vx, float vy);
     void setPositionHud();
-    void Update();
     void draw();
     sf::Text getLife();
     sf::Text getScore();
+    void init(long n_life, unsigned long n_score, sf::Texture* p_symboleWeapon);
 
     ~Hud();
 
@@ -36,6 +38,8 @@ private:
     sf::Font font;
     sf::RectangleShape fondBarreDeVie;
     sf::RectangleShape barreDeVie;
+
+    sf::Sprite* symboleWeapon;
 
     sf::Vector2f sizeWindow;
 

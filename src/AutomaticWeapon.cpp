@@ -10,7 +10,7 @@ AutomaticWeapon::AutomaticWeapon(Entity const& my_user)
     user=&my_user;
     fire_intervale = 150.00f;
     needRefresh=false;
-
+    symbole = (*(Engine::getInstance()->getLoadFiles()->getSymboleAutomaticWeapon()));
 }
 
 void AutomaticWeapon::fire()

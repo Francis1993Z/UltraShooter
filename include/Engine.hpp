@@ -57,6 +57,7 @@ public:
     MusicManager* getMusicManager();
     LoadFiles* getLoadFiles() const;
     Menu* getMenu() const;
+    Hud* getHud() const;
 
     bool loadNextMap();
     void updateView(float x, float y);
@@ -80,7 +81,7 @@ private:
 
     int mapNumber;
 
-    Hud *localplayer_hud;
+    Hud* localplayer_hud;
 
     bool fenetreFinJeu, MenuView_ON;
     bool IsRunning;
