@@ -23,6 +23,16 @@ Texture* EntityWithWeapon::getSymboleActualWeapon(){
     return my_weapon.at(actual_weapon)->getSymbole();
 }
 
+bool EntityWithWeapon::isTirIllimity() const{
+
+    return my_weapon.at(actual_weapon)->isTirIllimity();
+}
+
+unsigned int EntityWithWeapon::getAmmunitions() const{
+
+    return my_weapon.at(actual_weapon)->getAmmunitions();
+}
+
 EntityWithWeapon::~EntityWithWeapon()
 {
     for(vector<Weapon *>::iterator it = my_weapon.begin(); it != my_weapon.end(); ++it)

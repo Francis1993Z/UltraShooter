@@ -3,6 +3,12 @@
 using namespace std;
 using namespace sf;
 
+Weapon::Weapon(bool p_tirIllimity, unsigned int p_ammunitions){
+
+    tirIllimity = p_tirIllimity;
+    ammunitions = p_ammunitions;
+}
+
 void Weapon::fire()
 {
 
@@ -31,6 +37,16 @@ bool Weapon::isUpdatable() const
 Texture* Weapon::getSymbole(){
 
     return &symbole;
+}
+
+bool Weapon::isTirIllimity() const{
+
+ return tirIllimity;
+}
+
+unsigned int Weapon::getAmmunitions() const{
+
+    return ammunitions;
 }
 
 Weapon::~Weapon()

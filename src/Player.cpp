@@ -24,14 +24,15 @@ Player::Player(sf::Vector2f init_position, TEAM team): Entity(1000, team), Score
     setOrigin(my_size.x/2, my_size.x/2);
     actual_weapon=0;
 
-    my_weapon.push_back(new AutomaticWeapon(*this));
-    my_weapon.push_back(new ShrapnelWeapon(*this));
-    my_weapon.push_back(new LaserWeapon(*this));
+    my_weapon.push_back(new AutomaticWeapon(*this, false, 100));
+    my_weapon.push_back(new ShrapnelWeapon(*this, false, 10));
+    my_weapon.push_back(new LaserWeapon(*this, true, 0));
 }
 
 void Player::Shoot()
 {
     my_weapon.at(actual_weapon)->fire();
+    Engine::getInstance()->getHud()->updateAmmunitions(isTirIllimity(), getAmmunitions());
 }
 
 void Player::update()
@@ -103,7 +104,7 @@ unsigned long Player::getScore()
 
 void Player::initHud(){
 
-    Engine::getInstance()->getHud()->init(vie, Score, getSymboleActualWeapon());
+    Engine::getInstance()->getHud()->init(vie, Score, getSymboleActualWeapon(), isTirIllimity(), getAmmunitions());
 }
 
 Player::~Player()

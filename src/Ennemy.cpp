@@ -27,7 +27,6 @@ unsigned int Ennemy::die() const
     return 1;
 }
 
-
 void Ennemy::ChangeBehaviour(Behaviour NewBehaviour)
 {
     my_behaviour=NewBehaviour;
@@ -38,13 +37,10 @@ void Ennemy::SetTarget(Player &NewTarget)
     my_target=&NewTarget;
 }
 
-
 Ennemy* Ennemy::getAdresse()
 {
     return  this;
 }
-
-
 
 int Ennemy::getKillPoint() const
 {

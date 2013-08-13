@@ -5,7 +5,7 @@
 using namespace std;
 using namespace sf;
 
-AutomaticWeapon::AutomaticWeapon(Entity const& my_user)
+AutomaticWeapon::AutomaticWeapon(Entity const& my_user, bool p_tirIllimity, unsigned int p_ammunitions):Weapon(p_tirIllimity, p_ammunitions)
 {
     user=&my_user;
     fire_intervale = 150.00f;
@@ -15,7 +15,7 @@ AutomaticWeapon::AutomaticWeapon(Entity const& my_user)
 
 void AutomaticWeapon::fire()
 {
-    if(fire_intervale_clock.getElapsedTime().asMilliseconds() >= fire_intervale)
+    if((tirIllimity || (!tirIllimity && ammunitions > 0)) && fire_intervale_clock.getElapsedTime().asMilliseconds() >= fire_intervale)
         {
 
             sf::Vector2i localMousePosition = sf::Mouse::getPosition(*Engine::getInstance()->getRenderWindow());
@@ -47,12 +47,17 @@ void AutomaticWeapon::fire()
 
 
             Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), angle, user->getTeam()));
+
+            if(!tirIllimity){
+
+                --ammunitions;
+            }
         }
 }
 
 void AutomaticWeapon::fire(sf::Vector2f target_position)
 {
-    if(fire_intervale_clock.getElapsedTime().asMilliseconds() >= fire_intervale)
+    if((tirIllimity || (!tirIllimity && ammunitions > 0)) && fire_intervale_clock.getElapsedTime().asMilliseconds() >= fire_intervale)
         {
 
             sf::Vector2f converted_target_coord;//la position de la souris est en int
@@ -82,5 +87,10 @@ void AutomaticWeapon::fire(sf::Vector2f target_position)
 
 
             Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), angle, user->getTeam()));
+
+            if(!tirIllimity){
+
+                --ammunitions;
+            }
         }
 }

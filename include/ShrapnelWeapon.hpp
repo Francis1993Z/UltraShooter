@@ -6,7 +6,7 @@
 class ShrapnelWeapon : public Weapon
 {
 public:
-    ShrapnelWeapon(Entity const& my_user);
+    ShrapnelWeapon(Entity const& my_user, bool p_tirIllimity, unsigned int p_ammunitions);
     void fire();
     sf::Sprite* getSymbole();
 };

@@ -7,7 +7,7 @@
 class AutomaticWeapon : public Weapon
 {
 public:
-    AutomaticWeapon(Entity const& my_user);
+    AutomaticWeapon(Entity const& my_user, bool p_tirIllimity, unsigned int p_ammunitions);
 
     /// \brief Tire des projectiles
     ///

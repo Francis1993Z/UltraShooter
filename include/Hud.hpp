@@ -20,14 +20,15 @@ public:
 
     void updateLife(long n_life);
     void updateScore(unsigned long n_score);
-    void updateSymboleWeapon(sf::Texture* p_symboleWeapon);
+    void updateActualWeapon(sf::Texture* p_symboleWeapon, bool p_tirIllimity, unsigned int p_ammunitions);
+    void updateAmmunitions(bool p_tirIllimity, unsigned int p_ammunitions);
     void setSizeWindow(sf::Vector2f n_sizeWindow);
     void Move(float vx, float vy);
     void setPositionHud();
     void draw();
     sf::Text getLife();
     sf::Text getScore();
-    void init(long n_life, unsigned long n_score, sf::Texture* p_symboleWeapon);
+    void init(long n_life, unsigned long n_score, sf::Texture* p_symboleWeapon, bool p_tirIllimity, unsigned int p_ammunitions);
 
     ~Hud();
 
@@ -35,6 +36,7 @@ protected:
 private:
     sf::Text t_life;
     sf::Text t_score;
+    sf::Text t_ammunitions;
     sf::Font font;
     sf::RectangleShape fondBarreDeVie;
     sf::RectangleShape barreDeVie;

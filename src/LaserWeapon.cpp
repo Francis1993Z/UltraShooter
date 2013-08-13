@@ -5,7 +5,7 @@
 using namespace std;
 using namespace sf;
 
-LaserWeapon::LaserWeapon(Entity const& my_user)
+LaserWeapon::LaserWeapon(Entity const& my_user, bool p_tirIllimity, unsigned int p_ammunitions):Weapon(p_tirIllimity, p_ammunitions)
 {
     needRefresh=true;
     my_laserbeam=NULL;

@@ -26,9 +26,9 @@ Raider::Raider(sf::Vector2f init_Position, Player& init_Target, TEAM team) : Enn
     m_fy=0.00f;
     d_radius = 25;
     //my_behaviour = ATTACK;
-    my_behaviour = STANDBY;
+    my_behaviour = ATTACK;
     actual_weapon=0;
-    my_weapon.push_back(new AutomaticWeapon(*this));
+    my_weapon.push_back(new AutomaticWeapon(*this, true, 0));
 }
 
 void Raider::update()

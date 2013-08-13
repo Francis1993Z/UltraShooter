@@ -355,7 +355,7 @@ void Engine::gestionEvenements()
             if (WindowEvent.type == sf::Event::MouseWheelMoved)
                 {
                     player->change_Weapon(WindowEvent.mouseWheel.delta);
-                    localplayer_hud->updateSymboleWeapon(player->getSymboleActualWeapon());
+                    localplayer_hud->updateActualWeapon(player->getSymboleActualWeapon(), player->isTirIllimity(), player->getAmmunitions());
                 }
 
         }//pollEvent
@@ -377,6 +377,7 @@ void Engine::gestionEvenements()
     else if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
             player->stopMLAction();
+
         }
 
 

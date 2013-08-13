@@ -8,7 +8,7 @@ class LaserWeapon : public Weapon
 {
     Laserbeam* my_laserbeam;
 public:
-    LaserWeapon(Entity const& my_user);
+    LaserWeapon(Entity const& my_user, bool p_tirIllimity, unsigned int p_ammunitions);
     void fire();
     void refresh();
     void update();

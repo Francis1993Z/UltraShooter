@@ -5,7 +5,7 @@
 using namespace std;
 using namespace sf;
 
-ShrapnelWeapon::ShrapnelWeapon(Entity const& my_user)
+ShrapnelWeapon::ShrapnelWeapon(Entity const& my_user, bool p_tirIllimity, unsigned int p_ammunitions):Weapon(p_tirIllimity, p_ammunitions)
 {
     user=&my_user;
     fire_intervale = 150.00f;
@@ -15,7 +15,7 @@ ShrapnelWeapon::ShrapnelWeapon(Entity const& my_user)
 
 void ShrapnelWeapon::fire()
 {
-    if(fire_intervale_clock.getElapsedTime().asMilliseconds() >= fire_intervale)
+    if((tirIllimity || (!tirIllimity && ammunitions > 0)) && fire_intervale_clock.getElapsedTime().asMilliseconds() >= fire_intervale)
         {
 
             sf::Vector2i localMousePosition = sf::Mouse::getPosition(*Engine::getInstance()->getRenderWindow());
@@ -60,5 +60,10 @@ void ShrapnelWeapon::fire()
             Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), aimangle4, user->getTeam()));
 
             Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), aimangle5, user->getTeam()));
+
+            if(!tirIllimity){
+
+                --ammunitions;
+            }
         }
 }

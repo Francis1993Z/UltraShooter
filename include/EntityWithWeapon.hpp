@@ -16,6 +16,8 @@ protected:
 public:
     void change_Weapon(int delta);
     sf::Texture* getSymboleActualWeapon();
+    bool isTirIllimity() const;
+    unsigned int getAmmunitions() const;
     virtual ~EntityWithWeapon();
 };
 
