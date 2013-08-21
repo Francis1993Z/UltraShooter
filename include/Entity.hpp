@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "GlobalFunctions.h"
+#include "TextureManager.h"
 
 
 class Entity : public sf::RectangleShape
