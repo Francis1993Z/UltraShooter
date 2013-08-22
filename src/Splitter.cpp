@@ -8,17 +8,26 @@ using namespace sf;
 Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int level, TEAM team)
     :Zombie(init_Position, init_Target, team)
 {
-    float m_size = 100;
+    setTexture(*TextureManager::getTexture(getCWD()+"/ressources/ship/Raider.bmp"));
+
+        sf::Image tmpimg = image_manager::get_image(getCWD()+"/ressources/ship/Raider.bmp");
+    sf::Vector2u my_sizeu = tmpimg.getSize();
+    sf::Vector2f my_sizef;
+    my_sizef.x = (float)my_sizeu.x;
+    my_sizef.y = (float)my_sizeu.y;
+    setPosition(init_Position);
+    setOrigin(my_sizef.x/2, my_sizef.x/2);
+    float m_size = my_sizef.x;
     float n_size = m_size;
     sf::Vector2f my_size;
     my_level = level;
 
-    e_m = 4;
+    e_m = 4;//vitesse
     e_mx = e_m;
     e_my = e_m;
-  setTexture(*TextureManager::getTexture(getCWD()+"/ressources/ship/Raider.bmp"));
+
     kill_point = 5;
-    vie=75;
+    vie=7500;
     if (level == 2)
         {
             n_size = m_size / 2;
@@ -54,8 +63,8 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
 
     d_radius=n_size/2;
 
-    my_behaviour = ATTACK;
-    //my_behaviour = STANDBY;
+    //my_behaviour = ATTACK;
+    my_behaviour = STANDBY;
 
     Vector2f t_pos=my_target->getPosition();
 

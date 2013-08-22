@@ -287,6 +287,7 @@ Hud* Engine::getHud() const{
     return localplayer_hud;
 }
 
+
 void Engine::gestionEvenements()
 {
     if (widgetManager.getPause())
@@ -415,35 +416,11 @@ bool Engine::loadNextMap()
     return false;
 }
 
-void Engine::updateView(float x, float y)
+void Engine::updateView()
 {
-
-    Vector2i object_pixel_position=Game->mapCoordsToPixel(player->getPosition(), PlayerView);
-
-    if(object_pixel_position.x < 630)
-        {
-            PlayerView.move(x, 0.f);
-            localplayer_hud->Move(x, 0.f);//On met à jour la position de la HUD
-            Game->setView(PlayerView);
-        }
-    if((unsigned)object_pixel_position.x > Game->getSize().x-630)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
-        {
-            PlayerView.move(x, 0.f);
-            localplayer_hud->Move(x, 0.f);
-            Game->setView(PlayerView);
-        }
-    if(object_pixel_position.y < 350)
-        {
-            PlayerView.move(0.f, y);
-            localplayer_hud->Move(0.f, y);
-            Game->setView(PlayerView);
-        }
-    if((unsigned)object_pixel_position.y > Game->getSize().y-350)//ignorer avertissement de la comparaison entre expressions entières signée et non signée
-        {
-            PlayerView.move(0.f, y);
-            localplayer_hud->Move(0.f, y);
-            Game->setView(PlayerView);
-        }
+        PlayerView.setCenter(player->getPosition());
+        Game->setView(PlayerView);
+                      localplayer_hud->setPositionHud();
 }
 
 void Engine::drawMenu()

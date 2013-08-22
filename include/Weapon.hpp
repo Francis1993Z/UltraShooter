@@ -21,7 +21,7 @@ public:
 protected:
     int damage;//dommages infligés
     sf::Clock fire_intervale_clock;//temps écoulé à chaque tir
-    float fire_intervale;//Itervale de temps spcecifique entre chaque projectile tiré
+    float fire_intervale;//Intervalle de temps spécifique entre chaque projectile tiré
     const Entity* user;//Pointeur sur l'utilisateur de l'arme
     bool needRefresh;//Si l'arme a besoin d'être mise à jour dans la boucle principale
     sf::Texture symbole;

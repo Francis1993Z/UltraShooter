@@ -11,7 +11,7 @@ public:
 
     /// \brief Tire des projectiles
     ///
-    /// Cette fonction tire des projectile en fonction de la position de la souris
+    /// Cette fonction tire des projectiles en fonction de la position de la souris
     /// Elle est tres utilise par les Player
     ///
     /// \return void

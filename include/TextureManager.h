@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <map>
+#include "imagemanager.h"
 
 using namespace std;
 

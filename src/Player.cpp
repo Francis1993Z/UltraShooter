@@ -9,7 +9,7 @@ using namespace sf;
 
 Player::Player(sf::Vector2f init_position, TEAM team): Entity(1000, team), Score(0)
 {
-     setTexture(*TextureManager::getTexture(getCWD()+"/ressources/ship/Raider.bmp"));
+     setTexture(*TextureManager::getTexture(getCWD()+"/ressources/ship/Vessel1.bmp"));
 
     e_m = 15.00f;//vitesse
     e_mx = e_m;
@@ -17,13 +17,13 @@ Player::Player(sf::Vector2f init_position, TEAM team): Entity(1000, team), Score
     m_fx=0.00f;
     m_fy=0.00f;
     d_radius = 25;
-    sf::Vector2f my_size;
-    my_size.x=50;
-    my_size.y=50;
-    //setSize(my_size);
-    //setFillColor(sf::Color::Blue);
+    sf::Image tmpimg = image_manager::get_image(getCWD()+"/ressources/ship/Vessel1.bmp");
+    sf::Vector2u my_sizeu = tmpimg.getSize();
+    sf::Vector2f my_sizef;
+    my_sizef.x = (float)my_sizeu.x;
+    my_sizef.y = (float)my_sizeu.y;
     setPosition(init_position);
-    setOrigin(my_size.x/2, my_size.x/2);
+    setOrigin(my_sizef.x/2, my_sizef.x/2);
     actual_weapon=0;
 
     my_weapon.push_back(new AutomaticWeapon(*this, false, 100));

@@ -11,6 +11,14 @@ Raider::Raider(sf::Vector2f init_Position, Player& init_Target, TEAM team) : Enn
 
  setTexture(*TextureManager::getTexture(getCWD()+"/ressources/ship/Raider.bmp"));
 
+        sf::Image tmpimg = image_manager::get_image(getCWD()+"/ressources/ship/Raider.bmp");
+    sf::Vector2u my_sizeu = tmpimg.getSize();
+    sf::Vector2f my_sizef;
+    my_sizef.x = (float)my_sizeu.x;
+    my_sizef.y = (float)my_sizeu.y;
+    setPosition(init_Position);
+    setOrigin(my_sizef.x/2, my_sizef.x/2);
+
     damage = 5;
     kill_point = 15;
 
@@ -19,7 +27,7 @@ Raider::Raider(sf::Vector2f init_Position, Player& init_Target, TEAM team) : Enn
     e_my = e_m;
     m_fx=0.00f;
     m_fy=0.00f;
-    d_radius = 25;
+    d_radius = my_sizef.x/2;
     //my_behaviour = ATTACK;
     my_behaviour = ATTACK;
     actual_weapon=0;
@@ -49,7 +57,7 @@ void Raider::update()
             float o = vec2.y - vec1.y;
             float TargetDirection;
             TargetDirection = atan2(-o, a);
-            setRotation(-(TargetDirection*180/M_PI));
+            setRotation(-(TargetDirection*180/M_PI)+90);
 
 
             if(distance_target > 350)

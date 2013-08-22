@@ -90,6 +90,7 @@ void Hud::setPositionHud()
 
 void Hud::Move(float vx, float vy)
 {
+    cout<<"move!"<<endl;
     t_score.move(vx, vy);
     fondBarreDeVie.move(vx, vy);
     barreDeVie.move(vx, vy);

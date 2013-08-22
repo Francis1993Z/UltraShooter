@@ -40,38 +40,46 @@ void Events::updateEvents()
         {
         case LEFT:
             x-=speed;
+             Engine::getInstance()->getPlayer()->setRotation(270);
             break;
 
         case RIGHT:
             x+=speed;
+                         Engine::getInstance()->getPlayer()->setRotation(90);
             break;
 
         case UP:
             y-=speed;
+                         Engine::getInstance()->getPlayer()->setRotation(0);
             break;
 
         case DOWN:
             y+=speed;
+                         Engine::getInstance()->getPlayer()->setRotation(180.00f);
             break;
 
         case UP_AND_LEFT:
             y-=diagonale;
             x-=diagonale;
+                         Engine::getInstance()->getPlayer()->setRotation(305.00f);
             break;
 
         case UP_AND_RIGHT:
             y-=diagonale;
             x+=diagonale;
+                         Engine::getInstance()->getPlayer()->setRotation(45.00f);
             break;
 
         case DOWN_AND_LEFT:
             y+=diagonale;
             x-=diagonale;
+                         Engine::getInstance()->getPlayer()->setRotation(225.00f);
             break;
 
         case DOWN_AND_RIGHT:
             y+=diagonale;
             x+=diagonale;
+                         Engine::getInstance()->getPlayer()->setRotation(135.00f);
             break;
 
         default:
@@ -81,7 +89,7 @@ void Events::updateEvents()
         }
 
             Engine::getInstance()->getPlayer()->move(x, y);
-            Engine::getInstance()->updateView(x,y);
+            Engine::getInstance()->updateView();
 
             if(Engine::getInstance()->getCollisionManager()->CollisionJoueur(x, y))
                 {

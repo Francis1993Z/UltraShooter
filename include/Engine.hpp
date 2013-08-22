@@ -60,7 +60,7 @@ public:
     Hud* getHud() const;
 
     bool loadNextMap();
-    void updateView(float x, float y);
+    void updateView();
     void SwitchView();
     sf::Vector2i getScreenSize2i() const;
     sf::Vector2f getScreenSize2f() const;
