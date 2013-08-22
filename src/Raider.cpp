@@ -19,6 +19,8 @@ Raider::Raider(sf::Vector2f init_Position, Player& init_Target, TEAM team) : Enn
     setPosition(init_Position);
     setOrigin(my_sizef.x/2, my_sizef.x/2);
 
+sf::Vector2f ancrage = EntityWithWeapon::searchhotspot(tmpimg);
+
     damage = 5;
     kill_point = 15;
 
@@ -31,11 +33,20 @@ Raider::Raider(sf::Vector2f init_Position, Player& init_Target, TEAM team) : Enn
     //my_behaviour = ATTACK;
     my_behaviour = ATTACK;
     actual_weapon=0;
-    my_weapon.push_back(new AutomaticWeapon(*this, true, 0));
+    my_weapon.push_back(new AutomaticWeapon(*this, true, 0, ancrage));
 }
+
 
 void Raider::update()
 {
+                my_weapon.at(actual_weapon)->updatePosition();
+
+
+
+                   if(my_weapon.at(actual_weapon)->isUpdatable())
+        {
+                     my_weapon.at(actual_weapon)->update();
+        }
     if(my_behaviour == ATTACK)
         {
 

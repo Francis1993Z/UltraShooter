@@ -14,6 +14,7 @@ protected:
     std::vector<Weapon *> my_weapon;
     int actual_weapon;
 public:
+    static sf::Vector2f searchhotspot(sf::Image tmpimg);
     void change_Weapon(int delta);
     sf::Texture* getSymboleActualWeapon();
     bool isTirIllimity() const;

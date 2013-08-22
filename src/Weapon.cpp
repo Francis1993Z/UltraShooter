@@ -29,6 +29,20 @@ void Weapon::update()
 
 }
 
+void Weapon::updatePosition()
+{
+
+        targetdata t_data = m_user.getTarget();
+
+    //cout<<"angle : "<<-(angle*180/M_PI)<<endl;
+    setRotation(-(t_data.angle*180/M_PI)-90);
+
+sf::Vector2f NewTurretPosition;
+  NewTurretPosition.x=((cos(GetRotation()*M_PI/180)*hypo))+(user->getOrigin().x - ancrage.x) + user->getPosition().x;
+  NewTurretPosition.y=(-(sin(GetRotation()*M_PI/180)*hypo))+(user->getOrigin().y - ancrage.y) + user->getPosition().y;
+  setPosition(NewTurretPosition);
+}
+
 bool Weapon::isUpdatable() const
 {
     return needRefresh;

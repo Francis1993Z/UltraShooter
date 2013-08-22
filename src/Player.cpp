@@ -24,11 +24,16 @@ Player::Player(sf::Vector2f init_position, TEAM team): Entity(1000, team), Score
     my_sizef.y = (float)my_sizeu.y;
     setPosition(init_position);
     setOrigin(my_sizef.x/2, my_sizef.x/2);
+
+
+
+sf::Vector2f ancrage = EntityWithWeapon::searchhotspot(tmpimg);
+
     actual_weapon=0;
 
-    my_weapon.push_back(new AutomaticWeapon(*this, false, 100));
-    my_weapon.push_back(new ShrapnelWeapon(*this, false, 10));
-    my_weapon.push_back(new LaserWeapon(*this, true, 0));
+    my_weapon.push_back(new AutomaticWeapon(*this, false, 100, ancrage));
+    my_weapon.push_back(new ShrapnelWeapon(*this, false, 10, ancrage));
+    my_weapon.push_back(new LaserWeapon(*this, true, 0, ancrage));
 }
 
 void Player::Shoot()
@@ -39,9 +44,13 @@ void Player::Shoot()
 
 void Player::update()
 {
-    if(my_weapon.at(actual_weapon)->isUpdatable())
+            my_weapon.at(actual_weapon)->updatePosition();
+
+
+
+                   if(my_weapon.at(actual_weapon)->isUpdatable())
         {
-            my_weapon.at(actual_weapon)->update();
+                     my_weapon.at(actual_weapon)->update();
         }
 }
 
