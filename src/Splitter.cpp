@@ -16,7 +16,7 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
     e_m = 4;
     e_mx = e_m;
     e_my = e_m;
-
+  setTexture(*TextureManager::getTexture(getCWD()+"/ressources/ship/Raider.bmp"));
     kill_point = 5;
     vie=75;
     if (level == 2)
@@ -26,6 +26,7 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
             vie=25;
             e_mx = e_m * 2;
             e_my = e_m * 2;
+            setScale(0.5, 0.5);
         }
     else if (level == 3)
         {
@@ -34,6 +35,7 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
             vie=10;
             e_mx=e_m*4;
             e_my=e_m*4;
+            setScale(0.25, 0.25);
         }
     else if (level == 4)
         {
@@ -46,10 +48,9 @@ Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int lev
 
     my_size.x=n_size;
     my_size.y=n_size;
-    setSize(my_size);
 
-    setOrigin(Vector2f(my_size.x / 2, my_size.y / 2));
-    setFillColor(Color::Green);
+
+
 
     d_radius=n_size/2;
 

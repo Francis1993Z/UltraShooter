@@ -9,14 +9,10 @@ using namespace sf;
 Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target, TEAM team)
     :Ennemy(init_Position, init_Target, 1, team)
 {
-
+ setTexture(*TextureManager::getInstance()->getTexture(getCWD()+"/ressources/ship/Raider.bmp"));
     sf::Vector2f my_size;
     my_size.x=25;
     my_size.y=25;
-    setSize(my_size);
-    setOrigin(Vector2f(25/2,25/2));
-    setFillColor(Color::Red);
-
 
     damage = 5;
     kill_point = 10;

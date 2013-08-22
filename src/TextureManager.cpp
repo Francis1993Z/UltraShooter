@@ -1,8 +1,25 @@
 #include "TextureManager.h"
-
+#include "imagemanager.h"
+/*
+bool TextureManager::isAlreadyInstancied = false;
+TextureManager* TextureManager::instance = 0;
+*/
 TextureManager::TextureManager()
 {
+
 }
+/*
+TextureManager* TextureManager::getInstance()
+{
+    if(!isAlreadyInstancied)
+        {
+           TextureManager::instance = new TextureManager();
+            isAlreadyInstancied = true;
+                image_manager::getInstance()->add_resource_directory(getCWD());
+        }
+
+    return instance;
+}*/
 
 map<string, sf::Texture*> TextureManager::textures;
 
@@ -15,7 +32,8 @@ sf::Texture *TextureManager::getTexture(string str)
 
    // Haven't loaded it yet, time to create it
    sf::Texture *texture = new sf::Texture();
-   if(texture->loadFromFile(str))
+
+   if(texture->loadFromImage(image_manager::getInstance()->get_image(str)))
    {
       textures[str] = texture;
       return textures[str];

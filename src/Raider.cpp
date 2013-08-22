@@ -6,15 +6,10 @@ using namespace std;
 using namespace sf;
 
 
-Raider::Raider(sf::Vector2f init_Position, Player& init_Target, TEAM team) : Ennemy(init_Position, init_Target, 1, team)
+Raider::Raider(sf::Vector2f init_Position, Player& init_Target, TEAM team) : Ennemy(init_Position, init_Target, 100, team)
 {
 
-    sf::Vector2f my_size;
-    my_size.x=50;
-    my_size.y=50;
-    setSize(my_size);
-    setOrigin(Vector2f(25,25));
-    setFillColor(Color::Magenta);
+ setTexture(*TextureManager::getTexture(getCWD()+"/ressources/ship/Raider.bmp"));
 
     damage = 5;
     kill_point = 15;
