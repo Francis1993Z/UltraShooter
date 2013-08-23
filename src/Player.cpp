@@ -23,11 +23,10 @@ Player::Player(sf::Vector2f init_position, TEAM team): Entity(1000, team), Score
     my_sizef.x = (float)my_sizeu.x;
     my_sizef.y = (float)my_sizeu.y;
     setPosition(init_position);
-    setOrigin(my_sizef.x/2, my_sizef.x/2);
 
+sf::Vector2f ancrage = searchhotspot(tmpimg);
 
-
-sf::Vector2f ancrage = EntityWithWeapon::searchhotspot(tmpimg);
+setOrigin(ancrage.x, ancrage.y);
 
     actual_weapon=0;
 

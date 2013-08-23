@@ -40,46 +40,46 @@ void Events::updateEvents()
         {
         case LEFT:
             x-=speed;
-             Engine::getInstance()->getPlayer()->setRotation(270);
+            Engine::getInstance()->getPlayer()->setRotation(90);
             break;
 
         case RIGHT:
             x+=speed;
-                         Engine::getInstance()->getPlayer()->setRotation(90);
+            Engine::getInstance()->getPlayer()->setRotation(270);
             break;
 
         case UP:
             y-=speed;
-                         Engine::getInstance()->getPlayer()->setRotation(0);
+            Engine::getInstance()->getPlayer()->setRotation(180);
             break;
 
         case DOWN:
             y+=speed;
-                         Engine::getInstance()->getPlayer()->setRotation(180.00f);
+            Engine::getInstance()->getPlayer()->setRotation(0);
             break;
 
         case UP_AND_LEFT:
             y-=diagonale;
             x-=diagonale;
-                         Engine::getInstance()->getPlayer()->setRotation(305.00f);
+            Engine::getInstance()->getPlayer()->setRotation(135);
             break;
 
         case UP_AND_RIGHT:
             y-=diagonale;
             x+=diagonale;
-                         Engine::getInstance()->getPlayer()->setRotation(45.00f);
+            Engine::getInstance()->getPlayer()->setRotation(225);
             break;
 
         case DOWN_AND_LEFT:
             y+=diagonale;
             x-=diagonale;
-                         Engine::getInstance()->getPlayer()->setRotation(225.00f);
+            Engine::getInstance()->getPlayer()->setRotation(45);
             break;
 
         case DOWN_AND_RIGHT:
             y+=diagonale;
             x+=diagonale;
-                         Engine::getInstance()->getPlayer()->setRotation(135.00f);
+            Engine::getInstance()->getPlayer()->setRotation(305);
             break;
 
         default:
