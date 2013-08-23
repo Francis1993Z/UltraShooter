@@ -64,13 +64,13 @@ const sf::Image& image_manager::get_image( const std::string& filename, sf::Colo
 
 void image_manager::delete_image( const sf::Image& image )
 {
-	for( std::map<std::string, sf::Image>::const_iterator it = images_.begin();
+	for( std::map<std::string, sf::Image>::iterator it = images_.begin();
 		 it != images_.end();
 		 ++it)
 	{
 		if( &image == &it->second )
 		{
-			images_.erase( it );
+			images_.erase(it);
                         return;
 		}
 	}
@@ -78,9 +78,9 @@ void image_manager::delete_image( const sf::Image& image )
 
 void image_manager::delete_image( const std::string& filename )
 {
-	std::map<std::string, sf::Image>::const_iterator it = images_.find( filename );
+	std::map<std::string, sf::Image>::iterator it = images_.find( filename );
 	if( it != images_.end() )
-		images_.erase( it );
+		images_.erase(it);
 }
 
 void image_manager::add_resource_directory( const std::string& directory )
