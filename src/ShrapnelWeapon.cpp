@@ -14,10 +14,11 @@ ShrapnelWeapon::ShrapnelWeapon(Entity const& my_user, bool p_tirIllimity, unsign
     sf::Vector2f my_sizef;
     my_sizef.x = (float)my_sizeu.x;
     my_sizef.y = (float)my_sizeu.y;
-    setPosition(init_Position);
-    setOrigin(my_sizef.x/2, my_sizef.x/2);
 
-    user=&my_user;
+    setOrigin(my_sizef.x/2, my_sizef.x/2);
+       user=&my_user;
+updatePosition();
+
     fire_intervale = 150.00f;
     needRefresh=false;
     symbole = (*(Engine::getInstance()->getLoadFiles()->getSymboleShrapnelWeapon()));

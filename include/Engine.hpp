@@ -10,8 +10,8 @@
 #include <string>
 #include <map>
 
-
-#include "Ennemy.hpp"//include Player
+#include "Player.hpp"
+#include "Ennemy.hpp"
 #include "Splitter.hpp"//inclue zombi
 #include "Raider.hpp"
 

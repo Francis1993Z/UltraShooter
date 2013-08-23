@@ -37,3 +37,4 @@ sf::Vector2f NewTurretPosition;
   t_turret->SetPosition(NewTurretPosition);
 
 (centre - position hotspot sur image) + position image dans monde 2D
+*/

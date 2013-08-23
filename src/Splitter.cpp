@@ -1,11 +1,11 @@
 #include "Splitter.hpp"
 #include "Engine.hpp"
-#include "Player.hpp"
+#include "Entity.hpp"
 
 using namespace std;
 using namespace sf;
 
-Splitter::Splitter(Vector2f init_Position, Player& init_Target, unsigned int level, TEAM team)
+Splitter::Splitter(Vector2f init_Position, Entity& init_Target, unsigned int level, TEAM team)
     :Zombie(init_Position, init_Target, team)
 {
     setTexture(*TextureManager::getTexture(getCWD()+"/ressources/ship/Raider.bmp"));
@@ -113,9 +113,8 @@ unsigned int Splitter::die() const
             next_level = getNextLevel();
 
             Map *tmp_map = Engine::getInstance()->getMap();
-            Player *tmp_player = Engine::getInstance()->getPlayer();
-            tmp_map->addEnnemy(new Splitter(NewSplittersPosition1, *tmp_player, next_level, getTeam()));
-            tmp_map->addEnnemy(new Splitter(NewSplittersPosition2, *tmp_player, next_level, getTeam()));
+            tmp_map->addEnnemy(new Splitter(NewSplittersPosition1, *my_target, next_level, getTeam()));
+            tmp_map->addEnnemy(new Splitter(NewSplittersPosition2, *my_target, next_level, getTeam()));
 
         }
     return getKillPoint();

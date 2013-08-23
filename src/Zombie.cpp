@@ -6,7 +6,7 @@ using namespace std;
 using namespace sf;
 
 
-Zombie::Zombie(sf::Vector2f init_Position, Player& init_Target, TEAM team)
+Zombie::Zombie(sf::Vector2f init_Position, Entity& init_Target, TEAM team)
     :Ennemy(init_Position, init_Target, 1, team)
 {
  setTexture(*TextureManager::getTexture(getCWD()+"/ressources/ship/Raider.bmp"));

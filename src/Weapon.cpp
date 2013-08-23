@@ -3,10 +3,11 @@
 using namespace std;
 using namespace sf;
 
-Weapon::Weapon(bool p_tirIllimity, unsigned int p_ammunitions){
+Weapon::Weapon(bool p_tirIllimity, unsigned int p_ammunitions, sf::Vector2f pos){
 
     tirIllimity = p_tirIllimity;
     ammunitions = p_ammunitions;
+    ancrage=pos;
 }
 
 void Weapon::fire()
@@ -32,14 +33,14 @@ void Weapon::update()
 void Weapon::updatePosition()
 {
 
-        targetdata t_data = m_user.getTarget();
+        targetdata t_data = user->getTarget();
 
     //cout<<"angle : "<<-(angle*180/M_PI)<<endl;
     setRotation(-(t_data.angle*180/M_PI)-90);
 
 sf::Vector2f NewTurretPosition;
-  NewTurretPosition.x=((cos(GetRotation()*M_PI/180)*hypo))+(user->getOrigin().x - ancrage.x) + user->getPosition().x;
-  NewTurretPosition.y=(-(sin(GetRotation()*M_PI/180)*hypo))+(user->getOrigin().y - ancrage.y) + user->getPosition().y;
+  NewTurretPosition.x=((cos(getRotation()*M_PI/180)))+(user->getOrigin().x - ancrage.x) + user->getPosition().x;
+  NewTurretPosition.y=(-(sin(getRotation()*M_PI/180)))+(user->getOrigin().y - ancrage.y) + user->getPosition().y;
   setPosition(NewTurretPosition);
 }
 

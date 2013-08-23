@@ -14,12 +14,13 @@ LaserWeapon::LaserWeapon(Entity const& my_user, bool p_tirIllimity, unsigned int
     sf::Vector2f my_sizef;
     my_sizef.x = (float)my_sizeu.x;
     my_sizef.y = (float)my_sizeu.y;
-    setPosition(init_Position);
-    setOrigin(my_sizef.x/2, my_sizef.x/2);
 
+    setOrigin(my_sizef.x/2, my_sizef.x/2);
+     user=&my_user;
+updatePosition();
     needRefresh=true;
     my_laserbeam=NULL;
-    user=&my_user;
+
     symbole = (*(Engine::getInstance()->getLoadFiles()->getSymboleLaserWeapon()));
 }
 
