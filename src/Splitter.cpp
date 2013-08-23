@@ -27,7 +27,7 @@ Splitter::Splitter(Vector2f init_Position, Entity& init_Target, unsigned int lev
     e_my = e_m;
 
     kill_point = 5;
-    vie=7500;
+    vie=75;
     if (level == 2)
         {
             n_size = m_size / 2;

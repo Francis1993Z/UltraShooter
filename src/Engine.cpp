@@ -441,6 +441,7 @@ void Engine::drawGame()
     gameMap->drawObstacles(Game);
     gameMap->drawBonus();
     Game->draw(*player);
+    Game->draw(*player->getWeapon());
     localplayer_hud->draw();
 }
 

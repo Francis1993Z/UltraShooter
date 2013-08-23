@@ -62,15 +62,15 @@ void ShrapnelWeapon::fire()
             float aimangle4 = angle-0.1;
             float aimangle5 = angle-0.05;
 
-            Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), angle, user->getTeam()));
+            Engine::getInstance()->getMap()->addProjectile(new Bullet(getPosition(), angle, user->getTeam()));
 
-            Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), aimangle2, user->getTeam()));
+            Engine::getInstance()->getMap()->addProjectile(new Bullet(getPosition(), aimangle2, user->getTeam()));
 
-            Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), aimangle3, user->getTeam()));
+            Engine::getInstance()->getMap()->addProjectile(new Bullet(getPosition(), aimangle3, user->getTeam()));
 
-            Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), aimangle4, user->getTeam()));
+            Engine::getInstance()->getMap()->addProjectile(new Bullet(getPosition(), aimangle4, user->getTeam()));
 
-            Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), aimangle5, user->getTeam()));
+            Engine::getInstance()->getMap()->addProjectile(new Bullet(getPosition(), aimangle5, user->getTeam()));
 
             if(!tirIllimity){
 

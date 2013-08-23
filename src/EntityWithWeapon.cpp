@@ -39,6 +39,11 @@ EntityWithWeapon::~EntityWithWeapon()
         delete *it;
 }
 
+Weapon* EntityWithWeapon::getWeapon() const
+{
+    return my_weapon.at(actual_weapon);
+}
+
 
 sf::Vector2f EntityWithWeapon::searchhotspot(sf::Image tmpimg)
 {

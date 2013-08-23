@@ -28,7 +28,7 @@ void LaserWeapon::fire()
 {
     if(my_laserbeam==NULL)
         {
-            my_laserbeam = new Laserbeam(user->getPosition(), *user, user->getTeam());
+            my_laserbeam = new Laserbeam(getPosition(), *user, user->getTeam());
             my_laserbeam->setm(my_laserbeam);
             Engine::getInstance()->getMap()->addProjectile(my_laserbeam);
             //cout<<"new laser"<<endl;

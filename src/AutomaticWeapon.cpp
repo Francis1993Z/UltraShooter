@@ -58,7 +58,7 @@ void AutomaticWeapon::fire()
             fire_intervale_clock.restart();
 
 
-            Engine::getInstance()->getMap()->addProjectile(new Bullet(user->getPosition(), angle, user->getTeam()));
+            Engine::getInstance()->getMap()->addProjectile(new Bullet(getPosition(), angle, user->getTeam()));
 
             if(!tirIllimity){
 

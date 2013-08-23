@@ -302,7 +302,7 @@ void Map::update(RenderWindow* game)
         }
     }
 
-    game->draw(background);
+    //game->draw(background);
 
     for(it = ProjectilesArray.begin(); it != ProjectilesArray.end(); ++it)
         game->draw(*(*it));
@@ -313,6 +313,7 @@ void Map::update(RenderWindow* game)
 
     for(itEnnemy = EntityArray.begin(); itEnnemy != EntityArray.end(); ++itEnnemy)
         game->draw(*(*itEnnemy));
+
 }
 
 Sprite Map::getBackground() const
