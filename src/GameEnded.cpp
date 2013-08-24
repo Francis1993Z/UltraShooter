@@ -25,15 +25,22 @@ GameEnded::GameEnded()
 
     fond.setPosition(position_fond);
 
+    titre.setPosition(fond.getPosition().x+(fond.getSize().x/2)-(titre.getGlobalBounds().width/2), fond.getPosition().y+20);
     titre.setFont(*(Engine::getInstance()->getLoadFiles()->getPoliceArial()));
     titre.setColor(sf::Color::Black);
     titre.setCharacterSize(60);
 
+    messageInformatif.setPosition(fond.getPosition().x+10, fond.getPosition().y+150);
     messageInformatif.setFont(*(Engine::getInstance()->getLoadFiles()->getPoliceArial()));
     messageInformatif.setColor(sf::Color::Black);
     messageInformatif.setCharacterSize(20);
     messageInformatif.setString("Entrez votre pseudo :");
 
+    addWidget(new Button(pos, "Ok", 0, 0));
+    champsPseudo = new TextField(fond.getPosition().x+messageInformatif.getGlobalBounds().width+20, fond.getPosition().y+150, 1, 0);
+    addWidget(champsPseudo);
+
+    setActualGroup(0);
 }
 
 void GameEnded::draw()
@@ -66,18 +73,8 @@ void GameEnded::setActif(bool p_actif, bool gameOver)
 
     actif = p_actif;
 
-                sf::Vector2i pos = Engine::getInstance()->getScreenSize2i();
-                pos.x= pos.x/2.00f;
-                pos.y= (pos.y/2.00f)+50;
-            addWidget(new Button(pos, "Ok", 0));
-
     if(actif)
         {
-
-            champsPseudo = new TextField(fond.getPosition().x+messageInformatif.getGlobalBounds().width+20, fond.getPosition().y+150, 1);
-            addWidget(champsPseudo);
-
-
             if(gameOver)
                 {
 
@@ -88,9 +85,6 @@ void GameEnded::setActif(bool p_actif, bool gameOver)
 
                     titre.setString("BRAVO !");
                 }
-
-            titre.setPosition(fond.getPosition().x+(fond.getSize().x/2)-(titre.getGlobalBounds().width/2), fond.getPosition().y+20);
-            messageInformatif.setPosition(fond.getPosition().x+10, fond.getPosition().y+150);
         }
 }
 

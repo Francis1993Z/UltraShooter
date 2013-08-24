@@ -10,7 +10,7 @@
 class TextField : public Widget
 {
 public:
-    TextField(int p_posX, int p_posY, int p_id);
+    TextField(int p_posX, int p_posY, int p_id, int p_group);
     void draw();
     sf::FloatRect getCollisionBox() const;
     void setSurvolSouris(bool p_survol);

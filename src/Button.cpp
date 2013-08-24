@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Button::Button(sf::Vector2i p_pos, std::string p_text, int p_id)
+Button::Button(sf::Vector2i p_pos, std::string p_text, int p_id, int p_group):Widget(p_group)
 {
     survol = false;
     id = p_id;

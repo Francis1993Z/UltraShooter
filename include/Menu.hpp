@@ -28,18 +28,12 @@ private:
     sf::Text participant;
     bool actif;
     bool options;
+    bool scores;
     std::list<sf::Text> listeScores;
     Button* play;
-    Button* scores;
+    Button* scoresB;
     Button* quit;
-    float pos_x, pos_y;
-    float rotation;
-    int compteurCharactereSize;
-    int charactereSize;
-    unsigned int indiceListeParticipants;
-    int pause;
-    bool termine;
-    std::string listeParticipants[3];
+    Button* retourS;
 };
 
 #endif // MENU_INCLUDED_HPP

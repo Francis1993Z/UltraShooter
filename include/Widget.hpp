@@ -8,7 +8,7 @@ enum Type {Basic};
 class Widget
 {
 public:
-    Widget();
+    Widget(int p_group);
     virtual void draw() = 0;
     virtual sf::FloatRect getCollisionBox() const = 0;
     virtual void setSurvolSouris(bool p_survol) = 0;
@@ -16,9 +16,11 @@ public:
     virtual void codeKeyPressed(int code) = 0;
     int getId() const;
     Type getType() const;
+    int getGroup() const;
     virtual ~Widget();
 protected:
     int id;
+    int group;
     Type type;
 private:
 };

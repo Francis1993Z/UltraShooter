@@ -10,118 +10,39 @@ using namespace sf;
 Menu::Menu(sf::Vector2u sizeWindow, View menu_view)
 {
     options = false;
+    scores = false;
     sf::Vector2f converted_sprite_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(sf::Vector2i(0, 0), menu_view);
     sprite.setPosition(converted_sprite_coord);
     sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgBackgroundMenu()));
     sprite.scale(sf::Vector2f(sizeWindow.x/((float)sprite.getTexture()->getSize().x), sizeWindow.y/((float)sprite.getTexture()->getSize().y)));
 
-    play = new Button(sf::Vector2i(0, 0), "Play", 0);
-    scores = new Button(sf::Vector2i(0, 50), "High Scores", 1);
-    quit = new Button(sf::Vector2i(0, 100), "Quit", 2);
+    play = new Button(sf::Vector2i(0, 0), "Play", 0, 0);
+    scoresB = new Button(sf::Vector2i(0, 50), "High Scores", 1, 0);
+    quit = new Button(sf::Vector2i(0, 100), "Quit", 2, 0);
+    retourS = new Button(Vector2i(0, sizeWindow.y-50), "Come back", 5, 1);
 
     play->addLanguage(Fr, "Jouer");
-    scores->addLanguage(Fr, "Meilleurs Scores");
+    scoresB->addLanguage(Fr, "Meilleurs Scores");
     quit->addLanguage(Fr, "Quitter");
+    retourS->addLanguage(Fr, "Retour");
 
     addWidget(play);
-    addWidget(scores);
+    addWidget(scoresB);
     addWidget(quit);
-    addWidget(new Button(sf::Vector2i(0, 200), "English", 3));
-    addWidget(new Button(sf::Vector2i(0, 250), "Français", 4));
+    addWidget(new Button(sf::Vector2i(0, 200), "English", 3, 0));
+    addWidget(new Button(sf::Vector2i(0, 250), "Français", 4, 0));
+    addWidget(retourS);
 
-    listeParticipants[0] = "Francis Marcoux";
-    listeParticipants[1] = "Yann Castel";
-    listeParticipants[2] = "William Bedu";
-
-    participant.setFont(*(Engine::getInstance()->getLoadFiles()->getPoliceArial()));
-    indiceListeParticipants = 0;
-    participant.setString(listeParticipants[indiceListeParticipants]);
-    charactereSize = 0;
-    compteurCharactereSize = 0;
-    participant.setCharacterSize(charactereSize);
-    participant.setColor(sf::Color::White);
-    //pos_x = sizeWindow.x/2;
-    //pos_y = sizeWindow.y/2;
-    pos_x = 200.0f;
-    pos_y = 500.0f;
-    rotation = 0.0f;
-    participant.setPosition(pos_x, pos_y);
-    participant.setOrigin(participant.getGlobalBounds().width/2, participant.getGlobalBounds().height/2);
-    pause = 0;
-    termine = false;
+    setActualGroup(0);
 }
 
 void Menu::draw()
 {
-    Engine::getInstance()->getRenderWindow()->draw(sprite);
+    if(!options && !scores)
+    {
 
-    if(!options)
-        {
-
-            drawWidgets();
-
-            if(!termine){
-
-            if(participant.getPosition().x < 500 && participant.getPosition().y  > 200){
-
-                pos_x += 3.0f;
-                pos_y -= 3.0f;
-                rotation += 360.0f/100.0f;
-
-                ++compteurCharactereSize;
-
-                if(compteurCharactereSize == 2){
-
-                    compteurCharactereSize = 0;
-                    ++charactereSize;
-                }
-            }
-            else{
-
-                if(pause != 20){
-
-                   pause++;
-                }
-                else{
-
-                    ++compteurCharactereSize;
-
-                    if(compteurCharactereSize == 2){
-
-                        compteurCharactereSize = 0;
-                        --charactereSize;
-                    }
-
-                    if(charactereSize == 0){
-
-                       ++indiceListeParticipants;
-
-                       if(indiceListeParticipants < 3){
-
-                            participant.setString(listeParticipants[indiceListeParticipants]);
-                            pos_x = 200.0f;
-                            pos_y = 500.0f;
-                            rotation = 0.0f;
-                            pause = 0;
-                            compteurCharactereSize = 0;
-                            charactereSize = 0;
-                       }
-                       else{
-
-                            termine = true;
-                        }
-                    }
-                }
-            }
-
-            participant.setPosition(pos_x, pos_y);
-            participant.setCharacterSize(charactereSize);
-            participant.setRotation(rotation);
-
-            Engine::getInstance()->getRenderWindow()->draw(participant);
-            }
-
-        }
+        Engine::getInstance()->getRenderWindow()->draw(sprite);
+    }
     else
         {
 
@@ -133,6 +54,8 @@ void Menu::draw()
                     Engine::getInstance()->getRenderWindow()->draw(*it);
                 }
         }
+
+        drawWidgets();
 }
 
 void Menu::action(int idWidgetClique)
@@ -146,7 +69,8 @@ void Menu::action(int idWidgetClique)
             Engine::getInstance()->SwitchView();
             break;
         case 1:
-            options = true;
+            scores = true;
+            setActualGroup(1);
             afficherScores();
             break;
         case 2:
@@ -154,13 +78,17 @@ void Menu::action(int idWidgetClique)
             break;
         case 3:
             play->setCurrentLanguage(En);
-            scores->setCurrentLanguage(En);
+            scoresB->setCurrentLanguage(En);
             quit->setCurrentLanguage(En);
             break;
         case 4:
             play->setCurrentLanguage(Fr);
-            scores->setCurrentLanguage(Fr);
+            scoresB->setCurrentLanguage(Fr);
             quit->setCurrentLanguage(Fr);
+            break;
+        case 5:
+            scores = false;
+            setActualGroup(0);
             break;
         default:
             errorId(idWidgetClique);

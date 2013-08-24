@@ -19,6 +19,7 @@ void WidgetManager::updatePosSouris(float pos_x, float pos_y)
 
     for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it)
         {
+        if((*it)->getGroup() == widgetListener->getActualGroup()){
 
             if((*it)->getCollisionBox().contains(pos_x, pos_y))
                 {
@@ -31,6 +32,7 @@ void WidgetManager::updatePosSouris(float pos_x, float pos_y)
                     (*it)->setSurvolSouris(false);
                 }
         }
+    }
 }
 
 void WidgetManager::positionClicSouris(float pos_x, float pos_y)
@@ -38,6 +40,8 @@ void WidgetManager::positionClicSouris(float pos_x, float pos_y)
 
     for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it)
         {
+
+    if((*it)->getGroup() == widgetListener->getActualGroup()){
 
             if((*it)->getCollisionBox().contains(pos_x, pos_y))
                 {
@@ -51,6 +55,7 @@ void WidgetManager::positionClicSouris(float pos_x, float pos_y)
                     (*it)->setClicSouris(false);
                 }
         }
+    }
 }
 
 void WidgetManager::positionRelachementSouris(float pos_x, float pos_y)
@@ -59,7 +64,7 @@ void WidgetManager::positionRelachementSouris(float pos_x, float pos_y)
     for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it)
         {
 
-            if((*it)->getCollisionBox().contains(pos_x, pos_y) && (*it)->getId() == idWidgetClique)
+            if((*it)->getGroup() == widgetListener->getActualGroup() && (*it)->getCollisionBox().contains(pos_x, pos_y) && (*it)->getId() == idWidgetClique)
                 {
 
                     widgetListener->action(idWidgetClique);
@@ -72,8 +77,10 @@ void WidgetManager::codeKeyPressed(int code)
 
     for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it)
         {
+            if((*it)->getGroup() == widgetListener->getActualGroup()){
 
-            (*it)->codeKeyPressed(code);
+                (*it)->codeKeyPressed(code);
+            }
         }
 }
 

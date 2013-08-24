@@ -22,8 +22,10 @@ void WidgetListener::drawWidgets()
 
     for(it = listeWidgets.begin(); it != listeWidgets.end(); ++it)
         {
+            if((*it)->getGroup() == getActualGroup()){
 
-            (*it)->draw();
+                (*it)->draw();
+            }
         }
 }
 
@@ -38,6 +40,16 @@ void WidgetListener::errorId(int id)
 
     cerr << "ERROR : Id ("<<id<<") du widget est inconnu dans action()" << endl;
     exit(10);
+}
+
+void WidgetListener::setActualGroup(int p_id){
+
+    id = p_id;
+}
+
+int WidgetListener::getActualGroup() const{
+
+    return id;
 }
 
 WidgetListener::~WidgetListener()

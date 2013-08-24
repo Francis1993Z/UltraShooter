@@ -1,8 +1,9 @@
 #include "Widget.hpp"
 
-Widget::Widget()
+Widget::Widget(int p_group)
 {
     type = Basic;
+    group = p_group;
 }
 
 int Widget::getId() const
@@ -15,6 +16,11 @@ Type Widget::getType() const
 {
 
     return type;
+}
+
+int Widget::getGroup() const{
+
+    return group;
 }
 
 Widget::~Widget()
