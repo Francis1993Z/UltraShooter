@@ -7,7 +7,7 @@
 using namespace std;
 using namespace sf;
 
-TextField::TextField(int p_posX, int p_posY, int p_id, int p_group):Widget(p_group)
+TextField::TextField(int p_posX, int p_posY, int p_group):Widget(p_group)
 {
     champs.setSize(sf::Vector2f(270.f, 30.f));
     champs.setFillColor(sf::Color(0, 0, 0));

@@ -14,7 +14,7 @@ enum Language{En, Fr};
 class Button : public Widget
 {
 public:
-    Button(sf::Vector2i p_pos, std::string p_text, int p_id, int p_group);
+    Button(sf::Vector2i p_pos, std::string p_text, int p_group);
     void draw();
     sf::FloatRect getCollisionBox() const;
     void setSurvolSouris(bool p_survol);

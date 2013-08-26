@@ -5,10 +5,9 @@
 
 using namespace std;
 
-Button::Button(sf::Vector2i p_pos, std::string p_text, int p_id, int p_group):Widget(p_group)
+Button::Button(sf::Vector2i p_pos, std::string p_text, int p_group):Widget(p_group)
 {
     survol = false;
-    id = p_id;
 
     sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgButton()));
 sf::Vector2f converted_boutton_coord = Engine::getInstance()->getRenderWindow()->mapPixelToCoords(p_pos, Engine::getInstance()->getMenuView());

@@ -364,7 +364,7 @@ void Engine::gestionEvenements()
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
 
-            if (!menu->isActif())
+            if (!menu->isActif() && !gameEnded->isActif())
                 {
                     player->Shoot();
                 }

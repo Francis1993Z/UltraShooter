@@ -5,12 +5,13 @@
 
 #include "WidgetListener.hpp"
 #include "TextField.hpp"
+#include "Button.hpp"
 
 class GameEnded : public WidgetListener
 {
 public:
     GameEnded();
-    void action(int idWidgetClique);
+    void action(Widget* widgetClique);
     void draw();
     void setActif(bool p_actif, bool gameOver);
     void enregistrerScoreJoueur();
@@ -23,6 +24,7 @@ private:
     TextField* champsPseudo;
     sf::Text titre;
     sf::Text messageInformatif;
+    Button* ok;
 };
 
 #endif // GAMEENDED_INCLUDED_HPP

@@ -17,7 +17,7 @@ public:
     Menu(sf::Vector2u sizeWindow, sf::View menu_view);
     virtual ~Menu();
     void draw();
-    void action(int id);
+    void action(Widget* widgetClique);
     bool isActif() const;
     void afficher();
     void afficherScores();

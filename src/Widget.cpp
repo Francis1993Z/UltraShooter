@@ -6,12 +6,6 @@ Widget::Widget(int p_group)
     group = p_group;
 }
 
-int Widget::getId() const
-{
-
-    return id;
-}
-
 Type Widget::getType() const
 {
 

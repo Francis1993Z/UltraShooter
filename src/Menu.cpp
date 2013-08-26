@@ -16,10 +16,10 @@ Menu::Menu(sf::Vector2u sizeWindow, View menu_view)
     sprite.setTexture(*(Engine::getInstance()->getLoadFiles()->getImgBackgroundMenu()));
     sprite.scale(sf::Vector2f(sizeWindow.x/((float)sprite.getTexture()->getSize().x), sizeWindow.y/((float)sprite.getTexture()->getSize().y)));
 
-    play = new Button(sf::Vector2i(0, 0), "Play", 0, 0);
-    scoresB = new Button(sf::Vector2i(0, 50), "High Scores", 1, 0);
-    quit = new Button(sf::Vector2i(0, 100), "Quit", 2, 0);
-    retourS = new Button(Vector2i(0, sizeWindow.y-50), "Come back", 5, 1);
+    play = new Button(sf::Vector2i(0, 0), "Play", 0);
+    scoresB = new Button(sf::Vector2i(0, 50), "High Scores", 0);
+    quit = new Button(sf::Vector2i(0, 100), "Quit", 0);
+    retourS = new Button(Vector2i(0, sizeWindow.y-50), "Come back", 1);
 
     play->addLanguage(Fr, "Jouer");
     scoresB->addLanguage(Fr, "Meilleurs Scores");
@@ -29,8 +29,6 @@ Menu::Menu(sf::Vector2u sizeWindow, View menu_view)
     addWidget(play);
     addWidget(scoresB);
     addWidget(quit);
-    addWidget(new Button(sf::Vector2i(0, 200), "English", 3, 0));
-    addWidget(new Button(sf::Vector2i(0, 250), "Français", 4, 0));
     addWidget(retourS);
 
     setActualGroup(0);
@@ -58,42 +56,28 @@ void Menu::draw()
         drawWidgets();
 }
 
-void Menu::action(int idWidgetClique)
+void Menu::action(Widget* widgetClique)
 {
+    if(widgetClique == play){
 
-    switch (idWidgetClique)
-        {
+        actif = false;
+        Engine::getInstance()->SwitchView();
+    }
+    else if(widgetClique == scoresB){
 
-        case 0:
-            actif = false;
-            Engine::getInstance()->SwitchView();
-            break;
-        case 1:
-            scores = true;
-            setActualGroup(1);
-            afficherScores();
-            break;
-        case 2:
-            Engine::getInstance()->leaveGame("Quitter Menu");
-            break;
-        case 3:
-            play->setCurrentLanguage(En);
-            scoresB->setCurrentLanguage(En);
-            quit->setCurrentLanguage(En);
-            break;
-        case 4:
-            play->setCurrentLanguage(Fr);
-            scoresB->setCurrentLanguage(Fr);
-            quit->setCurrentLanguage(Fr);
-            break;
-        case 5:
-            scores = false;
-            setActualGroup(0);
-            break;
-        default:
-            errorId(idWidgetClique);
-            break;
-        }
+        scores = true;
+        setActualGroup(1);
+        afficherScores();
+    }
+    else if(widgetClique == quit){
+
+        Engine::getInstance()->leaveGame("Quitter Menu");
+    }
+    else if(widgetClique == retourS){
+
+        scores = false;
+        setActualGroup(0);
+    }
 }
 
 bool Menu::isActif() const

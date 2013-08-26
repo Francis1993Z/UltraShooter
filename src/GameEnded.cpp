@@ -36,8 +36,9 @@ GameEnded::GameEnded()
     messageInformatif.setCharacterSize(20);
     messageInformatif.setString("Entrez votre pseudo :");
 
-    addWidget(new Button(pos, "Ok", 0, 0));
-    champsPseudo = new TextField(fond.getPosition().x+messageInformatif.getGlobalBounds().width+20, fond.getPosition().y+150, 1, 0);
+    ok = new Button(pos, "Ok", 0);
+    addWidget(ok);
+    champsPseudo = new TextField(fond.getPosition().x+messageInformatif.getGlobalBounds().width+20, fond.getPosition().y+150, 0);
     addWidget(champsPseudo);
 
     setActualGroup(0);
@@ -52,20 +53,12 @@ void GameEnded::draw()
     drawWidgets();
 }
 
-void GameEnded::action(int widgetClique)
-{
+void GameEnded::action(Widget* widgetClique)
+{cout<<"lol"<<endl;
+    if(widgetClique == ok){
 
-    switch(widgetClique)
-        {
-
-        case 0:
-            enregistrerScoreJoueur();
-            break;
-        case 1:
-            break;
-        default:
-            break;
-        }
+        enregistrerScoreJoueur();
+    }
 }
 
 void GameEnded::setActif(bool p_actif, bool gameOver)

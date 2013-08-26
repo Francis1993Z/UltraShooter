@@ -24,7 +24,7 @@ public:
 protected:
 private:
     std::list<Widget *>* listeWidgets;
-    int idWidgetClique;
+    Widget* widgetClique;
     bool pause;
     WidgetListener* widgetListener;
 };

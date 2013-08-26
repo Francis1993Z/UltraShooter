@@ -14,12 +14,10 @@ public:
     virtual void setSurvolSouris(bool p_survol) = 0;
     virtual void setClicSouris(bool p_clic) = 0;
     virtual void codeKeyPressed(int code) = 0;
-    int getId() const;
     Type getType() const;
     int getGroup() const;
     virtual ~Widget();
 protected:
-    int id;
     int group;
     Type type;
 private:

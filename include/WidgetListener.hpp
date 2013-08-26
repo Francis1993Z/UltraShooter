@@ -10,7 +10,7 @@ class WidgetListener
 public:
     WidgetListener();
     std::list<Widget *>* getListeWidgets();
-    virtual void action(int idWidgetClique) = 0;
+    virtual void action(Widget* widgetClique) = 0;
     virtual void draw() = 0;
     void setActualGroup(int p_id);
     int getActualGroup() const;

@@ -1,4 +1,5 @@
 #include "WidgetManager.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -46,7 +47,7 @@ void WidgetManager::positionClicSouris(float pos_x, float pos_y)
             if((*it)->getCollisionBox().contains(pos_x, pos_y))
                 {
 
-                    idWidgetClique = (*it)->getId();
+                    widgetClique = *it;
                     (*it)->setClicSouris(true);
                 }
             else
@@ -64,10 +65,9 @@ void WidgetManager::positionRelachementSouris(float pos_x, float pos_y)
     for(list<Widget *>::iterator it = listeWidgets->begin(); it != listeWidgets->end(); ++it)
         {
 
-            if((*it)->getGroup() == widgetListener->getActualGroup() && (*it)->getCollisionBox().contains(pos_x, pos_y) && (*it)->getId() == idWidgetClique)
+            if((*it)->getGroup() == widgetListener->getActualGroup() && (*it)->getCollisionBox().contains(pos_x, pos_y) && *it == widgetClique)
                 {
-
-                    widgetListener->action(idWidgetClique);
+                    widgetListener->action(widgetClique);
                 }
         }
 }
