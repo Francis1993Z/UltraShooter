@@ -35,9 +35,9 @@ public:
     void move_myhud(float vx, float vy);
     //void setSizeWindowHud(sf::Vector2f sizeWindow);
     void addPoints(int p);
-    void modifierVie(int pv);
+    bool modifierVie(int pv);
     void initHud();
-
+    int getVieMax() const;
     void Shoot();
     ~Player();
 

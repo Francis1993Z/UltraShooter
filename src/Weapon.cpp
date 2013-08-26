@@ -41,7 +41,7 @@ void Weapon::updatePosition()
 sf::Vector2f NewTurretPosition;
   NewTurretPosition.x=((cos(user->getRotation()*M_PI/180)))+(user->getOrigin().x - ancrage.x) + user->getPosition().x;
   NewTurretPosition.y=(-(sin(user->getRotation()*M_PI/180)))+(user->getOrigin().y - ancrage.y) + user->getPosition().y;
-  cout<<"NewTurretPosition.x : "<<NewTurretPosition.x<<" NewTurretPosition.y : "<<NewTurretPosition.y<<endl;
+  //cout<<"NewTurretPosition.x : "<<NewTurretPosition.x<<" NewTurretPosition.y : "<<NewTurretPosition.y<<endl;
   setPosition(NewTurretPosition);
 }
 

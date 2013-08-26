@@ -28,17 +28,17 @@ Hud::Hud()
     t_ammunitions.setColor(sf::Color::Red);
 }
 
-void Hud::init(long n_life, unsigned long n_score, Texture* p_symboleWeapon, bool p_tirIllimity, unsigned int p_ammunitions){
+void Hud::init(long n_life, int p_vieMaxPlayer, unsigned long n_score, Texture* p_symboleWeapon, bool p_tirIllimity, unsigned int p_ammunitions){
 
-    updateLife(n_life);
+    updateLife(n_life, p_vieMaxPlayer);
     updateScore(n_score);
     updateActualWeapon(p_symboleWeapon, p_tirIllimity, p_ammunitions);
     setPositionHud();
 }
 
-void Hud::updateLife(long n_life)
+void Hud::updateLife(long n_life, int p_vieMaxPlayer)
 {
-    barreDeVie.setSize(Vector2f(200.f/1000*n_life, barreDeVie.getSize().y));
+    barreDeVie.setSize(Vector2f(200.f/p_vieMaxPlayer*n_life, barreDeVie.getSize().y));
 }
 
 void Hud::updateScore(unsigned long n_score)

@@ -30,7 +30,7 @@ public:
     TEAM getTeam() const;///recuperer dans quel equipe on est
     sf::FloatRect getCollisionBox();
     void subirDegats(unsigned int p_damage);///diminue les points de vie
-    virtual void modifierVie(int pv);///modifie les points de vie
+    virtual bool modifierVie(int pv);///modifie les points de vie
     bool alive() const;///Savoir si l'objet est encore en vie
     long getVie() const;///Recuperer les points de vie actuels
     float getSpeed() const;///Connaitre la vitesse

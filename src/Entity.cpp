@@ -16,9 +16,11 @@ bool Entity::alive() const
     return false;
 }
 
-void Entity::modifierVie(int pv)
+bool Entity::modifierVie(int pv)
 {
     vie+=pv;
+
+    return true;
 }
 
 sf::FloatRect Entity::getCollisionBox()

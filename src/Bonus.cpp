@@ -20,11 +20,9 @@ Bonus::Bonus(Vector2f pos)
 
 void Bonus::ramasser(){
 
-    ramasse = true;
+    if(typeBonusChoisi == VIE && Engine::getInstance()->getPlayer()->modifierVie(bonusVie)){
 
-    if(typeBonusChoisi == VIE){
-
-        Engine::getInstance()->getPlayer()->modifierVie(bonusVie);
+        ramasse = true;
     }
 }
 

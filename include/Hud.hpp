@@ -18,7 +18,7 @@ class Hud
 public:
     Hud();
 
-    void updateLife(long n_life);
+    void updateLife(long n_life, int p_vieMaxPlayer);
     void updateScore(unsigned long n_score);
     void updateActualWeapon(sf::Texture* p_symboleWeapon, bool p_tirIllimity, unsigned int p_ammunitions);
     void updateAmmunitions(bool p_tirIllimity, unsigned int p_ammunitions);
@@ -28,7 +28,7 @@ public:
     void draw();
     sf::Text getLife();
     sf::Text getScore();
-    void init(long n_life, unsigned long n_score, sf::Texture* p_symboleWeapon, bool p_tirIllimity, unsigned int p_ammunitions);
+    void init(long n_life, int p_vieMaxPlayer, unsigned long n_score, sf::Texture* p_symboleWeapon, bool p_tirIllimity, unsigned int p_ammunitions);
 
     ~Hud();
 
@@ -46,6 +46,8 @@ private:
     sf::Vector2f sizeWindow;
 
     std::stringstream ss;
+
+    int vieMaxPlayer;
 };
 
 #endif // HUD_H

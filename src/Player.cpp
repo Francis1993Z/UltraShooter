@@ -5,9 +5,9 @@
 using namespace std;
 using namespace sf;
 
+const int vieMax = 100;
 
-
-Player::Player(sf::Vector2f init_position, TEAM team): Entity(1000, team), Score(0)
+Player::Player(sf::Vector2f init_position, TEAM team): Entity(100, team), Score(0)
 {
      setTexture(*TextureManager::getTexture(getCWD()+"/ressources/ship/Vessel1.bmp"));
 
@@ -101,10 +101,25 @@ void Player::addPoints(int points)
     Engine::getInstance()->getHud()->updateScore(Score);
 }
 
-void Player::modifierVie(int pv)//fonction Entity::modifierVie() masquée
+bool Player::modifierVie(int pv)//fonction Entity::modifierVie() masquée
 {
-    vie+=pv;
-    Engine::getInstance()->getHud()->updateLife(vie);
+    if(pv > 0 && vie == vieMax){
+
+        return false;
+    }
+    else{
+
+        vie+=pv;
+
+        if(vie > vieMax){
+
+            vie = vieMax;
+        }
+
+        Engine::getInstance()->getHud()->updateLife(vie, vieMax);
+
+        return true;
+    }
 }
 
 unsigned long Player::getScore()
@@ -114,7 +129,12 @@ unsigned long Player::getScore()
 
 void Player::initHud(){
 
-    Engine::getInstance()->getHud()->init(vie, Score, getSymboleActualWeapon(), isTirIllimity(), getAmmunitions());
+    Engine::getInstance()->getHud()->init(vie, vieMax, Score, getSymboleActualWeapon(), isTirIllimity(), getAmmunitions());
+}
+
+int Player::getVieMax() const{
+
+    return vieMax;
 }
 
 Player::~Player()
