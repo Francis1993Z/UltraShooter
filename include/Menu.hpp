@@ -10,6 +10,7 @@
 
 #include "Button.hpp"
 #include "WidgetListener.hpp"
+#include "CheckBox.hpp"
 
 class Menu : public WidgetListener
 {
@@ -32,8 +33,12 @@ private:
     std::list<sf::Text> listeScores;
     Button* play;
     Button* scoresB;
+    Button* optionsB;
     Button* quit;
     Button* retourS;
+    Button* retourO;
+    CheckBox* musicCB;
+    CheckBox* soundCB;
 };
 
 #endif // MENU_INCLUDED_HPP

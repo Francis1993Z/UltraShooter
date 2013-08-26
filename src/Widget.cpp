@@ -2,7 +2,7 @@
 
 Widget::Widget(int p_group)
 {
-    type = Basic;
+    type = BASIC;
     group = p_group;
 }
 

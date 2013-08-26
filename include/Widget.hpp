@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-enum Type {Basic};
+enum Type {BASIC, COCHABLE};
 
 class Widget
 {

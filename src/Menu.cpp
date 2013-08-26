@@ -18,18 +18,21 @@ Menu::Menu(sf::Vector2u sizeWindow, View menu_view)
 
     play = new Button(sf::Vector2i(0, 0), "Play", 0);
     scoresB = new Button(sf::Vector2i(0, 50), "High Scores", 0);
-    quit = new Button(sf::Vector2i(0, 100), "Quit", 0);
+    optionsB = new Button(sf::Vector2i(0, 100), "Option", 0);
+    quit = new Button(sf::Vector2i(0, 150), "Quit", 0);
     retourS = new Button(Vector2i(0, sizeWindow.y-50), "Come back", 1);
-
-    play->addLanguage(Fr, "Jouer");
-    scoresB->addLanguage(Fr, "Meilleurs Scores");
-    quit->addLanguage(Fr, "Quitter");
-    retourS->addLanguage(Fr, "Retour");
+    musicCB = new CheckBox(sf::Vector2i(0, 0), "Music", 2);
+    soundCB = new CheckBox(sf::Vector2i(0, 35), "Sound", 2);
+    retourO = new Button(Vector2i(0, sizeWindow.y-50), "Come back", 2);
 
     addWidget(play);
     addWidget(scoresB);
+    addWidget(optionsB);
     addWidget(quit);
     addWidget(retourS);
+    addWidget(retourO);
+    addWidget(musicCB);
+    addWidget(soundCB);
 
     setActualGroup(0);
 }
@@ -41,8 +44,8 @@ void Menu::draw()
 
         Engine::getInstance()->getRenderWindow()->draw(sprite);
     }
-    else
-        {
+    else if(scores)
+    {
 
             list<Text>::iterator it;
 
@@ -51,7 +54,7 @@ void Menu::draw()
 
                     Engine::getInstance()->getRenderWindow()->draw(*it);
                 }
-        }
+    }
 
         drawWidgets();
 }
@@ -69,6 +72,11 @@ void Menu::action(Widget* widgetClique)
         setActualGroup(1);
         afficherScores();
     }
+    else if(widgetClique == optionsB){
+
+        options = true;
+        setActualGroup(2);
+    }
     else if(widgetClique == quit){
 
         Engine::getInstance()->leaveGame("Quitter Menu");
@@ -76,6 +84,11 @@ void Menu::action(Widget* widgetClique)
     else if(widgetClique == retourS){
 
         scores = false;
+        setActualGroup(0);
+    }
+    else if(widgetClique == retourO){
+
+        options = false;
         setActualGroup(0);
     }
 }

@@ -16,6 +16,8 @@ LoadFiles::LoadFiles()
     symboleAutomaticWeapon = new Texture();
     symboleShrapnelWeapon = new Texture();
     symboleLaserWeapon = new Texture();
+    imgCheckBox = new Texture();
+    imgCheckBoxClic = new Texture();
 
     if (!policeArial->loadFromFile("ressources/fonts/arial.ttf"))
         {
@@ -52,11 +54,17 @@ LoadFiles::LoadFiles()
 
             fichierIntrouvable = "ShrapnelWeapon.png";
         }
-    else if(!symboleLaserWeapon->loadFromFile("ressources/symboles/LaserWeapon.png"))
+    else if(!imgCheckBox->loadFromFile("ressources/widgets/checkBox.png"))
         {
 
-            fichierIntrouvable = "LaserWeapon.png";
+            fichierIntrouvable = "checkBox.png";
         }
+    else if(!imgCheckBoxClic->loadFromFile("ressources/widgets/checkBoxClic.png"))
+        {
+
+            fichierIntrouvable = "checkBoxClic.png";
+        }
+
 
     if(fichierIntrouvable != "")
         {
@@ -111,6 +119,18 @@ Texture* LoadFiles::getSymboleLaserWeapon() const{
     return symboleLaserWeapon;
 }
 
+Texture* LoadFiles::getImgCheckBox() const
+{
+
+    return imgCheckBox;
+}
+
+Texture* LoadFiles::getImgCheckBoxClic() const
+{
+
+    return imgCheckBoxClic;
+}
+
 LoadFiles::~LoadFiles()
 {
     delete policeArial;
@@ -121,4 +141,6 @@ LoadFiles::~LoadFiles()
     delete symboleAutomaticWeapon;
     delete symboleShrapnelWeapon;
     delete symboleLaserWeapon;
+    delete imgCheckBox;
+    delete imgCheckBoxClic;
 }

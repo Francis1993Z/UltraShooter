@@ -1,4 +1,5 @@
 #include "WidgetManager.hpp"
+#include "CheckBox.hpp"
 #include <iostream>
 
 using namespace std;
@@ -50,7 +51,7 @@ void WidgetManager::positionClicSouris(float pos_x, float pos_y)
                     widgetClique = *it;
                     (*it)->setClicSouris(true);
                 }
-            else
+            else if((*it)->getType() != COCHABLE)
                 {
 
                     (*it)->setClicSouris(false);
@@ -67,7 +68,14 @@ void WidgetManager::positionRelachementSouris(float pos_x, float pos_y)
 
             if((*it)->getGroup() == widgetListener->getActualGroup() && (*it)->getCollisionBox().contains(pos_x, pos_y) && *it == widgetClique)
                 {
+                    if(widgetClique->getType() == COCHABLE){
+
+                        ((CheckBox*) widgetClique)->setTickedOff(!((CheckBox*) widgetClique)->isTickedOff());
+                        cout<<"lol"<<endl;
+                    }
+
                     widgetListener->action(widgetClique);
+                    widgetClique = NULL;
                 }
         }
 }
