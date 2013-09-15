@@ -91,6 +91,7 @@ private:
     Map* gameMap;   // On utilise un pointeur pour éviter le soucis d'interdépendance.
     Player* player;
     CollisionManager* collisionManager;
+
     Menu* menu;
     GameEnded* gameEnded;
     LoadFiles* loadFiles;
@@ -100,7 +101,7 @@ private:
    sf::Vector2f screen_size2f;
     sf::Vector2i localMousePosition;
     sf::Event WindowEvent;
-    sf::RenderWindow* Game;
+    sf::RenderWindow* enginerender;
     sf::View PlayerView, MenuView;
 };
 

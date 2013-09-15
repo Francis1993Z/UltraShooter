@@ -25,7 +25,7 @@ const sf::Image& image_manager::get_image( const std::string& filename, sf::Colo
 	{
 		if( filename == it->first )
 		{
-			std::cout << "DEBUG_MESSAGE: " << filename << " using existing image.\n";
+			//std::cout << "DEBUG_MESSAGE: " << filename << " using existing image.\n";
 			return it->second;
 		}
 	}
@@ -38,7 +38,7 @@ const sf::Image& image_manager::get_image( const std::string& filename, sf::Colo
 	{
 	    image.createMaskFromColor(mask);
 		images_[filename] = image;
-		std::cout << "DEBUG_MESSAGE: " << filename << " loading image.\n";
+		//std::cout << "DEBUG_MESSAGE: " << filename << " loading image.\n";
 		return images_[filename];
 	}
 
@@ -51,7 +51,7 @@ const sf::Image& image_manager::get_image( const std::string& filename, sf::Colo
 		{
             image.createMaskFromColor(sf::Color(0,255,0));
 			images_[filename] = image;
-			std::cout << "DEBUG_MESSAGE: " << filename << " loading image.\n";
+			//std::cout << "DEBUG_MESSAGE: " << filename << " loading image.\n";
 			return images_[filename];
 		}
 

@@ -90,7 +90,7 @@ Engine* Engine::getInstance()
                                 }
                             // Mode is a valid video mode
                         }
-                    videomode<<"Game VideoMode : "<<init_width<<"x"<<init_height<< "-" << init_bitmode<<endl;
+                    videomode<<"enginerender VideoMode : "<<init_width<<"x"<<init_height<< "-" << init_bitmode<<endl;
                     videomode.close();  // on referme le fichier
                 }
             else  // sinon
@@ -119,12 +119,12 @@ Engine::Engine(VideoMode mode, bool fullscreen)
         gameMap = new Map(getCWD()+"/ressources/maps/" + oss.str() + ".map");
 
     loadFiles = new LoadFiles();
-    Game = new RenderWindow();
+    enginerender = new RenderWindow();
 
     if(fullscreen)
-        Game->create(mode, "Ultra Shooter 0.2", sf::Style::Fullscreen);
+        enginerender->create(mode, "Ultra Shooter 0.2", sf::Style::Fullscreen);
     else
-        Game->create(mode, "Ultra Shooter 0.2");
+        enginerender->create(mode, "Ultra Shooter 0.2");
 }
 /*
 void Engine::screenshot()
@@ -144,9 +144,9 @@ void Engine::screenshot()
 int Engine::Run()
 {
     Clock fps_clock;
-    //Game.setVerticalSyncEnabled(true);
-    Game->setFramerateLimit(60);
-    Vector2u screen_size=Game->getSize();
+    //enginerender.setVerticalSyncEnabled(true);
+    enginerender->setFramerateLimit(60);
+    Vector2u screen_size=enginerender->getSize();
     screen_size2i.x = (int)screen_size.x;
     screen_size2i.y = (int)screen_size.y;
     screen_size2f.x = (float)screen_size.x;
@@ -155,11 +155,11 @@ int Engine::Run()
     player = new Player(sf::Vector2f(100.f, 100.f), TEAM1);
     PlayerView.setCenter(player->getPosition());
     events = new Events();
-    Game->setView(PlayerView);
+    enginerender->setView(PlayerView);
     collisionManager = new CollisionManager(*player, *gameMap);
     MenuView.setSize(screen_size.x, screen_size.y);
     MenuView.setCenter(screen_size.x/2, screen_size.y/2);
-    Game->setView(MenuView);
+    enginerender->setView(MenuView);
     menu = new Menu(screen_size, MenuView);
     menu->afficher();
     widgetManager.setPause(false);
@@ -175,10 +175,10 @@ int Engine::Run()
 
     gameMap->loadNextWave();
 
-    Game->setView(PlayerView);//<-- pour que la HUD se centre sur le joueur
+    enginerender->setView(PlayerView);//<-- pour que la HUD se centre sur le joueur
     localplayer_hud = new Hud();
     player->initHud();
-    Game->setView(MenuView);//<-- on revient avec le menu
+    enginerender->setView(MenuView);//<-- on revient avec le menu
 
     fenetreFinJeu = false;
     IsRunning=true;
@@ -186,7 +186,7 @@ int Engine::Run()
         {
 
 
-            while(Game->isOpen())//Fenetre
+            while(enginerender->isOpen())//Fenetre
                 {
 
 
@@ -196,8 +196,8 @@ int Engine::Run()
                         {
 
                             fenetreFinJeu = false;
-                            PlayerView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
-                            Game->setView(MenuView);
+                            PlayerView.setCenter(enginerender->getSize().x/2, enginerender->getSize().y/2);
+                            enginerender->setView(MenuView);
                             menu->afficher();
                             widgetManager.setPause(false);
                             widgetManager.setCurrentWidgetListener(menu);
@@ -206,9 +206,9 @@ int Engine::Run()
                     if(!menu->isActif() && !gameEnded->isActif())
                         {
                             widgetManager.setPause(true);
-                            Game->clear(Color(0,0,0));
+                            enginerender->clear(Color(0,0,0));
                             drawGame(); //Dessine tous les composants du jeu lors d'une partie.
-                            Game->display();
+                            enginerender->display();
                             lookIfGameOver(); //Regarde si il y a "GAME OVER".
                             nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
                         }
@@ -216,17 +216,17 @@ int Engine::Run()
                         {
 
                             fenetreFinJeu = true;
-                            Game->setView(MenuView);
-                            Game->clear(Color(0,0,0));
+                            enginerender->setView(MenuView);
+                            enginerender->clear(Color(0,0,0));
                             gameEnded->draw();
-                            Game->display();
+                            enginerender->display();
                         }
                     else if(menu->isActif())
                         {
-                            Game->setView(MenuView);
-                            Game->clear(Color(0,0,0));
+                            enginerender->setView(MenuView);
+                            enginerender->clear(Color(0,0,0));
                             drawMenu(); //Dessine le menu.
-                            Game->display();
+                            enginerender->display();
                         }
                 }
         }
@@ -263,7 +263,7 @@ LoadFiles* Engine::getLoadFiles() const
 RenderWindow* Engine::getRenderWindow() const
 {
 
-    return Game;
+    return enginerender;
 }
 
 View Engine::getMenuView() const
@@ -293,19 +293,19 @@ void Engine::gestionEvenements()
     if (widgetManager.getPause())
     events->updateEvents();
 
-            localMousePosition = sf::Mouse::getPosition(*Game);
+            localMousePosition = sf::Mouse::getPosition(*enginerender);
 
 //Pour des touches séparées(avec délai du système), il vaut mieux utiliser ces lignes là(pollEvent).
-    while (Game->pollEvent(WindowEvent))
+    while (enginerender->pollEvent(WindowEvent))
         {
             if (WindowEvent.type == Event::Closed)
                 {
-                    Game->close();
+                    enginerender->close();
                     IsRunning=false;
                 }
             if (WindowEvent.type == Event::MouseMoved && !widgetManager.getPause())
                 {
-         sf::Vector2f converted_mouse_coord = Game->mapPixelToCoords(localMousePosition);
+         sf::Vector2f converted_mouse_coord = enginerender->mapPixelToCoords(localMousePosition);
                     widgetManager.updatePosSouris(converted_mouse_coord.x, converted_mouse_coord.y);
                 }
 
@@ -321,14 +321,14 @@ void Engine::gestionEvenements()
             if (WindowEvent.type == sf::Event::Resized)
                 {
                     PlayerView.setSize(WindowEvent.size.width, WindowEvent.size.height);
-                    Game->setView(PlayerView);
+                    enginerender->setView(PlayerView);
                     localplayer_hud->setSizeWindow(getScreenSize2f());
                 }
             if (WindowEvent.type == Event::KeyPressed)
                 {
                     if (WindowEvent.key.code == sf::Keyboard::Escape)
                         {
-                            Game->close();
+                            enginerender->close();
                             IsRunning=false;
                         }
                     if(!menu->isActif())
@@ -371,7 +371,7 @@ void Engine::gestionEvenements()
 
             else if(!widgetManager.getPause())
                 {
-                       sf::Vector2f converted_mouse_coord = Game->mapPixelToCoords(localMousePosition);
+                       sf::Vector2f converted_mouse_coord = enginerender->mapPixelToCoords(localMousePosition);
                     widgetManager.positionClicSouris(converted_mouse_coord.x, converted_mouse_coord.y);
                 }
         }
@@ -387,7 +387,7 @@ void Engine::gestionEvenements()
 
             if (WindowEvent.mouseButton.button == sf::Mouse::Left && !widgetManager.getPause())
                 {
-                        sf::Vector2f converted_mouse_coord = Game->mapPixelToCoords(localMousePosition);
+                        sf::Vector2f converted_mouse_coord = enginerender->mapPixelToCoords(localMousePosition);
                     widgetManager.positionRelachementSouris(converted_mouse_coord.x, converted_mouse_coord.y);
                 }
         }
@@ -419,7 +419,7 @@ bool Engine::loadNextMap()
 void Engine::updateView()
 {
         PlayerView.setCenter(player->getPosition());
-        Game->setView(PlayerView);
+        enginerender->setView(PlayerView);
                       localplayer_hud->setPositionHud();
 }
 
@@ -430,18 +430,18 @@ void Engine::drawMenu()
 
 void Engine::SwitchView()
 {
-    if (MenuView_ON) Game->setView(PlayerView);
-    else             Game->setView(MenuView);
+    if (MenuView_ON) enginerender->setView(PlayerView);
+    else             enginerender->setView(MenuView);
 }
 
 void Engine::drawGame()
 {
-    Game->draw(gameMap->getBackground());
-    gameMap->update(Game);
-    gameMap->drawObstacles(Game);
+    enginerender->draw(gameMap->getBackground());
+    gameMap->update(enginerender);
+    gameMap->drawObstacles(enginerender);
     gameMap->drawBonus();
-    Game->draw(*player);
-    Game->draw(*player->getWeapon());
+    enginerender->draw(*player);
+    enginerender->draw(*player->getWeapon());
     localplayer_hud->draw();
 }
 
@@ -456,8 +456,8 @@ void Engine::nextWaveAndMap()
                         {
                             //leaveGame("Jeu termine !");
                             gameEnded->setActif(true, false);
-                            PlayerView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
-                            Game->setView(MenuView);
+                            PlayerView.setCenter(enginerender->getSize().x/2, enginerender->getSize().y/2);
+                            enginerender->setView(MenuView);
 
                             widgetManager.setCurrentWidgetListener(gameEnded);
                             widgetManager.setPause(false);
@@ -472,10 +472,10 @@ void Engine::lookIfGameOver()
 
     if(gameMap->getGameOver())
         {
-            //leaveGame("Game Over !");
+            //leaveGame("enginerender Over !");
             gameEnded->setActif(true, true);
-            PlayerView.setCenter(Game->getSize().x/2, Game->getSize().y/2);
-            Game->setView(MenuView);
+            PlayerView.setCenter(enginerender->getSize().x/2, enginerender->getSize().y/2);
+            enginerender->setView(MenuView);
 
             widgetManager.setCurrentWidgetListener(gameEnded);
             widgetManager.setPause(false);
@@ -486,7 +486,7 @@ void Engine::leaveGame(string cause)
 {
 
     cout<<cause<<endl;
-    Game->close();
+    enginerender->close();
     IsRunning=false;
 }
 
@@ -504,10 +504,10 @@ Vector2f Engine::getScreenSize2f() const
 Engine::~Engine()
 {
     isAlreadyInstancied = false;
-    Game->close();
+    enginerender->close();
     IsRunning=false;
 
-    delete Game;
+    delete enginerender;
     delete gameMap;
     delete localplayer_hud;
     //delete player; C'est maintenant Map qui détruit player
