@@ -37,6 +37,7 @@ template <typename T> string NumberToString ( T Number )
     Si aucun Engine n'a été crée, alors celui-ci sera crée et la fonction retournera son adresse,
     sinon elle retourne l'adresse de l'Engine qui a déjà été crée.
 */
+
 Engine* Engine::getInstance()
 {
     if(!isAlreadyInstancied)
@@ -141,6 +142,7 @@ void Engine::screenshot()
         exit(-1);
 }
 */
+
 int Engine::Run()
 {
     Clock fps_clock;
@@ -206,11 +208,18 @@ int Engine::Run()
                     if(!menu->isActif() && !gameEnded->isActif())
                         {
                             widgetManager.setPause(true);
+
+                            //Phase de mise à jour
+                                gameMap->update();
+
+                            lookIfGameOver(); //Regarde s'il y a "GAME OVER".
+                            nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
+
+                            //Phase de rendu
                             Game->clear(Color(0,0,0));
                             drawGame(); //Dessine tous les composants du jeu lors d'une partie.
                             Game->display();
-                            lookIfGameOver(); //Regarde si il y a "GAME OVER".
-                            nextWaveAndMap(); //Charge la wave ou la map suivante à defaut de wave.
+
                         }
                     else if(gameEnded->isActif())
                         {
@@ -437,9 +446,8 @@ void Engine::SwitchView()
 void Engine::drawGame()
 {
     Game->draw(gameMap->getBackground());
-    gameMap->update(Game);
-    gameMap->drawObstacles(Game);
-    gameMap->drawBonus();
+
+    gameMap->draw(Game);
     Game->draw(*player);
     Game->draw(*player->getWeapon());
     localplayer_hud->draw();

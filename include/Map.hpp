@@ -35,10 +35,14 @@ class Map
     Player* localplayer;
     bool gameOver;
 
+
+
 public:
 
     Map(std::string mapPath);
     ~Map();
+
+    void draw(sf::RenderWindow* game);
 
     int getWidth() const;
     int getHeight() const;
@@ -63,7 +67,7 @@ public:
 
     void drawObstacles(sf::RenderWindow* window) const;
     void drawBonus() const;
-    void update(sf::RenderWindow* game);
+    void update();
 
     sf::Sprite getBackground() const;
 

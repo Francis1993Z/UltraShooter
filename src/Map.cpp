@@ -191,7 +191,7 @@ void Map::drawObstacles(RenderWindow* window) const
         it->draw(window);
 }
 
-void Map::update(RenderWindow* game)
+void Map::update()
 {
     CollisionManager& collisionManager = *Engine::getInstance()->getCollisionManager();
 
@@ -302,17 +302,8 @@ void Map::update(RenderWindow* game)
         }
     }
 
-    //game->draw(background);
-
-    for(it = ProjectilesArray.begin(); it != ProjectilesArray.end(); ++it)
-        game->draw(*(*it));
 
 
-    for(itEnnemy = EntityArray.begin(); itEnnemy != EntityArray.end(); ++itEnnemy)
-        game->draw(*(*itEnnemy));
-
-    for(itEnnemy = EntityArray.begin(); itEnnemy != EntityArray.end(); ++itEnnemy)
-        game->draw(*(*itEnnemy));
 
 }
 
@@ -348,7 +339,8 @@ void Map::setlocalPlayer(Player& newPlayer)
 
 }
 
-void Map::drawBonus() const{
+void Map::drawBonus() const
+{
 
     for(list<Bonus *>::const_iterator it = lBonus.begin(); it != lBonus.end(); ++it)
         Engine::getInstance()->getRenderWindow()->draw(*(*it));
@@ -369,6 +361,23 @@ bool Map::loadNextWave()
 
 }
 
+void Map::draw(RenderWindow* game)
+{
+    list<Projectile *>::iterator it = ProjectilesArray.begin();
+    list<Entity *>::iterator itEnnemy = EntityArray.begin();
+
+    for(it = ProjectilesArray.begin(); it != ProjectilesArray.end(); ++it)
+        game->draw(*(*it));
+
+
+    for(itEnnemy = EntityArray.begin(); itEnnemy != EntityArray.end(); ++itEnnemy)
+        game->draw(*(*itEnnemy));
+
+    for(itEnnemy = EntityArray.begin(); itEnnemy != EntityArray.end(); ++itEnnemy)
+        game->draw(*(*itEnnemy));
+            drawObstacles(game);//changement à faire
+drawBonus();//ici aussi
+}
 
 bool Map::isCurrentWaveOver() const
 {
