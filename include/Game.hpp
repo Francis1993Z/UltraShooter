@@ -17,6 +17,8 @@ class Game
     std::list<Obstacle> lObstacles;
     std::list<Bonus *> lBonus;
 
+    std::vector<Map*> MapArray;
+
 public:
 
     void addEnnemy(Ennemy* e);
@@ -24,7 +26,12 @@ public:
     void addProjectile(Projectile* p);
     void rmProjectile(Projectile* p);
 
-virtual void update();
+virtual void updateGame();
+virtual void updateEntity();
+virtual void updatePhysics();
+virtual void upgradePhase();
+virtual void EndGame();
+virtual void Pause();
 virtual void drawgame(sf::RenderWindow& target);
 
 };
