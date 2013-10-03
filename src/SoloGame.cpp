@@ -3,40 +3,40 @@
 using namespace std;
 using namespace sf;
 
-void Game::updateGame()
+void SoloGame::updateGame()
 {
-
+/*
 updateEntity()
 updatePhysics()
-
+*/
 }
 
-void updateEntity()
+void SoloGame::updateEntity()
 {
 
 }
 
-void updatePhysics()
+void SoloGame::updatePhysics()
 {
 
 }
 
-void upgradePhase()
+void SoloGame::upgradePhase()
 {
 
 }
 
-void EndGame()
+void SoloGame:: EndGame()
 {
 
 }
 
-void Pause()
+void SoloGame::Pause()
 {
 
 }
 
-void drawgame(sf::RenderWindow& target)
+void SoloGame::drawgame(sf::RenderWindow& target)
 {
 
 }

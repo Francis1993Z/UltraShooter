@@ -8,32 +8,32 @@ void Game::updateGame()
 
 }
 
-void updateEntity()
+void Game::updateEntity()
 {
 
 }
 
-void updatePhysics()
+void Game::updatePhysics()
 {
 
 }
 
-void upgradePhase()
+void Game::upgradePhase()
 {
 
 }
 
-void EndGame()
+void Game::EndGame()
 {
 
 }
 
-void Pause()
+void Game::Pause()
 {
 
 }
 
-void drawgame(sf::RenderWindow& target)
+void Game::drawgame(sf::RenderWindow& target)
 {
 
 }
